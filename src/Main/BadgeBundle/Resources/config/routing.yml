@@ -1,0 +1,3 @@
+main_badge_homepage:
+    path:     /badges
+    defaults: { _controller: MainBadgeBundle:Default:index }

@@ -1,0 +1,77 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>{{ entity.titre }}</h1>
+
+    <table class="record_properties table">
+        <tbody>
+            <tr>
+                <th>Niveau</th>
+                <td>{% if (entity.niveau == 1) %}facile{% elseif (entity.niveau == 2) %}moyen{% elseif (entity.niveau == 3) %}difficile{% elseif (entity.niveau == 4) %}très difficile{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{% if (entity.type == 1) %}QCM{% elseif (entity.type == 2) %}Question simple{% elseif (entity.type == 3) %}Texte à trous{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Enoncé / Question</th>
+                <td>{{ entity.texte }}</td>
+            </tr>
+			{% if (entity.type == 1) %}
+				<tr>
+					<th>Réponse 1</th>
+					<td>{{ entity.reponse1 }}</td>
+				</tr>
+				<tr>
+					<th>Réponse 2</th>
+					<td>{{ entity.reponse2 }}</td>
+				</tr>
+				<tr>
+					<th>Réponse 3</th>
+					<td>{{ entity.reponse3 }}</td>
+				</tr>
+				<tr>
+					<th>Réponse 4</th>
+					<td>{{ entity.reponse4 }}</td>
+				</tr>
+				<tr>
+					<th>Réponse(s) juste(s)</th>
+					{% for reponse in entity.reponseJuste %}
+					<td>{{ reponse }}</td>
+					{% endfor %}
+				</tr>
+			{% elseif (entity.type == 2) %}
+				<tr>
+					<th>Réponse</th>
+					<td>{{ entity.reponse1 }}</td>
+				</tr>
+			{% elseif (entity.type == 3) %}
+				<tr>
+					<th>Réponse 1</th>
+					<td>{{ entity.reponse1 }}</td>
+				</tr>
+				<tr>
+					<th>Réponse 2</th>
+					<td>{{ entity.reponse2 }}</td>
+				</tr>
+				<tr>
+					<th>Réponse 3</th>
+					<td>{{ entity.reponse3 }}</td>
+				</tr>
+				<tr>
+					<th>Réponse 4</th>
+					<td>{{ entity.reponse4 }}</td>
+				</tr>
+			{% endif %}
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('exercice_edit', { 'id': entity.id }) }}">
+            Editer
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

@@ -1,0 +1,31 @@
+services:
+    sonata.admin.user:
+        class: Main\UserBundle\Admin\UserAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Contenu", label: "Elèves" }
+        arguments:
+            - ~
+            - Main\UserBundle\Entity\User
+            - ~
+        calls:
+            - [ setTranslationDomain, [SonataAdminBundle]]
+    sonata.admin.prof_tbc:
+        class: Main\UserBundle\Admin\ProfTbcAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Contenu", label: "Profs à confirmer" }
+        arguments:
+            - ~
+            - Main\UserBundle\Entity\User
+            - MainUserBundle:Admin
+        calls:
+            - [ setTranslationDomain, [SonataAdminBundle]]
+    sonata.admin.prof:
+        class: Main\UserBundle\Admin\ProfAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Contenu", label: "Profs" }
+        arguments:
+            - ~
+            - Main\UserBundle\Entity\User
+            - ~
+        calls:
+            - [ setTranslationDomain, [SonataAdminBundle]]

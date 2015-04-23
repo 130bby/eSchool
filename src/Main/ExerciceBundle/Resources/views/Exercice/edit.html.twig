@@ -1,0 +1,48 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    <h1>Edition d'un exercice</h1>
+
+    {{ form(edit_form) }}
+
+    <ul class="record_actions">
+		<li>{{ form(delete_form) }}</li>
+	</ul>
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script type="text/javascript">
+		$( "#main_exercicebundle_exercice_type" ).change(change_type);
+		
+		function change_type()
+		{
+			if ($( "#main_exercicebundle_exercice_type" ).val() == "1")
+			{
+				$("label[for='main_exercicebundle_exercice_reponse1']").text("Réponse 1 ");
+				$( "#main_exercicebundle_exercice_reponse2" ).show();
+				$( "#main_exercicebundle_exercice_reponse2" ).parent().show();
+				$( "#main_exercicebundle_exercice_reponse3" ).parent().show();
+				$( "#main_exercicebundle_exercice_reponse4" ).parent().show();
+				$( "#main_exercicebundle_exercice_reponseJuste" ).parent().show();
+			}
+			if ($( "#main_exercicebundle_exercice_type" ).val() == "2")
+			{
+				$("label[for='main_exercicebundle_exercice_reponse1']").text("Réponse ");
+				$( "#main_exercicebundle_exercice_reponse2" ).parent().hide();
+				$( "#main_exercicebundle_exercice_reponse3" ).parent().hide();
+				$( "#main_exercicebundle_exercice_reponse4" ).parent().hide();
+				$( "#main_exercicebundle_exercice_reponseJuste" ).parent().hide();
+			}
+			if ($( "#main_exercicebundle_exercice_type" ).val() == "3")
+			{
+				$("label[for='main_exercicebundle_exercice_reponse1']").text("Réponse 1 ");
+				$( "#main_exercicebundle_exercice_reponse2" ).parent().show();
+				$( "#main_exercicebundle_exercice_reponse3" ).parent().show();
+				$( "#main_exercicebundle_exercice_reponse4" ).parent().show();
+				$( "#main_exercicebundle_exercice_reponseJuste" ).parent().hide();
+			}
+		}
+	</script>
+	
+{% endblock %}

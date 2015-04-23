@@ -1,0 +1,473 @@
+/* Start by setting display:none to make this hidden.
+   Then we position it in relation to the viewport window
+   with position:fixed. Width, height, top and left speak
+   speak for themselves. Background we set to 80% white with
+   our animation centered, and no-repeating */
+.modal {
+    display:    none;
+    position:   fixed;
+    z-index:    1000;
+    top:        0;
+    left:       0;
+    height:     100%;
+    width:      100%;
+    background: rgba( 255, 255, 255, .8 ) 
+                url('/img/ajax-loader.gif') 
+                50% 50% 
+                no-repeat;
+}
+
+/* When the body has the loading class, we turn
+   the scrollbar off with overflow:hidden */
+body.loading {
+    overflow: hidden;   
+}
+
+/* Anytime the body has the loading class, our
+   modal element will be visible */
+body.loading .modal {
+    display: block;
+}
+
+.spanMarge{
+	margin-left: 16px;
+}
+
+.link_arbre_panel:hover{
+text-decoration: none
+}
+
+@font-face {
+      font-family: "PW Back to School";
+      src: url("/fonts/PWBacktoSchool.ttf");
+    }
+
+.btnValider{
+	border: none;
+	border-radius: 28px;
+	background: #0DDE29; 
+	height: 45px;
+	width: 150px;
+	font-size: 21px;
+	text-align: center;
+}
+
+.btnSuivant{
+	border: none;
+	border-radius: 28px;
+	background: #0DDE29; 
+	height: 45px;
+	width: 150px;
+	font-size: 21px;
+}
+
+.btnRecom{
+	border: none;
+	border-radius: 28px;
+	background: #FC7F3C; 
+	height: 45px;
+	width: 150px;
+	font-size: 21px;
+}
+
+.blocCentre{
+	border: 2px #E4E5E5 solid;
+	border-radius: 30px;
+	text-align:center;
+	box-shadow: 6px 6px 10px #E4E5E5;
+	max-width: 650px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 20px;
+}
+
+.blocCentre input, .blocCentre button {
+	margin-bottom: 15px;
+}
+
+.trous{
+	border: 2px #E4E5E5 solid;
+	border-radius: 12px;
+	height: 1px;
+}
+
+
+.repTrous{
+	cursor: pointer;
+	border: 2px #E4E5E5 solid;
+	border-radius: 12px;
+	margin-left: 3px;
+}
+
+.spanImg{
+	height: 50px;
+	width: 50px;
+	max-width:50px;
+	max-height: 50px;
+	background-image:url(/img/image1.jpg); 
+	padding: 10px;
+	display:inline-block;
+	position: relative;
+	text-align:center;
+	background-repeat: no-repeat;
+	background-size: 100%;
+	display: inline-block;
+}
+
+.spanImg_2{
+	float: right;
+}
+
+.spanBlocImg{
+	width: 135px;
+	height: 150px;
+	margin-left:auto; 
+	margin-right:auto; 
+	display:inline-block;
+	text-align:center;
+	position: relative;
+	vertical-align: top;
+}
+
+.spanBlocImg:hover{
+	opacity: 0.75;
+}
+
+
+
+.barForce5{
+	display: inline-block;
+	width: 39px;
+	height: 80px;
+	position: relative;
+	background-image:url(/img/bar_force.png);
+}
+
+.barForce4{
+	display: inline-block;
+	width: 39px;
+	height: 80px;
+	position: relative;
+	background-image:url(/img/bar_force.png);
+	background-position: 16% 0%;
+}
+
+.barForce3{
+	display: inline-block;
+	width: 39px;
+	height: 80px;
+	position: relative;
+	background-image:url(/img/bar_force.png);
+	background-position: 32% 0%;
+}
+
+.barForce2{
+	display: inline-block;
+	width: 39px;
+	height: 80px;
+	position: relative;
+	background-image:url(/img/bar_force.png);
+	background-position: 48% 0%;
+}
+
+.barForce1{
+	display: inline-block;
+	width: 39px;
+	height: 80px;
+	position: relative;
+	background-image:url(/img/bar_force.png);
+	background-position: 64% 0%;
+}
+
+.barForce0{
+	display: inline-block;
+	width: 39px;
+	height: 80px;
+	position: relative;
+	background-image:url(/img/bar_force.png);
+	background-position: 80% 0%;
+}
+
+
+
+.spanTxt{
+	margin:20px;
+	position: relative;
+	width: 100px;
+	height: 45px;
+	top: 15px;
+	text-align:center;
+	display: inline-block;
+}
+
+a.infobulle {
+   position: relative;
+   color: black;
+   text-decoration: none;
+}
+a.infobulle div {
+   display: none; /* On masque l'infobulle. */
+}
+a.infobulle:hover {
+   background: none; /* Correction d'un bug d'Internet Explorer. */
+   z-index: 500; /* On définit une valeur pour l'ordre d'affichage. */
+   cursor: help; /* On change le curseur par défaut par un curseur d'aide. */
+}
+a.infobulle:hover div {
+   display: inline; /* On affiche l'infobulle. */
+   position: absolute;
+   white-space: nowrap; /* On change la valeur de la propriété white-space pour qu'il n'y ait pas de retour à la ligne non désiré. */
+   top: 30px; /* On positionne notre infobulle. */
+   left: 20px;
+   background: white;
+   color: green;
+   padding: 3px;
+   border: 1px solid green;
+   border-radius: 8px;
+   border-left: 4px solid green;
+}
+
+.reponseValide{
+	background-color: #9AFF9C;
+}
+
+
+.reponseInvalide{
+	background-color: #FFB8B8;
+}
+
+.imgExercice{
+	max-width: 400px;
+	max-height: 200px;
+}
+
+.div_profile{
+	font-family: 'Quattrocento Sans', sans-serif;
+	font-size:17px;
+}
+
+.h1_profile{
+	font-weight: bold;
+	font-size: 36px;
+}
+
+.btn_profile{
+	border: 1px solid black;
+	border-radius: 28px;
+	background: #FFB742; 
+	height: 45px;
+	width: 150px;
+	font-size: 20px;
+	margin-bottom: 15px;
+	color: black;
+}
+
+.txt_home_eleve{
+	font-size: 24px;
+	margin: 60px;
+	text-align: center;
+}
+
+.div_liste_home{
+	margin-left: auto;
+	margin-right:  auto;
+	text-align: center;
+}
+
+#msgReponse{
+	-webkit-transition: background-color 2s linear;
+	-moz-transition: background-color 2s linear;
+	-ms-transition: background-color 2s linear;
+	-o-transition: background-color 2s linear;
+	transition: background-color 2s linear;
+}
+
+#msgReponse:hover{
+	background-color: rgba(255,255,255,1);
+}
+
+#pwidget
+{
+	width:254px;
+	padding:2px;
+	-moz-border-radius:3px;
+	border-radius:3px;
+	text-align:left;
+	margin-left: auto;
+	margin-right: auto; 
+}
+
+#progressbar
+{
+	width:254px;
+	background-color:white;
+	border:2px solid #E4E5E5;
+	height:30px;
+	border-radius: 7px;  
+}
+
+#indicator
+{
+	width:0px;
+	background-color:#F4D11D;
+	height:28px;
+	margin:0;
+	display: inline-block;
+	border-radius: 7px;
+}
+
+#icone_reponse{
+	font-size: 30px;
+	top: 49px;
+	right: 103px;
+}
+
+.div_icone_plus_home{
+	display: inline-block;
+	float: right;
+	top: -4px;
+}
+
+#textMsgReponse{
+	float: center;
+}
+
+#icone_reponse_left{
+	font-size: 30px;
+	top: 49px;
+	right: 103px;
+}
+
+#menu-accordeon {
+  padding:0;
+  margin:0;
+  list-style:none;
+  text-align: center;
+  width: 225px;
+}
+#menu-accordeon ul {
+  padding:0;
+  margin:0;
+  list-style:none;
+  text-align: center;
+}
+#menu-accordeon li {
+   background-color:#729EBF; 
+   background-image:-webkit-linear-gradient(top, #729EBF 0%, #333A40 100%);
+   background-image: linear-gradient(to bottom, #729EBF 0%, #333A40 100%);
+   border-radius: 6px;
+   margin-bottom:2px;
+   box-shadow: 3px 3px 3px #999;
+   border:solid 1px #333A40
+}
+#menu-accordeon li li {
+   max-height:0;
+   overflow: hidden;
+   transition: all .5s;
+   border-radius:0;
+   background: #444;
+   box-shadow: none;
+   border:none;
+   margin:0;
+   color: white;
+}
+#menu-accordeon a, #menu-accordeon span {
+  display:block;
+  text-decoration: none;
+  color: #fff;
+  padding: 8px 0;
+  font-size:1.2em;
+  top: -4px;
+}
+#menu-accordeon ul li a, #menu-accordeon li:hover li a {
+  font-size:1em
+}
+#menu-accordeon li:hover {
+   background: #729EBF
+}
+#menu-accordeon li li:hover {
+   background: #999;
+}
+#menu-accordeon ul li:last-child {
+   border-radius: 0 0 6px 6px;
+   border:none;
+}
+
+.icone_menu_eleve{
+display:inline;
+left: 4px;
+}
+
+#menu_user_eleve li{
+margin: 8px;
+}
+
+#menu_user_prof li{
+margin: 8px;
+}
+
+.div_theme_name_home{
+	max-width: 150px;
+	display: inline-block;
+	margin: 5px;
+}
+
+.flash_message_home{
+	text-align:center;
+	max-width: 380px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 20px;
+}
+
+.icone_ok_flash_message{
+float: left;
+width: 35px;
+}
+
+.modal_login_user{
+top: 100px;
+width: 525px;
+height: 350px;
+text-align:center;
+right:100px;
+}
+
+.modal_sign_up_user{
+top: 100px;
+width: 475px;
+height: 200px;
+text-align:center;
+right:100px;
+}
+
+.modal_login_user p{
+margin-top: 15px;
+}
+
+.modal_login_user input, .modal_login_user label{
+margin: auto;
+display: block;
+}
+
+.modal-footer{
+text-align:center;
+}
+
+.form_login_user{
+width: 250px;
+margin: auto;
+}
+
+.form_login_user a{
+margin: 2px;
+}
+
+#school_note{
+font-family:'PW Back to School'; 
+font-size:40px;
+}
+
+.arbre_grise {
+opacity: 0.5;
+}

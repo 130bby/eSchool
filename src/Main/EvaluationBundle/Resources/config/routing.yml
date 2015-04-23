@@ -1,0 +1,14 @@
+admin_evaluation_refresh_savoirs_ajax:
+    path:     /ajax/admin_refresh_savoirs
+    defaults: { _controller: MainEvaluationBundle:Default:adminRefreshAjax }
+main_evaluation_pass_student:
+    path:     /evaluation/pass/{evaluation_id}
+    defaults: { _controller: MainEvaluationBundle:Default:pass, evaluation_id: null }
+main_evaluation_passed_student:
+    path:     /evaluation/passed/{evaluation_id}
+    defaults: { _controller: MainEvaluationBundle:Default:passed }
+main_evaluation_pass_ajax:
+    path:     /evaluation/ajax
+    defaults: { _controller: MainEpreuveBundle:Default:passAjax }
+    requirements:
+        _method: POST

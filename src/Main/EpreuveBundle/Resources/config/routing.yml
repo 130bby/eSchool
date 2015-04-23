@@ -1,0 +1,11 @@
+main_epreuve_pass_student:
+    path:     /epreuve/pass/{savoir_id}
+    defaults: { _controller: MainEpreuveBundle:Default:pass, savoir_id: null }
+main_epreuve_passed_student:
+    path:     /epreuve/passed/{savoir_id}
+    defaults: { _controller: MainEpreuveBundle:Default:passed }
+main_epreuve_pass_ajax:
+    path:     /epreuve/ajax
+    defaults: { _controller: MainEpreuveBundle:Default:passAjax }
+    requirements:
+        _method: POST

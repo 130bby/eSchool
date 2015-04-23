@@ -1,0 +1,12 @@
+services:
+    sonata.admin.exercice:
+        class: Main\ExerciceBundle\Admin\ExerciceAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Contenu", label: "Exercices" }
+        arguments:
+            - ~
+            - Main\ExerciceBundle\Entity\Exercice
+            - ~
+        calls:
+            - [ setTranslationDomain, [SonataAdminBundle]]
+            - [ setTemplate, [edit, MainExerciceBundle:Admin:edit.html.twig]]

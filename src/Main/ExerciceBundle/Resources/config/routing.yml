@@ -1,0 +1,6 @@
+main_exercice_import:
+    path:     /admin/exercice/import
+    defaults: { _controller: MainExerciceBundle:Default:import }
+main_exercice_export:
+    path:     /admin/exercice/export
+    defaults: { _controller: MainExerciceBundle:Default:export }

@@ -1,0 +1,15 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+	{% for badge in badges %}
+		Bravo, vous avez acquis un nouveau badge : {{badge.badge.name}}<br /> 
+	{% endfor %}
+	{% if success %}
+		Bravo ! Vous avez passé l'évaluation avec succès ! les savoirs suivants ont été débloqués automatiquement :
+		{% for savoir in savoirs %}
+			<br />- {{savoir.name}} 
+		{% endfor %}
+	{% else %}
+		Dommage, votre résultat à l'évaluation est insuffisant.
+	{% endif %}
+{% endblock %}

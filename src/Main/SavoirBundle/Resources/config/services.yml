@@ -1,0 +1,4 @@
+services:
+#    main_savoir.example:
+#        class: Main\SavoirBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

@@ -1,0 +1,3 @@
+main_cours_show:
+    path:     /cours/{savoir_id}
+    defaults: { _controller: MainCoursBundle:Default:show, savoir_id: null }

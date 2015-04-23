@@ -1,0 +1,3 @@
+main_matiere_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: MainMatiereBundle:Default:index }

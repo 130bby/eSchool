@@ -1,0 +1,11 @@
+services:
+    sonata.admin.cours:
+        class: Main\CoursBundle\Admin\CoursAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Contenu", label: "Cours" }
+        arguments:
+            - ~
+            - Main\CoursBundle\Entity\Cours
+            - ~
+        calls:
+            - [ setTranslationDomain, [SonataAdminBundle]]

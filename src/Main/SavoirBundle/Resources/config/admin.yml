@@ -1,0 +1,11 @@
+services:
+    sonata.admin.savoir:
+        class: Main\SavoirBundle\Admin\SavoirAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Contenu", label: "Savoirs" }
+        arguments:
+            - ~
+            - Main\SavoirBundle\Entity\Savoir
+            - MainSavoirBundle:SavoirAdmin
+        calls:
+            - [ setTranslationDomain, [SonataAdminBundle]]

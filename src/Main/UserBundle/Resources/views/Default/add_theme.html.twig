@@ -1,0 +1,56 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+	{% for flashMessage in app.session.flashbag.get('notice') %}
+		<div class="alert alert-success alert-dismissible fade in flash_message_home">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<span class="glyphicon glyphicon-ok icone_ok_flash_message"></span>
+			<p>{{ flashMessage }} </p>
+		</div>
+	{% endfor %}
+	<p class="txt_home_eleve">  Envie de devenir un savant ? <br/>
+		Developpez vos arbres de savoir pour les thèmes qui vous interessent !  
+	</p>
+	<div class="col-lg-offset-5">
+		<ul id="menu-accordeon">
+			{%for matiere in matieres%}
+				<li><a id="a_home_matiere_{{matiere.name}}" href="#">{{matiere.name}}</a>
+					<ul>
+						{%for theme in matiere.themes%}
+							<li id="li_home_theme_{{matiere.name}}_{{theme.name}}" class="menu_index_closed">
+								<div class="div_theme_name_home">{{theme.name}}</a></div>
+									{%if theme.available is not defined%}
+										<div class="div_icone_plus_home"><a href="{{ path('main_user_add_theme', { 'theme_id': theme.id })}}"><span id="icone_plus_home" class="glyphicon glyphicon-plus-sign"></span></a></div>
+									{%endif%}
+							</li>
+						{%endfor%} 
+					</ul>
+			{%endfor%}
+		</ul>
+	</div>
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+<script type="text/javascript">
+$('[id^="a_home_matiere_"]').click(function(){
+				var temp_array = $(this).attr('id').split("_");
+				var mon_id = temp_array[3];
+				var li_id = "li_home_theme_"+mon_id+"_";
+				
+				if($('[id^="' + li_id + '"]').hasClass('menu_index_opened'))
+				{
+					$('[id^="' + li_id + '"]').removeClass('menu_index_opened');
+					$('[id^="' + li_id + '"]').addClass('menu_index_closed');
+					$('[id^="' + li_id + '"]').css('max-height', '0');
+				}
+				else
+				{
+					$('[id^="' + li_id + '"]').removeClass('menu_index_cloed');
+					$('[id^="' + li_id + '"]').addClass('menu_index_opened');
+					$('[id^="' + li_id + '"]').css('max-height', '15em');
+				}
+			});
+</script>
+{% endblock %}

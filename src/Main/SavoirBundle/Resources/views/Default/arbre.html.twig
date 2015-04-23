@@ -1,0 +1,110 @@
+{% extends '::base.html.twig' %}
+{% block body %}
+{% if evaluation %}
+<div class="modal fade" style="display:block;top:50px;" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Bonjour {{app.user}} !</h4>
+      </div>
+      <div class="modal-body">
+        <p>Nouveau sur le site, envie d'apprendre un nouveau thème ? Evalue ton niveau pour mieux cibler les savoirs qui t'intéressent !</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Non merci</button>
+		{% for evaluation in evaluations %}
+		<a href="{{ path('main_evaluation_pass_student', { 'evaluation_id': evaluation.id }) }}">
+			<button type="button" class="btn btn-primary" id="evaluation_{{evaluation.id}}">
+				Niveau{%if loop.index == 1 %} débutant {% elseif loop.index == 2 %} intermédiaire {% else %} avancé {% endif %} 
+			</button>
+		</a>
+		{% endfor %}
+	  </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+{% endif %}
+
+<ul class="list-style" style="text-align:center;list-style: none;">
+	{% for level in arbre %}
+	{% if evaluations[loop.index] is defined and evaluations[loop.index]['passed'] is not defined %}
+		<li style="margin-top:20px;">
+			<a href="{{ path('main_evaluation_pass_student', { 'evaluation_id': evaluations[loop.index]['id'] }) }}">
+				<button type="button" class="btn btn-primary" >
+					Passer une évaluation : {{evaluations[loop.index]['name']}}
+				</button>
+			</a>
+		</li> 
+	{% endif %}
+	<li style="margin-top:20px;">
+		{% for savoir in level %}
+		{% if savoir.available %}
+			<a id="link_slide_panel_{{savoir.id}}_{{savoir.name}}"class="link_arbre_panel" href="#">
+				<span class="spanBlocImg" data-html="true" data-toggle="tooltip" data-placement="top" title="{%if savoir.prerequis_name is defined %}  Prérequis :  {%for nom_prerequis in savoir.prerequis_name%} <br/>-{{nom_prerequis}} {%endfor%} <br/><br/>{%endif%} Niveau : {{loop.parent.loop.index}} ">
+					{%if savoir.strength is defined %}<span style="width:39px; height:80px; display: inline-block;" class="barForce{{savoir.strength}}" ></span>{%endif%}
+					<span class="spanImg {%if savoir.strength is defined %} spanImg_2 {% endif %}" {% if savoir.path is not null%} style="background-image:url(/uploads/savoir/{{savoir.id}}.{{savoir.path}});"{% endif %} ></span>
+					<span class="spanTxt" {%if savoir.strength is defined %} style="width:150px; top:-15px;" {%endif%}>{{savoir.name}}</span> 
+				</span>
+			</a>
+		{% else %}
+			<span class="spanBlocImg arbre_grise" data-html="true" data-toggle="tooltip" data-placement="top" title="{%if savoir.prerequis_name is defined %}  Prérequis :  {%for nom_prerequis in savoir.prerequis_name%} <br/>-{{nom_prerequis}} {%endfor%} <br/><br/>{%endif%}  Niveau : {{loop.parent.loop.index}} ">
+				<span class="spanImg" {% if savoir.path is not null%} style="background-image:url(/uploads/savoir/{{savoir.id}}.{{savoir.path}})" alt="" {% endif %} >  </span>
+				<span class="spanTxt" >{{savoir.name}}</span>
+			</span>
+		{% endif %}
+		{% endfor %}
+	</li> 
+	{% endfor %}
+</ul>
+
+<div  id="div_panel" class="cd-panel from-right">
+	<header class="cd-panel-header">
+		<h1 id="panel_title">Titre</h1>
+		<a id="btn_close_panel" class="glyphicon glyphicon-remove" href="#"></a>
+	</header>
+ 
+	<div class="cd-panel-container">
+		<div class="cd-panel-content">
+			<a id="panel_link_lesson" class="cd-panel-content-link" style="text-decoration:none;"><button type="button" class="btn btn-info"> Cours </button> </a> <br/>
+			<a id="panel_link_exercice" class="cd-panel-content-link" style="text-decoration:none;"><button type="button" class="btn btn-info"> Epreuve </button></a>
+		</div> <!-- cd-panel-content -->
+	</div> <!-- cd-panel-container -->
+</div> <!-- cd-panel -->
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+<script type="text/javascript">
+
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})		
+
+$('[id^="link_slide_panel_"]').click(function(event) {
+	event.preventDefault();
+	var temp_array = $(this).attr('id').split("_");
+	var id_savoir = temp_array[3];
+	var name_savoir = temp_array[4];
+	var href = "{{ path('main_epreuve_pass_student')}}";
+	href = href+"/"+id_savoir;
+	var href_cours = "{{ path('main_cours_show')}}";
+	href_cours = href_cours+"/"+id_savoir;
+	$('#panel_title').html(name_savoir);
+	$('#panel_link_lesson').attr('href', href_cours );
+	$('#panel_link_exercice').attr("href", href );
+	$('#div_panel').addClass('is-visible');
+});
+
+$('#btn_close_panel').click(function(event) {
+	$('#div_panel').removeClass('is-visible');
+	$('#panel_link_lesson').removeAttr('href');
+	$('#panel_link_exercice').removeAttr('href');
+	event.preventDefault();
+});
+
+{% if evaluation %}
+$('#myModal').modal('show');
+{% endif %}
+
+</script>
+{% endblock%}

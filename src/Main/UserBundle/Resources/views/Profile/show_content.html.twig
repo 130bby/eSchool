@@ -1,0 +1,16 @@
+{% trans_default_domain 'FOSUserBundle' %}
+<h1 style="text-align:center;"> Profil </h1>
+
+<div class="fos_user_user_show blocCentre div_profile">
+    <p>{{ 'profile.show.username'|trans }}: {{ user.username }}</p>
+    <p>{{ 'profile.show.email'|trans }}: {{ user.email }}</p>
+    <p>{{ 'Prénom'|trans }}: {{ user.firstName }}</p>
+    <p>{{ 'Nom'|trans }}: {{ user.lastName }}</p>
+	{% if is_granted('ROLE_ELEVE') %}
+    <p>{{ 'Classe'|trans }}: {{ user.classe }}ème</p>
+	{% endif %}
+	<p>{{ 'Date de naissance'|trans }}: {{ user.birthday|date("d/m/Y") }}</p>
+    <p>{{ 'Pays'|trans }}: {{ user.country }}</p>
+	<a href="{{ path('main_user_profil_edit')}}" ><button type="button" class="btn btn-info"> Modifier </button></a>
+
+</div>

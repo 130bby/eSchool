@@ -1,0 +1,4 @@
+services:
+#    main_epreuve.example:
+#        class: Main\EpreuveBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

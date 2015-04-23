@@ -1,0 +1,13 @@
+services:
+    main_user.registration.form.type:
+        class: Main\UserBundle\Form\Type\RegistrationFormType
+        arguments: ["@security.context"]
+        tags:
+            - { name: form.type, alias: main_user_registration }
+        calls:
+            - [setRequest, [@request_stack]]
+    login_listener:
+        class: 'Main\UserBundle\Listener\LoginListener'
+        arguments: ['@security.context', '@doctrine', '@service_container']
+        tags:
+            - { name: 'kernel.event_listener', event: 'security.interactive_login' }

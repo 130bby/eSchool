@@ -1,0 +1,11 @@
+services:
+    sonata.admin.matiere:
+        class: Main\MatiereBundle\Admin\MatiereAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Contenu", label: "Matieres" }
+        arguments:
+            - ~
+            - Main\MatiereBundle\Entity\Matiere
+            - ~
+        calls:
+            - [ setTranslationDomain, [SonataAdminBundle]]

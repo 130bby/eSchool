@@ -1,0 +1,6 @@
+main_savoir_improve:
+    path:     /improve
+    defaults: { _controller: MainSavoirBundle:Default:improve }
+main_savoir_arbre_theme:
+    path:     /arbre/{theme_id}
+    defaults: { _controller: MainSavoirBundle:Default:getArbre }

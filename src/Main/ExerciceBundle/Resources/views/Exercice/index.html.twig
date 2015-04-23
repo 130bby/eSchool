@@ -1,0 +1,48 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+	<div class="col-lg-offset-1">
+		<h1>Mes Exercices</h1>
+
+		<table class="records_list table table-hover" style="max-width: 1024px;">
+			<thead>
+				<tr>
+					<th>Titre</th>
+					<th>Niveau</th>
+					<th>Type</th>
+					<th>Savoir</th>
+					<th>Thème</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+			{% for entity in entities %}
+				<tr>
+					<td><a href="{{ path('exercice_show', { 'id': entity.id }) }}">{{ entity.titre }}</a></td>
+					<td>{% if (entity.niveau == 1) %}facile{% elseif (entity.niveau == 2) %}moyen{% elseif (entity.niveau == 3) %}difficile{% elseif (entity.niveau == 4) %}très difficile{% endif %}</td>
+					<td>{% if (entity.type == 1) %}QCM{% elseif (entity.type == 2) %}Question simple{% elseif (entity.type == 3) %}Texte à trous{% endif %}</td>
+					<td>{{ entity.savoir }}</td>
+					<td>{{ entity.savoir.theme }}</td>
+					<td>
+					<ul class="list-inline">
+						<li>
+							<a class="glyphicon glyphicon-eye-open" title="Voir" href="{{ path('exercice_show', { 'id': entity.id }) }}"> </a>
+						</li>
+						<li>
+							<a class="glyphicon glyphicon-edit" title="Editer"href="{{ path('exercice_edit', { 'id': entity.id }) }}"></a>
+						</li>
+					</ul>
+					</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+
+
+		<a href="{{ path('exercice_new') }}" style="text-decoration:none;">
+			<button class="btn btn-info" type="button" style="height:50px;">
+				Créer un nouvel exercice
+			</button>
+		</a>
+</div>
+{% endblock %}

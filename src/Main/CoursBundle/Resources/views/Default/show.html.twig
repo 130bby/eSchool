@@ -1,0 +1,26 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+{% if cours.0 is defined %}<h1 style="text-align:center;">{{ cours.0.savoir.name }}</h1> {% endif %}
+
+<div style="margin:10px;">
+{% for cours_obj in cours %}
+	<a class="btn btn-primary"  data-toggle="collapse" href="#div_cours_{{ cours_obj.id }}" aria-expanded="false" aria-controls="collapseExample">
+		{{ cours_obj.titre }}
+	</a>
+{% endfor %}
+
+{% for cours_obj in cours %}
+	<div class="collapse" style="margin-top:10px;" id="div_cours_{{ cours_obj.id }}">
+		<div class="well">
+			<p>{{ cours_obj.texte|raw }}</p>
+		</div>
+	</div>
+{% endfor %}
+</div>
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.2-latest/MathJax.js?config=TeX-AMS_HTML"></script>
+{% endblock %}

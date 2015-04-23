@@ -1,0 +1,12 @@
+services:
+    sonata.admin.evaluation:
+        class: Main\EvaluationBundle\Admin\EvaluationAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Contenu", label: "Evaluations" }
+        arguments:
+            - ~
+            - Main\EvaluationBundle\Entity\Evaluation
+            - MainEvaluationBundle:EvaluationAdmin
+        calls:
+            - [ setTranslationDomain, [SonataAdminBundle]]
+            - [ setTemplate, [edit, MainEvaluationBundle:Admin:edit.html.twig]]

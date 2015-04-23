@@ -1,0 +1,14 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+	{% for badge in badges %}
+		Bravo, vous avez acquis un nouveau badge : {{badge.badge.name}}<br /> 
+	{% endfor %}
+	
+	{% if success %}
+		Félicitations ! Vous avez acquis le savoir : {{savoir.name}}
+	{% else %}
+		Désolé, votre score est insuffisant pour acquérir le savoir : {{savoir.name}}
+	{% endif %}
+
+{% endblock %}

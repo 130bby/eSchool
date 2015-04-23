@@ -1,0 +1,70 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+
+<div class="row">
+	<div class="col-xs-3">
+	{% if badges.1 is defined %}
+		<img src="/uploads/badges/1.jpg" data-html="true" data-toggle="tooltip" data-placement="top" title="{{badges.1.badge.name}} :{% for theme in badges.1.themes %}<br />- {{theme}}{% endfor %}" />
+	{% else %}
+		<img style="opacity: 0.4;" src="/uploads/badges/1.jpg" data-html="true" data-toggle="tooltip" data-placement="top" title="Maître du thème"/>
+	{% endif %}
+	</div>
+	
+	<div class="col-xs-3">
+	{% if badges.2 is defined %}
+		<img src="/uploads/badges/2.jpg" data-html="true" data-toggle="tooltip" data-placement="top" title="Sur le bout des doigts" />
+	{% else %}
+		<img style="opacity: 0.4;" src="/uploads/badges/2.jpg" data-html="true" data-toggle="tooltip" data-placement="top" title="Sur le bout des doigts" />
+	{% endif %}
+	</div>
+
+	<div class="col-xs-3">
+	{% if badges.3 is defined %}
+		<img src="/uploads/badges/3.jpg" data-html="true" data-toggle="tooltip" data-placement="top" title="A l'épreuve du feu" />
+	{% else %}
+		<img style="opacity: 0.4;" src="/uploads/badges/3.jpg" data-html="true" data-toggle="tooltip" data-placement="top" title="A l'épreuve du feu" />
+	{% endif %}
+	</div>
+
+	<div class="col-xs-3">
+	{% if badges.4 is defined %}
+		<img src="/uploads/badges/4.jpg" data-html="true" data-toggle="tooltip" data-placement="top" title="Repris de justesse" />
+	{% else %}
+		<img style="opacity: 0.4;" src="/uploads/badges/4.jpg" data-html="true" data-toggle="tooltip" data-placement="top" title="Repris de justesse" />
+	{% endif %}
+	</div>
+
+	<div class="col-xs-3">
+	{% if badges.5 is defined %}
+		<img src="/uploads/badges/5.png" data-html="true" data-toggle="tooltip" data-placement="top" title="J'ai plus d'une preuve !<br /> Niveau : {{badges.5.niveau}}" />
+	{% else %}
+		<img style="opacity: 0.4;" src="/uploads/badges/5.png" data-html="true" data-toggle="tooltip" data-placement="top" title="J'ai plus d'une preuve !" />
+	{% endif %}
+	</div>
+
+	<div class="col-xs-3">
+	{% if badges.6 is defined %}
+		<img src="/uploads/badges/6.jpg" data-html="true" data-toggle="tooltip" data-placement="top" title="Tout le monde thème<br />Niveau : {{badges.6.niveau}}" />
+	{% else %}
+		<img style="opacity: 0.4;" src="/uploads/badges/6.jpg" data-html="true" data-toggle="tooltip" data-placement="top" title="Tout le monde thème" />
+	{% endif %}
+	</div>
+
+	<div class="col-xs-3">
+	{% if badges.7 is defined %}
+		<img src="/uploads/badges/7.jpg" data-html="true" data-toggle="tooltip" data-placement="top" title="Tenace, ne lâche pas le morceau" />
+	{% else %}
+		<img style="opacity: 0.4;" src="/uploads/badges/7.jpg" data-html="true" data-toggle="tooltip" data-placement="top" title="Tenace, ne lâche pas le morceau" />
+	{% endif %}
+	
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script type="text/javascript">
+		$(function () {
+		  $('[data-toggle="tooltip"]').tooltip()
+		})		
+	</script>
+{% endblock %}

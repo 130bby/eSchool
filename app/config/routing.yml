@@ -1,0 +1,56 @@
+main_badge:
+    resource: "@MainBadgeBundle/Resources/config/routing.yml"
+    prefix:   /
+
+main_cours:
+    resource: "@MainCoursBundle/Resources/config/routing.yml"
+    prefix:   /
+
+main_evaluation:
+    resource: "@MainEvaluationBundle/Resources/config/routing.yml"
+    prefix:   /
+
+main_matiere:
+    resource: "@MainMatiereBundle/Resources/config/routing.yml"
+    prefix:   /
+
+main_theme:
+    resource: "@MainThemeBundle/Resources/config/routing.yml"
+    prefix:   /
+
+main_savoir:
+    resource: "@MainSavoirBundle/Resources/config/routing.yml"
+    prefix:   /
+
+main_epreuve:
+    resource: "@MainEpreuveBundle/Resources/config/routing.yml"
+    prefix:   /
+
+main_exercice:
+    resource: "@MainExerciceBundle/Resources/config/routing.yml"
+    prefix:   /
+
+main_exercice_crud:
+    type:     annotation
+    resource: "@MainExerciceBundle/Controller/ExerciceController.php"
+    prefix:   /
+
+main_home:
+    resource: "@MainHomeBundle/Resources/config/routing.yml"
+    prefix:   /
+
+main_user:
+    resource: "@MainUserBundle/Resources/config/routing.yml"
+    prefix:   /
+
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
+admin:
+    resource: '@SonataAdminBundle/Resources/config/routing/sonata_admin.xml'
+    prefix: /admin
+
+_sonata_admin:
+    resource: .
+    type: sonata_admin
+    prefix: /admin

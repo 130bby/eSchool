@@ -1,0 +1,13 @@
+{% if success is defined %}
+	{% if success %}
+	Votre import a été effectué avec succès !
+	{% else %}
+	Il y a eu une erreur lors de l'import :
+	{{message}}
+	{% endif %}
+{% endif %}
+<form id="import_exercice_excel" action="{{path('main_exercice_import')}}" method="post" enctype="multipart/form-data">
+  Fichier Excel: <input type="file" name="xlsfile"><br>
+  <input type="submit" value="Importer">
+  <a href="{{ path('sonata_admin_dashboard')}}"><button type="button">Retour à l'admin</button></a>
+</form>

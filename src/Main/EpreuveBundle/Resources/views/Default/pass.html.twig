@@ -1,0 +1,316 @@
+{% extends '::base.html.twig' %}
+{% block head %}
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
+	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+{% endblock %}
+		
+{% block body -%}
+     <h1 class="text-center">Epreuve pour acquérir : {{savoir.name}}</h1>
+		<div id="timer" class="blocCentre"><span id="temps_restant">Temps restant : </span><span id="clock"></span>
+			<div id="pwidget">  
+				<div id="progressbar">
+					<div id="indicator"></div>
+				</div>
+			</div>
+			<span id="compteurReponses"> Questions : 1/20 </span>
+			<progress id="progressQuest" value="0" max="255"> </progress> 
+			<p id="school_note"></p>
+		</div>
+		{% for exercice in exercices %}
+		<form >
+			<div id="exercice_{{loop.index}}_{{exercice.id}}" style="display: none;" class="blocCentre">
+				<p class="lead text-center">{{ exercice.titre }}</p>
+				{% if exercice.path is not null%}
+				<img src="/uploads/exercice/{{exercice.id}}.{{exercice.path}}" class="imgExercice" alt="{{exercice.titre}}" />
+				{% endif %}
+				{% if exercice.type == 3 %}
+					{% set enonce_array = exercice.texte|split('...') %}
+					{% for enonce_part in enonce_array %}
+						<span class="text-center" > {{ enonce_part | raw }} </span>
+						{% if loop.index < enonce_array|length %}
+							<span class="text-center trous" id="droppable_exo_{{exercice.id}}_{{loop.index}}">...</span>
+						{% endif %}
+					{% endfor %}
+				{% else %}
+					<p class="text-center">{{ exercice.texte | raw }}</p>
+				{% endif %}
+				{% if exercice.type == 1 %}
+					<p id="randomise_me_{{exercice.id}}" class="text-center checkbox">
+						{% if exercice.reponse1 %}<label for="reponse_{{exercice.id}}_1" class="spanMarge"><input type="checkbox" id="reponse_{{exercice.id}}_1" name="reponse_{{exercice.id}}_1" class="spanMarge"/>{{exercice.reponse1 | raw }}</label>{% endif %}
+						{% if exercice.reponse2 %}<label for="reponse_{{exercice.id}}_2" class="spanMarge"><input type="checkbox" id="reponse_{{exercice.id}}_2" name="reponse_{{exercice.id}}_2" class="spanMarge"/>{{exercice.reponse2 | raw }}</label>{% endif %}
+						{% if exercice.reponse3 %}<label for="reponse_{{exercice.id}}_3" class="spanMarge"><input type="checkbox" id="reponse_{{exercice.id}}_3" name="reponse_{{exercice.id}}_3" class="spanMarge"/>{{exercice.reponse3 | raw }}</label>{% endif %}
+						{% if exercice.reponse4 %}<label for="reponse_{{exercice.id}}_4" class="spanMarge"><input type="checkbox" id="reponse_{{exercice.id}}_4" name="reponse_{{exercice.id}}_4" class="spanMarge"/>{{exercice.reponse4 | raw }}</label>{% endif %}
+					</p>
+					<p class="text-center"><button type="submit" id="submit_exo_{{exercice.id}}_{{loop.index}}" class="btn btn-success">Valider</button></p>
+				{% elseif exercice.type == 2 %}
+					<p class="text-center">
+						<input type="text" id="reponse_{{exercice.id}}_1" name="reponse_{{exercice.id}}_1" />
+						{% if exercice.init %}
+							<input type="hidden" id="reponse_{{exercice.id}}_juste" name="reponse_{{exercice.id}}_juste" value="{exercice.reponse1}}" />
+						{% endif %}
+					</p>
+					<p class="text-center"><button type="submit" id="submit_exo_{{exercice.id}}_{{loop.index}}" class="btn btn-success">Valider</button></p>
+				{% elseif exercice.type == 3 %}
+					<p class="text-center">
+						<ul id="drag_it_{{exercice.id}}" class="list-inline">
+						{% if exercice.reponse1 %}<li class ="repTrous" style="display:inline;" id="reponse_draggable_{{exercice.id}}_1">{{exercice.reponse1 | raw }}</li>{% endif %}
+						{% if exercice.reponse2 %}<li class ="repTrous" style="display:inline;" id="reponse_draggable_{{exercice.id}}_2">{{exercice.reponse2 | raw }}</li>{% endif %}
+						{% if exercice.reponse3 %}<li class ="repTrous" style="display:inline;" id="reponse_draggable_{{exercice.id}}_3">{{exercice.reponse3 | raw }}</li>{% endif %}
+						{% if exercice.reponse4 %}<li class ="repTrous" style="display:inline;" id="reponse_draggable_{{exercice.id}}_4">{{exercice.reponse4 | raw }}</li>{% endif %}
+						</ul>
+					</p>
+					<p class="text-center"><button type="button" id="restart_exo_{{exercice.id}}_{{loop.index}}" class="btn btn-warning" >Recommencer</button></p>
+					<p class="text-center"><button type="submit" id="submit_exo_{{exercice.id}}_{{loop.index}}" class="btn btn-success">Valider</button></p>
+				{% endif %}
+			</div>
+		</form>
+		{% endfor %}
+			<div id="msgReponse" class="blocCentre" style="display: none;">
+				<span id="icone_reponse"></span>
+				<div id="textMsgReponse"> </div>
+				<button id="btnSuivant" class="btn btn-success" type="button"> Suivant</button>
+			</div>
+		<form id="pass_epreuve" action="{{ path('main_epreuve_passed_student', { 'savoir_id': savoir.id }) }}" method="post" enctype="multipart/form-data">
+			<input type="hidden" name="score" id="score" value="0">
+			<input type="hidden" name="temps" id="temps" value="0">
+		</form>
+		<div class="modal"></div>
+
+{% endblock %}
+
+{% block javascripts %}
+	<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.2-latest/MathJax.js?config=TeX-AMS_HTML"></script>
+	<script src="/js/bootstrap.min.js"></script>
+	<script src="/js/jquery.countdown.min.js"></script>
+	<script type="text/javascript">
+
+	$('body').addClass('loading');
+	$(document).ready(function() { $('body').removeClass('loading'); });    	 
+
+	// gestion du compteur de temps
+	var d = new Date();
+	d.setMinutes(d.getMinutes()+15);
+	$('#clock').countdown(d)
+	.on('update.countdown', function(event) {
+		var format = '%M minutes et %S secondes';
+		$(this).html(event.strftime(format));
+		$('#temps').val(event.strftime('%M:%S'));
+	})
+	.on('finish.countdown', function(event) {
+		$(this).html('Votre temps a expiré !');
+		setTimeout(function() {	$('#pass_epreuve').submit();}, 5000);
+	});
+	
+	//shuffle des reponses texte a trous
+	$('[id^="drag_it_"]').each( function() {
+		var divs = $(this).children();
+		while (divs.length) {
+			$(this).append(divs.splice(Math.floor(Math.random() * divs.length), 1)[0]);
+		}
+	});
+	
+	//shuffle des reponses QCM
+	$('[id^="randomise_me_"]').each( function() {
+		var divs = $(this).children();
+		while (divs.length) {
+			$(this).append(divs.splice(Math.floor(Math.random() * divs.length), 1)[0]);
+		}
+	});
+	
+	
+	// drag and drop
+	$( init );
+		
+	function init() {
+	  $('[id^="reponse_draggable_"]').draggable( {
+        stack: '[id^="droppable_exo_"] div',
+        cursor: 'move',
+        revert: true
+	  } );
+	  $('[id^="droppable_exo_"]').droppable( {
+//		accept: '[id^="reponse_draggable_"] div',
+        hoverClass: 'hovered',
+	    drop: handleDropEvent
+	  } );
+	  $('[id^="exercice_"]').hide();
+	  $('[id^="exercice_1_"]').show();
+	}
+
+	function handleDropEvent( event, ui ) {
+	  var slotNumber = $(this).attr('id');
+	  var reponseNumber = ui.draggable.attr('id');
+	 
+		$(this).droppable( 'disable' );
+		$(this).html( ui.draggable.html() );
+		ui.draggable.hide();
+		ui.draggable.position( { of: $(this), my: 'left top', at: 'left top' } );
+		ui.draggable.draggable( 'option', 'revert', false );
+	}
+	
+	
+	
+	//restart d'un exo texte a trous
+	$('[id^="restart_exo_"]').click(function() {
+	  var temp_array = $(this).attr('id').split("_");
+	  var id_exo = temp_array[2];
+	  var div_droppable = "droppable_exo_".concat(id_exo);
+	  var div_draggable = "reponse_draggable_".concat(id_exo);
+	  $('[id^="' + div_droppable + '"]').html('...');
+  	  $('[id^="' + div_droppable + '"]').droppable( 'enable' );
+	  $('[id^="' + div_draggable + '"]').show();
+	  $('[id^="' + div_draggable + '"]').css({top: 0, left: 0, position:'relative'});
+	  $('[id^="' + div_draggable + '"]').draggable( 'option', 'revert', true );
+	});	
+
+	var reponses_justes = 0;
+	var compteurReponse = 1;
+	var compteurQestion = 0;
+			
+
+	$('[id^="submit_exo_"]').click(function() {
+
+		$('body').addClass('loading');
+		var temp_array = $(this).attr('id').split("_");
+		var id_exo = temp_array[2];
+		var numero_exo = temp_array[3];
+		var DATA = 'id=' + id_exo;
+		for (i = 1; i < 5; i++) {
+			// type QCM
+			if ($("#reponse_"+id_exo+"_"+i).is(':checkbox') && $("#reponse_"+id_exo+"_"+i).prop('checked'))
+			  DATA += '&reponse'+i+'='+i;
+			  
+			// type reponse simple
+			if ($("#reponse_"+id_exo+"_"+i).is(':text'))
+			  DATA += '&reponse1='+encodeURIComponent($("#reponse_"+id_exo+"_"+i).val());
+
+			// type texte a trous
+			if($("#droppable_exo_"+id_exo+"_"+i).html() != undefined)
+			  DATA += '&reponse'+i+'=' + encodeURIComponent($("#droppable_exo_"+id_exo+"_"+i).html());
+
+		}
+		
+		// passage de la bonne réponse
+		var exercice_array = JSON.parse('{{ exercices|json_encode()|e('js') }}');
+		// type QCM
+		if ($("#reponse_"+id_exo+"_1").is(':checkbox'))
+		{
+			var reponse_array = exercice_array[numero_exo-1]["reponseJuste"].toString();
+			var reponse_array = reponse_array.split(",");
+			var data_temp = "";
+			for (var i=0; i<reponse_array.length; i++)
+				data_temp += $("label[for='reponse_"+id_exo+"_"+reponse_array[i]+"']").text()+" ";
+
+			DATA += '&type_exo=1&reponse_juste='+data_temp;
+		}
+
+		// type reponse simple
+		if ($("#reponse_"+id_exo+"_1").is(':text'))
+			if($("#reponse_"+id_exo+"_juste").length)
+				DATA += '&type_exo=2&reponse_juste='+$("#reponse_"+id_exo+"_juste").val();
+			else
+				DATA += '&type_exo=2&reponse_juste='+encodeURIComponent(exercice_array[numero_exo-1]["reponse1"]);
+
+//		alert(DATA);
+		  $.ajax({
+			type: "POST",
+			url: "{{ path('main_epreuve_pass_ajax')}}",
+			data: DATA,
+			cache: false,
+			success: function(data){
+				if (data == 'ok')
+				{
+					
+					$('#textMsgReponse').html('. <p> Bonne réponse =)</p>');
+					$('#msgReponse').removeClass('reponseInvalide');
+					$('#msgReponse').addClass('reponseValide');
+					$('#icone_reponse').removeClass('glyphicon glyphicon-remove-circle');
+					$('#icone_reponse').addClass('glyphicon glyphicon-ok-circle');
+					$('#msgReponse').show();
+					$('body').attr('onkeypress','if (event.keyCode == 13) {btnSuivant('+numero_exo+');}')
+					reponses_justes++;
+					$('#score').val(reponses_justes);
+				}
+				else
+				{
+					var array_data = JSON.parse(data);
+					$('#textMsgReponse').html('. <p> Mauvaise réponse =( <br />La bonne réponse était : '+array_data[1]+'</p>');
+					$('#msgReponse').removeClass('reponseValide');
+					$('#msgReponse').addClass('reponseInvalide');
+					$('#icone_reponse').removeClass('glyphicon glyphicon-ok-circle');
+					$('#icone_reponse').addClass('glyphicon glyphicon-remove-circle');
+					$('#msgReponse').show();
+					$('body').attr('onkeypress','if (event.keyCode == 13) {btnSuivant('+numero_exo+');}')
+				}
+				
+				compteurReponse++;
+				$('[id^="exercice_' + numero_exo + '"]').hide();
+				$("#btnSuivant").attr('onclick','btnSuivant('+numero_exo+')');
+				school_note();
+				
+				$('body').removeClass('loading');
+//				alert(reponses_justes);
+				return false;
+			}
+			
+			
+		});    
+		
+
+		return false;
+	});	
+	
+	function btnSuivant(numero_exo){
+		if (numero_exo == 20)
+		{
+			$('#pass_epreuve').submit();	
+			return false;
+		}
+		$('#msgReponse').hide();
+		$('[id^="exercice_' + (parseInt(numero_exo)+1) + '_"]').show();
+		$('body').removeAttr('onkeypress');
+		quest();
+		
+	}
+	
+	
+	</script>
+	
+	<script type="text/javascript">  
+		setInterval(prog, 100);
+		//Gestion de la barre de progression du temps
+		var maxprogress = 101;   // total à atteindre
+		var actualprogress = 100;  // valeur courante
+		var itv = 0;  // id pour setinterval
+		function prog()
+		{
+		  if(actualprogress >= maxprogress) 
+		  {
+			clearInterval(itv);   	
+			return;
+		  }	
+		  
+		  <!-- var progressnum = document.getElementById("progressnum"); -->
+		  var indicator = document.getElementById("indicator");
+		  var dateActuelle = new Date();
+		  var temp = d - dateActuelle ;
+		  actualprogress = 100 - (temp *100 / 897894);
+		  indicator.style.width=actualprogress + "%";
+		  <!-- progressnum.innerHTML = actualprogress; -->
+		  if(actualprogress == maxprogress) clearInterval(itv); 
+		}
+		
+		function quest()
+		{
+			var progressQuest = document.getElementById("progressQuest");
+			progressQuest.value = 12.7 * compteurReponse;
+			$('#compteurReponses').html('question : '+compteurReponse+'/20');
+		}
+		
+		function school_note()
+		{
+			$('#school_note').html('Bonnes réponses : '+reponses_justes +'/'+(compteurReponse-1) );
+		}
+	</script> 
+	
+{% endblock %}

@@ -1,0 +1,11 @@
+services:
+    sonata.admin.theme:
+        class: Main\ThemeBundle\Admin\ThemeAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Contenu", label: "Thèmes" }
+        arguments:
+            - ~
+            - Main\ThemeBundle\Entity\Theme
+            - ~
+        calls:
+            - [ setTranslationDomain, [SonataAdminBundle]]

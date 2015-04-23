@@ -1,0 +1,76 @@
+{#
+
+This file is part of the Sonata package.
+
+(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% extends base_template %}
+
+{% block title %}
+    {% if admin.id(object) is not null %}
+        {{ "title_edit"|trans({'%name%': admin.toString(object)|truncate(15) }, 'SonataAdminBundle') }}
+    {% else %}
+        {{ "title_create"|trans({}, 'SonataAdminBundle') }}
+    {% endif %}
+{% endblock%}
+
+{% block navbar_title %}
+    {{ block('title') }}
+{% endblock %}
+
+{% block actions %}
+    <li>{% include 'SonataAdminBundle:Button:show_button.html.twig' %}</li>
+    <li>{% include 'SonataAdminBundle:Button:history_button.html.twig' %}</li>
+    <li>{% include 'SonataAdminBundle:Button:acl_button.html.twig' %}</li>
+    <li>{% include 'SonataAdminBundle:Button:list_button.html.twig' %}</li>
+    <li>{% include 'SonataAdminBundle:Button:create_button.html.twig' %}</li>
+{% endblock %}
+
+{% block tab_menu %}{{ knp_menu_render(admin.sidemenu(action), {'currentClass' : 'active', 'template': admin_pool.getTemplate('tab_menu_template')}, 'twig') }}{% endblock %}
+
+{% use 'SonataAdminBundle:CRUD:base_edit_form.html.twig' with form as parentForm %}
+{% import "SonataAdminBundle:CRUD:base_edit_form_macro.html.twig" as form_helper %}
+
+{% block form %}
+    {{ block('parentForm') }}
+	
+	<script type="text/javascript">
+		$( document ).ready(change_type);
+		$( "#{{admin.uniqid}}_type" ).change(change_type);
+		
+		function change_type()
+		{
+			if ($( "#{{admin.uniqid}}_type" ).val() == "1")
+			{
+				$("label[for='{{admin.uniqid}}_reponse1']").text("Réponse 1 ");
+				$( "#sonata-ba-field-container-{{admin.uniqid}}_reponse2" ).show();
+				$( "#sonata-ba-field-container-{{admin.uniqid}}_reponse3" ).show();
+				$( "#sonata-ba-field-container-{{admin.uniqid}}_reponse4" ).show();
+				$( "#sonata-ba-field-container-{{admin.uniqid}}_reponseJuste" ).show();
+			}
+			if ($( "#{{admin.uniqid}}_type" ).val() == "2")
+			{
+				$("label[for='{{admin.uniqid}}_reponse1']").text("Réponse ");
+				$( "#sonata-ba-field-container-{{admin.uniqid}}_reponse2" ).hide();
+				$( "#sonata-ba-field-container-{{admin.uniqid}}_reponse3" ).hide();
+				$( "#sonata-ba-field-container-{{admin.uniqid}}_reponse4" ).hide();
+				$( "#sonata-ba-field-container-{{admin.uniqid}}_reponseJuste" ).hide();
+			}
+			if ($( "#{{admin.uniqid}}_type" ).val() == "3")
+			{
+				$("label[for='{{admin.uniqid}}_reponse1']").text("Réponse 1 ");
+				$( "#sonata-ba-field-container-{{admin.uniqid}}_reponse2" ).show();
+				$( "#sonata-ba-field-container-{{admin.uniqid}}_reponse3" ).show();
+				$( "#sonata-ba-field-container-{{admin.uniqid}}_reponse4" ).show();
+				$( "#sonata-ba-field-container-{{admin.uniqid}}_reponseJuste" ).hide();
+			}
+		}
+	</script>
+{% endblock %}
+
+

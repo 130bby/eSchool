@@ -1,0 +1,21 @@
+main_student_register:
+    path:     /register_student
+    defaults: { _controller: MainUserBundle:Registration:register }
+main_prof_register:
+    path:     /register_prof
+    defaults: { _controller: MainUserBundle:Registration:register }
+main_user_profil:
+    path:     /profile
+    defaults: { _controller: MainUserBundle:Profile:show }
+main_user_profil_edit:
+    path:     /profile/edit
+    defaults: { _controller: MainUserBundle:Profile:edit }
+main_user_my_history:
+    path:     /my_history
+    defaults: { _controller: MainUserBundle:Default:myHistory }
+main_user_add_theme:
+    path:     /add_theme/{theme_id}
+    defaults: { _controller: MainUserBundle:Default:addTheme, theme_id: null  }
+main_eleve_stat_export:
+    path:     /admin/eleve/export
+    defaults: { _controller: MainUserBundle:Default:export }
