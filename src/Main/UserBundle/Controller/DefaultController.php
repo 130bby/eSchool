@@ -15,6 +15,14 @@ class DefaultController extends Controller
         return $this->render('MainUserBundle:Default:my_history.html.twig', array('epreuves' => $epreuves));
     }
 
+    public function myStatsAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+		$epreuves = $em->getRepository('MainUserBundle:SavoirUser')->findByUser($this->container->get('security.context')->getToken()->getUser());
+
+        return $this->render('MainUserBundle:Default:my_stats.html.twig', array('epreuves' => $epreuves));
+    }
+
     public function addThemeAction($theme_id)
     {
 		$em = $this->getDoctrine()->getManager();

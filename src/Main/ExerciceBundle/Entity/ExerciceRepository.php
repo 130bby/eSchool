@@ -132,61 +132,64 @@ class ExerciceRepository extends EntityRepository
 				$init_array = explode(';',$exercice['init']);
 				foreach ($init_array as $variable_full)
 				{
-					$nom_variable = explode('=',$variable_full);
-					$chiffres_variable = preg_split('/[(),]/', $nom_variable[1]);
-					if ((int)$chiffres_variable[3] != 0)
-						$valeur_variable = (float)rand((int)$chiffres_variable[1]*pow(10, (int)$chiffres_variable[3]),(int)$chiffres_variable[2]*pow(10, (int)$chiffres_variable[3]))/pow(10, (int)$chiffres_variable[3]);
-					else
-						$valeur_variable = rand((int)$chiffres_variable[1],(int)$chiffres_variable[2]);
-					$enonce = explode('&',$exercice['texte']);
-					$i=0;
-					foreach ($enonce as $cle => $enonce_part)
+					if ($variable_full != NULL)
 					{
-						if ($i % 2 == 1 && $enonce_part == $nom_variable[0])
-							$exercices[$key]['texte'] = str_replace('&'.$nom_variable[0].'&',$valeur_variable,$exercices[$key]['texte']);
-						$i++;
-					}
-
-					$reponse1 = explode('&',$exercice['reponse1']);
-					$i=0;
-					foreach ($reponse1 as $cle => $reponse_part)
-					{
-						if ($i % 2 == 1 && $reponse_part == $nom_variable[0])
-							$exercices[$key]['reponse1'] = str_replace('&'.$nom_variable[0].'&',$valeur_variable,$exercices[$key]['reponse1']);
-						$i++;
-					}
-
-					if($exercice['reponse2'] != NULL)
-					{
-						$reponse2 = explode('&',$exercice['reponse2']);
+						$nom_variable = explode('=',$variable_full);
+						$chiffres_variable = preg_split('/[(),]/', $nom_variable[1]);
+						if ((int)$chiffres_variable[3] != 0)
+							$valeur_variable = (float)rand((int)$chiffres_variable[1]*pow(10, (int)$chiffres_variable[3]),(int)$chiffres_variable[2]*pow(10, (int)$chiffres_variable[3]))/pow(10, (int)$chiffres_variable[3]);
+						else
+							$valeur_variable = rand((int)$chiffres_variable[1],(int)$chiffres_variable[2]);
+						$enonce = explode('&',$exercice['texte']);
 						$i=0;
-						foreach ($reponse2 as $cle => $reponse_part)
+						foreach ($enonce as $cle => $enonce_part)
 						{
-							if ($i % 2 == 1 && $reponse_part == $nom_variable[0])
-								$exercices[$key]['reponse2'] = str_replace('&'.$nom_variable[0].'&',$valeur_variable,$exercices[$key]['reponse2']);
+							if ($i % 2 == 1 && $enonce_part == $nom_variable[0])
+								$exercices[$key]['texte'] = str_replace('&'.$nom_variable[0].'&',$valeur_variable,$exercices[$key]['texte']);
 							$i++;
 						}
-					}
-					if($exercice['reponse3'] != NULL)
-					{
-						$reponse3 = explode('&',$exercice['reponse3']);
+
+						$reponse1 = explode('&',$exercice['reponse1']);
 						$i=0;
-						foreach ($reponse3 as $cle => $reponse_part)
+						foreach ($reponse1 as $cle => $reponse_part)
 						{
 							if ($i % 2 == 1 && $reponse_part == $nom_variable[0])
-								$exercices[$key]['reponse3'] = str_replace('&'.$nom_variable[0].'&',$valeur_variable,$exercices[$key]['reponse3']);
+								$exercices[$key]['reponse1'] = str_replace('&'.$nom_variable[0].'&',$valeur_variable,$exercices[$key]['reponse1']);
 							$i++;
 						}
-					}
-					if($exercice['reponse4'] != NULL)
-					{
-						$reponse4 = explode('&',$exercice['reponse4']);
-						$i=0;
-						foreach ($reponse4 as $cle => $reponse_part)
+
+						if($exercice['reponse2'] != NULL)
 						{
-							if ($i % 2 == 1 && $reponse_part == $nom_variable[0])
-								$exercices[$key]['reponse4'] = str_replace('&'.$nom_variable[0].'&',$valeur_variable,$exercices[$key]['reponse4']);
-							$i++;
+							$reponse2 = explode('&',$exercice['reponse2']);
+							$i=0;
+							foreach ($reponse2 as $cle => $reponse_part)
+							{
+								if ($i % 2 == 1 && $reponse_part == $nom_variable[0])
+									$exercices[$key]['reponse2'] = str_replace('&'.$nom_variable[0].'&',$valeur_variable,$exercices[$key]['reponse2']);
+								$i++;
+							}
+						}
+						if($exercice['reponse3'] != NULL)
+						{
+							$reponse3 = explode('&',$exercice['reponse3']);
+							$i=0;
+							foreach ($reponse3 as $cle => $reponse_part)
+							{
+								if ($i % 2 == 1 && $reponse_part == $nom_variable[0])
+									$exercices[$key]['reponse3'] = str_replace('&'.$nom_variable[0].'&',$valeur_variable,$exercices[$key]['reponse3']);
+								$i++;
+							}
+						}
+						if($exercice['reponse4'] != NULL)
+						{
+							$reponse4 = explode('&',$exercice['reponse4']);
+							$i=0;
+							foreach ($reponse4 as $cle => $reponse_part)
+							{
+								if ($i % 2 == 1 && $reponse_part == $nom_variable[0])
+									$exercices[$key]['reponse4'] = str_replace('&'.$nom_variable[0].'&',$valeur_variable,$exercices[$key]['reponse4']);
+								$i++;
+							}
 						}
 					}
 				}

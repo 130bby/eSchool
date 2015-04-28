@@ -13,6 +13,9 @@ main_user_profil_edit:
 main_user_my_history:
     path:     /my_history
     defaults: { _controller: MainUserBundle:Default:myHistory }
+main_user_my_stats:
+    path:     /my_stats
+    defaults: { _controller: MainUserBundle:Default:myStats }
 main_user_add_theme:
     path:     /add_theme/{theme_id}
     defaults: { _controller: MainUserBundle:Default:addTheme, theme_id: null  }
