@@ -2,29 +2,8 @@
 
 {% block body -%}
     <h1>Mes statistiques</h1>
-
-    <table class="records_list table table-hover">
-        <thead>
-            <tr>
-                <th>Savoir</th>
-                <th>Temps</th>
-                <th>Score</th>
-                <th>Date</th>
-            </tr>
-        </thead>
-        <tbody>
-		{% for epreuve in epreuves %}
-            <tr {% if epreuve.score >= epreuve.savoir.scoreMini %}class="success" {% else %}class="danger"{% endif %}>
-                <td>{{ epreuve.savoir.name }}</td>
-                <td>{{ epreuve.temps|date("i:s") }}</td>
-                <td>{{ epreuve.score }}</td>
-                <td>{{ epreuve.date|date("d/m/Y H:i:s") }}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-	
 	<canvas id="myChart" width="400" height="400"></canvas>
+	<div id="js-legend" class="chart-legend"></div>
 
 {% endblock %}
 
@@ -33,32 +12,46 @@
 	<script src="/js/Chart.min.js"></script>
 	<script type="text/javascript">
 		var ctx = document.getElementById("myChart").getContext("2d");
+		var labels = $.parseJSON('{{ legend | raw }}');
+		var data_epreuve_passees = $.parseJSON('{{ data_epreuve_passees | raw }}');
+		var data_epreuve_reussies = $.parseJSON('{{ data_epreuve_reussies | raw }}');
 		var data = {
-			labels: ["January", "February", "March", "April", "May", "June", "July"],
+			labels: labels ,
 			datasets: [
 			{
-				label: "My First dataset",
-				fillColor: "rgba(220,220,220,0.2)",
-				strokeColor: "rgba(220,220,220,1)",
-				pointColor: "rgba(220,220,220,1)",
-				pointStrokeColor: "#fff",
-				pointHighlightFill: "#fff",
-				pointHighlightStroke: "rgba(220,220,220,1)",
-				data: [65, 59, 80, 81, 56, 55, 40]
-			},
-			{
-				label: "My Second dataset",
+				label: "Epreuves passées",
 				fillColor: "rgba(151,187,205,0.2)",
 				strokeColor: "rgba(151,187,205,1)",
 				pointColor: "rgba(151,187,205,1)",
 				pointStrokeColor: "#fff",
 				pointHighlightFill: "#fff",
 				pointHighlightStroke: "rgba(151,187,205,1)",
-				data: [28, 48, 40, 19, 86, 27, 90]
+				data: data_epreuve_passees
+			},
+			{
+				label: "Epreuves réussies",
+				fillColor: "rgba(220,220,220,0.2)",
+				strokeColor: "rgba(220,220,220,1)",
+				pointColor: "rgba(220,220,220,1)",
+				pointStrokeColor: "#fff",
+				pointHighlightFill: "#fff",
+				pointHighlightStroke: "rgba(220,220,220,1)",
+				data: data_epreuve_reussies
 			}
 			]
 		};
-		var myLineChart = new Chart(ctx).Line(data);
+		var options = {
+		  legendTemplate : '<ul>'
+						  +'<% for (var i=0; i<datasets.length; i++) { %>'
+							+'<li>'
+							+'<span style=\"background-color:<%=datasets[i].pointColor%>\"></span>'
+							+'<% if (datasets[i].label) { %><%= datasets[i].label %><% } %>'
+						  +'</li>'
+						+'<% } %>'
+					  +'</ul>'
+		}
+		var myLineChart = new Chart(ctx).Line(data,options);
+		$('#js-legend').append(myLineChart.generateLegend());
 	</script>
 {% endblock %}
 

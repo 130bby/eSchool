@@ -471,3 +471,14 @@ font-size:40px;
 .arbre_grise {
 opacity: 0.5;
 }
+
+/* my stats */
+.chart-legend li span{
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin-right: 5px;
+}
+.chart-legend ul{
+	list-style-type:none; 
+}

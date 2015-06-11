@@ -17,7 +17,7 @@ class SavoirRepository extends EntityRepository
 	{
 		$arbre = array();
 		$savoirs = $this->getEntityManager()
-			->createQuery('SELECT s FROM MainSavoirBundle:Savoir s WHERE s.theme ='.$theme_id)->getArrayResult();
+			->createQuery('SELECT s, t FROM MainSavoirBundle:Savoir s JOIN s.theme t WHERE s.theme ='.$theme_id)->getArrayResult();
 		// on récupère les savoir sans prérequis pour créer le premier niveau
 		foreach ($savoirs as $key => $savoir)
 		{
@@ -37,14 +37,14 @@ class SavoirRepository extends EntityRepository
 		// on récupère les niveaux suivants
 		while (!empty($savoirs))
 		{
-			$this->getNextLevel($savoirs, $arbre, $user, $arbre['level'.$i], $i+1, $evaluations);
+			$this->getNextLevel($savoirs, $arbre, $user, $arbre['level'.$i], $i+1, $theme_id, $evaluations);
 			$i++;
 		}
 
 		return $arbre;
 	}
 	
-	private function getNextLevel(&$savoirs, &$arbre, $user, $prerequis, $level, &$evaluations)
+	private function getNextLevel(&$savoirs, &$arbre, $user, $prerequis, $level, $theme_id, &$evaluations)
 	{
 		
 		//modif le tableau evaluations
@@ -141,7 +141,6 @@ class SavoirRepository extends EntityRepository
 					$arbre['level'.$level][] = $savoir;
 					unset($savoirs[$key]);
 				}
-				
 				
 			}
 		}

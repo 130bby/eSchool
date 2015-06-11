@@ -18,9 +18,43 @@ class DefaultController extends Controller
     public function myStatsAction()
     {
         $em = $this->getDoctrine()->getManager();
-		$epreuves = $em->getRepository('MainUserBundle:SavoirUser')->findByUser($this->container->get('security.context')->getToken()->getUser());
+		//légende pour les jours précédents
+		for ($i=1;$i<8;$i++)
+			$days[] = strftime("%A",time() + $i*(24 * 60 * 60));
+		$legend = json_encode($days);
+		
+		//epreuves passées
+		$epreuves = $em->createQuery("SELECT COUNT(s.id), SUBSTRING(s.date, 1, 10) as day FROM MainUserBundle:SavoirUser s WHERE s.date > '".date('Y-m-d', strtotime('-1 week'))."' GROUP BY day ")->getArrayResult();
+		$data_epreuve_passees = array();
+		for($i=0;$i<7;$i++)
+		{
+			foreach ($epreuves as $epreuve)
+			{
+				if ($epreuve['day'] == date("Y-m-d",strtotime('-'.(6-$i).' days')))
+					$data_epreuve_passees[$i] = $epreuve[1];
+			}
+			if (!isset($data_epreuve_passees[$i]))
+			$data_epreuve_passees[$i] = 0;
+		}
+		$data_epreuve_passees = json_encode($data_epreuve_passees);
+		
+		//epreuves réussies
+		$epreuves_reussies = $em->createQuery("SELECT COUNT(s.id), SUBSTRING(s.date, 1, 10) as day FROM MainUserBundle:SavoirUser s WHERE s.score > 70 AND s.date > '".date('Y-m-d', strtotime('-1 week'))."' GROUP BY day ")->getArrayResult();
+		$data_epreuve_reussies = array();
+		for($i=0;$i<7;$i++)
+		{
+			foreach ($epreuves_reussies as $epreuve)
+			{
+				if ($epreuve['day'] == date("Y-m-d",strtotime('-'.(6-$i).' days')))
+					$data_epreuve_reussies[$i] = $epreuve[1];
+			}
+			if (!isset($data_epreuve_reussies[$i]))
+			$data_epreuve_reussies[$i] = 0;
+		}
+		$data_epreuve_reussies = json_encode($data_epreuve_reussies);
 
-        return $this->render('MainUserBundle:Default:my_stats.html.twig', array('epreuves' => $epreuves));
+		
+        return $this->render('MainUserBundle:Default:my_stats.html.twig', array('legend' => $legend,'data_epreuve_passees' => $data_epreuve_passees,'data_epreuve_reussies' => $data_epreuve_reussies));
     }
 
     public function addThemeAction($theme_id)
