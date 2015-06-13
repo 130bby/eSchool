@@ -191,8 +191,78 @@ class ExerciceRepository extends EntityRepository
 								$i++;
 							}
 						}
+						if($exercice['temp'] != NULL)
+						{
+							$temp = explode('&',$exercice['temp']);
+							$i=0;
+							foreach ($temp as $cle => $temp_part)
+							{
+								if ($i % 2 == 1 && $temp_part == $nom_variable[0])
+									$exercices[$key]['temp'] = str_replace('&'.$nom_variable[0].'&',$valeur_variable,$exercices[$key]['temp']);
+								$i++;
+							}
+						}
 					}
 				}
+				
+				//gestion des variables temporaires, on les remplacde par leur valeur dans l'enonce et les reponses
+				$temp_array = explode(';',$exercice['temp']);
+				foreach ($temp_array as $variable_temp_full)
+				{
+					$variable = explode('=',$variable_full);
+					$enonce = explode('&',$exercice['texte']);
+					$i=0;
+					foreach ($enonce as $cle => $enonce_part)
+					{
+						if ($i % 2 == 1 && $enonce_part == $variable[0])
+							$exercices[$key]['texte'] = str_replace('&'.$variable[0].'&',$variable[1],$exercices[$key]['texte']);
+						$i++;
+					}
+
+					$reponse1 = explode('&',$exercice['reponse1']);
+					$i=0;
+					foreach ($reponse1 as $cle => $reponse_part)
+					{
+						if ($i % 2 == 1 && $reponse_part == $variable[0])
+							$exercices[$key]['reponse1'] = str_replace('&'.$variable[0].'&',$variable[1],$exercices[$key]['reponse1']);
+						$i++;
+					}
+
+					if($exercice['reponse2'] != NULL)
+					{
+						$reponse2 = explode('&',$exercice['reponse2']);
+						$i=0;
+						foreach ($reponse2 as $cle => $reponse_part)
+						{
+							if ($i % 2 == 1 && $reponse_part == $variable[0])
+								$exercices[$key]['reponse2'] = str_replace('&'.$variable[0].'&',$variable[1],$exercices[$key]['reponse2']);
+							$i++;
+						}
+					}
+					if($exercice['reponse3'] != NULL)
+					{
+						$reponse3 = explode('&',$exercice['reponse3']);
+						$i=0;
+						foreach ($reponse3 as $cle => $reponse_part)
+						{
+							if ($i % 2 == 1 && $reponse_part == $variable[0])
+								$exercices[$key]['reponse3'] = str_replace('&'.$variable[0].'&',$variable[1],$exercices[$key]['reponse3']);
+							$i++;
+						}
+					}
+					if($exercice['reponse4'] != NULL)
+					{
+						$reponse4 = explode('&',$exercice['reponse4']);
+						$i=0;
+						foreach ($reponse4 as $cle => $reponse_part)
+						{
+							if ($i % 2 == 1 && $reponse_part == $variable[0])
+								$exercices[$key]['reponse4'] = str_replace('&'.$variable[0].'&',$variable[1],$exercices[$key]['reponse4']);
+							$i++;
+						}
+					}
+				}
+
 				$exercices[$key]['reponse1'] = eval('return '.$exercices[$key]['reponse1'].';');
 				if ($exercices[$key]['reponse2'] != NULL)
 					$exercices[$key]['reponse2'] = eval('return '.$exercices[$key]['reponse2'].';');
@@ -200,6 +270,8 @@ class ExerciceRepository extends EntityRepository
 					$exercices[$key]['reponse3'] = eval('return '.$exercices[$key]['reponse3'].';');
 				if ($exercices[$key]['reponse4'] != NULL)
 					$exercices[$key]['reponse4'] = eval('return '.$exercices[$key]['reponse4'].';');
+				if ($exercices[$key]['temp'] != NULL)
+					$exercices[$key]['temp'] = eval('return '.$exercices[$key]['temp'].';');
 			}
 		}
 	

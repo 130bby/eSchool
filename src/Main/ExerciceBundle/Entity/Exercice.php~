@@ -561,27 +561,4 @@ class Exercice
     {
         return $this->init;
     }
-
-    /**
-     * Set temp
-     *
-     * @param string $temp
-     * @return Exercice
-     */
-    public function setTemp($temp)
-    {
-        $this->temp = $temp;
-
-        return $this;
-    }
-
-    /**
-     * Get temp
-     *
-     * @return string 
-     */
-    public function getTemp()
-    {
-        return $this->temp;
-    }
 }

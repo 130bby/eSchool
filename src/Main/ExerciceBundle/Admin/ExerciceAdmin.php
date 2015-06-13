@@ -39,6 +39,7 @@ class ExerciceAdmin extends Admin
             ->add('reponseJuste', 'choice', array('label' => 'Réponse(s) Juste(s)', 'choices'   => array(
 					'1' => '1','2' => '2','3' => '3','4' => '4'),'multiple'  => true,'expanded'  => true))
             ->add('init', null, array('label' => 'Initialisation des variables aléatoires'))
+            ->add('temp', null, array('label' => 'Variables temporaires'))
             ->add('savoir', 'entity', array( 'class' => 'MainSavoirBundle:Savoir','property' => 'name'))
 			;
 				

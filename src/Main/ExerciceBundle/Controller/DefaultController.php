@@ -49,12 +49,14 @@ class DefaultController extends Controller
 					$arraydata[$row-1][8]=$objWorksheet->getCellByColumnAndRow(8, $row)->getValue();  
 					//Init
 					$arraydata[$row-1][9]=$objWorksheet->getCellByColumnAndRow(9, $row)->getValue();  
-					//Savoir
+					//Temp
 					$arraydata[$row-1][10]=$objWorksheet->getCellByColumnAndRow(10, $row)->getValue();  
-					//Thème
+					//Savoir
 					$arraydata[$row-1][11]=$objWorksheet->getCellByColumnAndRow(11, $row)->getValue();  
-					//Matière
+					//Thème
 					$arraydata[$row-1][12]=$objWorksheet->getCellByColumnAndRow(12, $row)->getValue();  
+					//Matière
+					$arraydata[$row-1][13]=$objWorksheet->getCellByColumnAndRow(13, $row)->getValue();  
 				}
 			}
 			// var_dump($arraydata);
@@ -87,9 +89,10 @@ class DefaultController extends Controller
 				$exercice->setReponse4($exercice_TBI[7]);
 				$exercice->setReponseJuste(explode ( ",", $exercice_TBI[8]));
 				$exercice->setInit($exercice_TBI[9]);
+				$exercice->setTemp($exercice_TBI[10]);
 
-				$savoir = $em->getRepository('MainSavoirBundle:Savoir')->findOneByName($exercice_TBI[10]);
-				if ($savoir!= NULL && $savoir->getTheme() == $exercice_TBI[11] && $savoir->getTheme()->getMatiere() == $exercice_TBI[12])
+				$savoir = $em->getRepository('MainSavoirBundle:Savoir')->findOneByName($exercice_TBI[11]);
+				if ($savoir!= NULL && $savoir->getTheme() == $exercice_TBI[12] && $savoir->getTheme()->getMatiere() == $exercice_TBI[13])
 				{
 					$exercice->setSavoir($savoir);
 					$em->persist($exercice);
