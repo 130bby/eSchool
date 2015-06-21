@@ -13,9 +13,7 @@ class DefaultController extends Controller
     public function importAction(Request $request)
     {
 		$em = $this->getDoctrine()->getManager();
-		if ($request->files->get('xlsfile') !== NULL && (
-			$request->files->get('xlsfile')->getClientMimeType() == 'application/vnd.ms-excel' 
-			|| $request->files->get('xlsfile')->getClientMimeType() == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'))
+		if ($request->files->get('xlsfile') !== NULL )
 		{
 			$phpExcelObject = PHPExcel_IOFactory::load($request->files->get('xlsfile')->getRealPath());
 			$arraydata = array();
