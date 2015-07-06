@@ -5,23 +5,23 @@
     <!-- Page Content -->
     <div class="container">
         <div class="row">
-            <div class="col-lg-12 text-center">
+            <div class="title col-lg-12 col-xs-12 text-center">
 				{% if app.user %}
+					{% if is_granted('ROLE_PROF_TBC') %}
+						Votre application est en cours de validation. Merci de bien vouloir patienter.
+					{% elseif is_granted('ROLE_ELEVE') %}
 					<h1>Bienvenue {{app.user.firstName}}</h1>
 					<p class="lead"></p>
 					<ul class="list-unstyled">
 						<li></li>
 					</ul>
-				{% endif %}
-				<div>
-				{% if app.user %}
-					{% if is_granted('ROLE_PROF_TBC') %}
-						Votre application est en cours de validation. Merci de bien vouloir patienter.
-					{% elseif is_granted('ROLE_ELEVE') %}
 					{% endif %}
 
 				{% else %}
-					{{ render(controller('MainUserBundle:Security:login')) }} 
+				
+				<h1><span class="h3">Le meilleur moyen</span><br /><span class="h2">d' </span><b>apprendre</b><br /><span class="h2">en </span><b>s'amusant !</b></h1>
+				<img class="img-responsive" src="/img/bg_home.png">
+					<!-- {{ render(controller('MainUserBundle:Security:login')) }}
 					<br />
 					<br />
 					<br />
@@ -30,6 +30,7 @@
 					<br />
 					vous êtes un prof ?
 					<a href="{{ path('main_prof_register')}}">inscrivez vous</a>
+					  -->
 				{% endif %}
 				</div>
             </div>

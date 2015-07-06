@@ -275,14 +275,6 @@ class ExerciceRepository extends EntityRepository
 				}
 
 				$exercices[$key]['reponse1'] = eval('return '.$exercices[$key]['reponse1'].';');
-				if ($exercices[$key]['reponse2'] != NULL)
-					$exercices[$key]['reponse2'] = eval('return '.$exercices[$key]['reponse2'].';');
-				if ($exercices[$key]['reponse3'] != NULL)
-					$exercices[$key]['reponse3'] = eval('return '.$exercices[$key]['reponse3'].';');
-				if ($exercices[$key]['reponse4'] != NULL)
-					$exercices[$key]['reponse4'] = eval('return '.$exercices[$key]['reponse4'].';');
-				if ($exercices[$key]['temp'] != NULL)
-					$exercices[$key]['temp'] = eval('return '.$exercices[$key]['temp'].';');
 			}
 		}
 	

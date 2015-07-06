@@ -1,0 +1,26 @@
+.theme1 {
+background : #5b74a9;
+border-style: solid;
+border-bottom : 0px;
+border-top: 2px solid #f6a000;
+color: #ffffff;
+}
+
+.navbar-inverse .navbar-brand {
+    color: #ffffff;
+}
+
+.navbar-inverse .navbar-brand:hover,
+.navbar-inverse .navbar-brand:focus {
+  color: #f6a000;
+  background-color: transparent;
+}
+
+.title h1{
+color: #506590;
+font-family: Verdana;
+}
+
+.bg_home {
+    background: url(/img/bg_home.png);
+  }

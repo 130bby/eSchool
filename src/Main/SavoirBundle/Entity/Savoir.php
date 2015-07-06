@@ -386,7 +386,8 @@ class Savoir
      */
     public function removeUpload()
     {
-        if ($this->filenameForRemove) {
+        echo $this->filenameForRemove;
+		if ($this->filenameForRemove && file_exists($this->filenameForRemove)) {
             unlink($this->filenameForRemove);
         }
     }
