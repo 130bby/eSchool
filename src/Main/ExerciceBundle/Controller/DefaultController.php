@@ -45,16 +45,18 @@ class DefaultController extends Controller
 					$arraydata[$row-1][7]=$objWorksheet->getCellByColumnAndRow(7, $row)->getValue();  
 					//Réponse Juste
 					$arraydata[$row-1][8]=$objWorksheet->getCellByColumnAndRow(8, $row)->getValue();  
-					//Init
+					//Is Numeric Answer
 					$arraydata[$row-1][9]=$objWorksheet->getCellByColumnAndRow(9, $row)->getValue();  
-					//Temp
+					//Init
 					$arraydata[$row-1][10]=$objWorksheet->getCellByColumnAndRow(10, $row)->getValue();  
-					//Savoir
+					//Temp
 					$arraydata[$row-1][11]=$objWorksheet->getCellByColumnAndRow(11, $row)->getValue();  
-					//Thème
+					//Savoir
 					$arraydata[$row-1][12]=$objWorksheet->getCellByColumnAndRow(12, $row)->getValue();  
-					//Matière
+					//Thème
 					$arraydata[$row-1][13]=$objWorksheet->getCellByColumnAndRow(13, $row)->getValue();  
+					//Matière
+					$arraydata[$row-1][14]=$objWorksheet->getCellByColumnAndRow(14, $row)->getValue();  
 				}
 			}
 			// var_dump($arraydata);
@@ -86,11 +88,12 @@ class DefaultController extends Controller
 				$exercice->setReponse3($exercice_TBI[6]);
 				$exercice->setReponse4($exercice_TBI[7]);
 				$exercice->setReponseJuste(explode ( ",", $exercice_TBI[8]));
-				$exercice->setInit($exercice_TBI[9]);
-				$exercice->setTemp($exercice_TBI[10]);
+				$exercice->setIsNumericAnswer($exercice_TBI[9]);
+				$exercice->setInit($exercice_TBI[10]);
+				$exercice->setTemp($exercice_TBI[11]);
 
-				$savoir = $em->getRepository('MainSavoirBundle:Savoir')->findOneByName($exercice_TBI[11]);
-				if ($savoir!= NULL && $savoir->getTheme() == $exercice_TBI[12] && $savoir->getTheme()->getMatiere() == $exercice_TBI[13])
+				$savoir = $em->getRepository('MainSavoirBundle:Savoir')->findOneByName($exercice_TBI[12]);
+				if ($savoir!= NULL && $savoir->getTheme() == $exercice_TBI[13] && $savoir->getTheme()->getMatiere() == $exercice_TBI[14])
 				{
 					$exercice->setSavoir($savoir);
 					$em->persist($exercice);

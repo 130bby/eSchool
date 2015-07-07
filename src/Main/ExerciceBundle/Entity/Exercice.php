@@ -108,6 +108,13 @@ class Exercice
      */
     private $reponseJuste;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="is_numeric_answer", type="boolean", nullable=true)
+     */
+    private $isNumericAnswer;
+
 	/**
 	 * @ORM\ManyToOne(targetEntity="Main\SavoirBundle\Entity\Savoir")
 	 * @ORM\JoinColumn(name="savoir_id", referencedColumnName="id")
@@ -583,5 +590,28 @@ class Exercice
     public function getTemp()
     {
         return $this->temp;
+    }
+
+    /**
+     * Set isNumericAnswer
+     *
+     * @param boolean $isNumericAnswer
+     * @return Exercice
+     */
+    public function setIsNumericAnswer($isNumericAnswer)
+    {
+        $this->isNumericAnswer = $isNumericAnswer;
+
+        return $this;
+    }
+
+    /**
+     * Get isNumericAnswer
+     *
+     * @return boolean 
+     */
+    public function getIsNumericAnswer()
+    {
+        return $this->isNumericAnswer;
     }
 }

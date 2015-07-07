@@ -273,8 +273,13 @@ class ExerciceRepository extends EntityRepository
 						}
 					}
 				}
-
-				$exercices[$key]['reponse1'] = eval('return '.$exercices[$key]['reponse1'].';');
+				if ($exercices[$key]['isNumericAnswer'])
+				{
+					$exercices[$key]['reponse1'] = eval('return '.$exercices[$key]['reponse1'].';');
+					$exercices[$key]['reponse2'] = eval('return '.$exercices[$key]['reponse2'].';');
+					$exercices[$key]['reponse3'] = eval('return '.$exercices[$key]['reponse3'].';');
+					$exercices[$key]['reponse4'] = eval('return '.$exercices[$key]['reponse4'].';');
+				}
 			}
 		}
 	

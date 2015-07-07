@@ -47,7 +47,7 @@
 					<p class="text-center">
 						<input type="text" id="reponse_{{exercice.id}}_1" name="reponse_{{exercice.id}}_1" />
 						{% if exercice.init %}
-							<input type="hidden" id="reponse_{{exercice.id}}_juste" name="reponse_{{exercice.id}}_juste" value="{exercice.reponse1}}" />
+							<input type="hidden" id="reponse_{{exercice.id}}_juste" name="reponse_{{exercice.id}}_juste" value="{{exercice.reponse1}}" />
 						{% endif %}
 					</p>
 					<p class="text-center"><button type="submit" id="submit_exo_{{exercice.id}}_{{loop.index}}" class="btn btn-success">Valider</button></p>
