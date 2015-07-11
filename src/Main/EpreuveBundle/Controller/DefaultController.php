@@ -51,7 +51,7 @@ class DefaultController extends Controller
 		$request = $this->getRequest()->request;
         $em = $this->getDoctrine()->getManager();
         $savoir = $em->getRepository('MainSavoirBundle:Savoir')->find($savoir_id);
-		
+
 		//gestion du temps
 		$temps_limite = new \DateTime('00:15:00');
 		$temps_intervalle = $temps_limite->diff(new \Datetime('00:'.$request->get('temps')));

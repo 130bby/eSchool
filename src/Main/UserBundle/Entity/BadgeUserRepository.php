@@ -227,7 +227,7 @@ class BadgeUserRepository extends EntityRepository
 				$badges_new[] = $badge_tmt;
 			}
 		}
-		elseif (!isset($badge_tmt) && sizeof($badge_mdt->getThemes()) >= 3)
+		elseif (!isset($badge_tmt) && isset($badge_mdt) && sizeof($badge_mdt->getThemes()) >= 3)
 		{
 			$badge_tlmtm = $this->getEntityManager()
 				->createQuery('SELECT b FROM MainBadgeBundle:Badge b WHERE b.id = 6')->getOneorNullResult();

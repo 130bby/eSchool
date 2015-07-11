@@ -3,7 +3,7 @@
 {% block body %}
 
     <!-- Page Content -->
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             <div class="title col-lg-12 col-xs-12 text-center">
 				{% if app.user %}
@@ -19,8 +19,41 @@
 
 				{% else %}
 				
-				<h1><span class="h3">Le meilleur moyen</span><br /><span class="h2">d' </span><b>apprendre</b><br /><span class="h2">en </span><b>s'amusant !</b></h1>
-				<img class="img-responsive" src="/img/bg_home.png">
+				<h1><strong><span class="h3"><strong>Le meilleur moyen</strong></span><br /><span class="h2"><strong>d' </strong></span>apprendre<br /><span class="h2"><strong>en </strong></span>s'amusant !</strong></h1>
+				<div>
+				<a href="#" class="btn-orange"><span class="h4"><strong>Allons-y !</strong></span></a>
+				<img class="img-responsive" src="/img/bg_home.png" />
+				</div>
+				<div class="blue-home">
+					<div class="boss-home">
+						<img style="float:left;margin-right:20px" src="/img/picto_home.png" />
+						<p class="orange-home">Deviens le boss des maths</p>
+						<p class="blanc-home">Apprends les maths sur PAPILO pour épater tes potos !</p>
+					</div>
+				</div>
+				<div class="bottom-home"><span class="h3"><strong>Pourquoi Papilo ?</strong></span>
+				</div>
+				<div class="col-xs-4">
+					<img src="/img/picto2_home.png" /><br />
+					<div class="separateur-home">&nbsp;</div>
+					<span class="h3 bottom-titre-home">Ta progression en ligne</span><br /><br />
+					<span>A tout moment, il est possible de consulter son historique et ses statistiques</span>
+				</div>
+				<div class="col-xs-4">
+					<img src="/img/picto3_home.png" /><br />
+					<div class="separateur-home">&nbsp;</div>
+					<span class="h3 bottom-titre-home">Une méthode d'apprentissage</span><br /><br />
+					<span>Une liste de savoirs étudiée de manière à permettre une progression sereine</span>
+				</div>
+				<div class="col-xs-4">
+					<img src="/img/picto4_home.png" /><br />
+					<div class="separateur-home">&nbsp;</div>
+					<span class="h3 bottom-titre-home">La classe internationale</span><br /><br />
+					<span>Parles en avec tes amis et tu deviendras célèbre !</span>
+				</div>
+				<div class="footer-home"><span class="h5">&copy; Epilog SARL 2015</span>
+				</div>
+				
 					<!-- {{ render(controller('MainUserBundle:Security:login')) }}
 					<br />
 					<br />
@@ -32,7 +65,6 @@
 					<a href="{{ path('main_prof_register')}}">inscrivez vous</a>
 					  -->
 				{% endif %}
-				</div>
             </div>
         </div>
 		

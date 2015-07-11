@@ -21,6 +21,84 @@ color: #506590;
 font-family: Verdana;
 }
 
-.bg_home {
-    background: url(/img/bg_home.png);
-  }
+.container-fluid {
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.blue-home{
+	background-color: #5c74a6;
+}
+
+.boss-home{
+	background-color: #5c74a6;
+	padding-top: 50px;
+	margin-left: auto;
+	margin-right: auto;
+	height: 235px;
+	width: 320px;
+}
+
+.orange-home{
+	color: #f6a000;
+	font-size: 20px;
+	font-weight: bold;
+	text-align:left;
+}
+
+.blanc-home{
+	color: #f4f6f9;
+	text-align:left;
+}
+
+.bottom-home{
+	padding-top: 120px;
+	padding-bottom: 50px;
+	color: #094b84;
+}
+
+.separateur-home{
+	margin-top: 50px;
+	margin-bottom: 10px;
+	height: 2px;
+	width: 30px;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: #204477;
+}
+
+.bottom-titre-home{
+	color: #204477;
+}
+
+.footer-home {
+	display:inline-block;
+	margin-top: 50px;
+	width:100%;
+	background-color: #f6a000;
+	height: 50px;
+	text-align:right;
+	padding-top: 15px;
+	padding-right: 70px;
+}
+
+.btn-orange{
+	background-color: #dd922d;
+	color: #ffffff;
+	position:absolute;
+	top:14%;
+	left:42%;
+	display:inline;
+	width:150px;
+	height:30px;
+	padding-top:5px;
+	border-radius: 10px;
+}
+
+.btn-orange:hover{
+	background-color: #506590;
+	color: #ffffff;
+	text-decoration:none;
+}
