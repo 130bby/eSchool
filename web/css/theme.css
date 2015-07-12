@@ -59,8 +59,17 @@ font-family: Verdana;
 	color: #094b84;
 }
 
+.bottom-home-txt{
+	padding-bottom: 50px;
+}
+
+.bottom-home-txt img{
+	max-width: 100%;
+	object-fit: contain;
+}
+
 .separateur-home{
-	margin-top: 50px;
+	margin-top: 20px;
 	margin-bottom: 10px;
 	height: 2px;
 	width: 30px;
@@ -95,6 +104,21 @@ font-family: Verdana;
 	height:30px;
 	padding-top:5px;
 	border-radius: 10px;
+}
+
+@media screen and (max-width: 360px) {
+.btn-orange{
+	background-color: #dd922d;
+	color: #ffffff;
+	position:absolute;
+	top:14%;
+	left:36%;
+	display:inline;
+	width:100px;
+	height:25px;
+	padding-top:1px;
+	border-radius: 10px;
+}
 }
 
 .btn-orange:hover{
