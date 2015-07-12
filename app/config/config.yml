@@ -111,7 +111,7 @@ sonata_block:
             contexts:   [admin]
         # Your other blocks
 sonata_admin:
-    title:      eSchool Admin
-    title_logo: bundles/mainuser/images/eSchool01.gif
+    title:      Papilo Admin
+    title_logo: img/papilo.jpg
     templates:
       layout:  SonataAdminBundle::layout.html.twig

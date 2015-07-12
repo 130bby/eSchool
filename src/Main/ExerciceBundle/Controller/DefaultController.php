@@ -92,18 +92,24 @@ class DefaultController extends Controller
 				$exercice->setInit($exercice_TBI[10]);
 				$exercice->setTemp($exercice_TBI[11]);
 
-				$savoir = $em->getRepository('MainSavoirBundle:Savoir')->findOneByName($exercice_TBI[12]);
-				if ($savoir!= NULL && $savoir->getTheme() == $exercice_TBI[13] && $savoir->getTheme()->getMatiere() == $exercice_TBI[14])
+				$savoirs = $em->getRepository('MainSavoirBundle:Savoir')->findByName($exercice_TBI[12]);
+				$found = 0;
+				foreach ($savoirs as $savoir)
 				{
-					$exercice->setSavoir($savoir);
-					$em->persist($exercice);
+					if ($savoir!= NULL && $savoir->getTheme() == $exercice_TBI[13] && $savoir->getTheme()->getMatiere() == $exercice_TBI[14])
+					{
+						$exercice->setSavoir($savoir);
+						$em->persist($exercice);
+						$found = 1;
+					}
 				}
-				else
+				if (!$found)
 				{
 					$message = "problème de savoir/thème/matière à la ligne ".($key+1);
 					$success = false;
 					break;
 				}		
+
 			}		
 			if ($success)
 				$em->flush();
