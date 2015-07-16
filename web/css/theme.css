@@ -98,7 +98,7 @@ font-family: Verdana;
 	color: #ffffff;
 	position:absolute;
 	top:12%;
-	left:42%;
+	left:46%;
 	display:inline;
 	width:150px;
 	height:30px;
@@ -106,18 +106,23 @@ font-family: Verdana;
 	border-radius: 10px;
 }
 
-@media screen and (max-width: 360px) {
+@media screen and (max-width: 991px) {
 .btn-orange{
-	background-color: #dd922d;
-	color: #ffffff;
-	position:absolute;
+	top:11%;
+	left:43%;
+	width:150px;
+	height:30px;
+	padding-top:5px;
+}
+}
+
+@media screen and (max-width: 400px) {
+.btn-orange{
 	top:10%;
 	left:36%;
-	display:inline;
 	width:100px;
 	height:25px;
 	padding-top:1px;
-	border-radius: 10px;
 }
 }
 
@@ -125,4 +130,12 @@ font-family: Verdana;
 	background-color: #506590;
 	color: #ffffff;
 	text-decoration:none;
+}
+
+.bg_high_res_home {
+	background-image:url(/img/bg_home_repeat.png);
+}
+
+.img-center {
+    margin: 0 auto;
 }

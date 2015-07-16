@@ -71,7 +71,7 @@ class ExerciceRepository extends EntityRepository
 		return $exercices;
 	}
 	
-	public function getReponseExercice($exercice,$type_exo,$reponses,$reponse_juste)
+	public function getReponseExercice($exercice,$type_exo,$reponses,$reponse_juste,$enonce)
 	{
 		switch ($exercice->getType())
 		{
@@ -92,26 +92,30 @@ class ExerciceRepository extends EntityRepository
 			//texte à trous
 			case 3:
 				$success = true;
-				if ($exercice->getReponse1() != NULL && isset($reponses[0]) && html_entity_decode($reponses[0]) != $exercice->getReponse1())
+				//attention, faille possible sur le split à la virgule
+				//a refaire, avec des for ?
+				$reponses_justes = explode(",",$reponse_juste);
+				if ($reponses_justes[0] != "" && isset($reponses[0]) && html_entity_decode($reponses[0]) != $reponses_justes[0])
 					$success = false;
-				if ($exercice->getReponse2() != NULL && isset($reponses[1]) && html_entity_decode($reponses[1]) != $exercice->getReponse2())
+				if ($reponses_justes[1] != "" && isset($reponses[1]) && html_entity_decode($reponses[1]) != $reponses_justes[1])
 					$success = false;
-				if ($exercice->getReponse3() != NULL && isset($reponses[2]) && html_entity_decode($reponses[2]) != $exercice->getReponse3())
+				if ($reponses_justes[2] != "" && isset($reponses[2]) && html_entity_decode($reponses[2]) != $reponses_justes[2])
 					$success = false;
-				if ($exercice->getReponse4() != NULL && isset($reponses[3]) && html_entity_decode($reponses[3]) != $exercice->getReponse4())
+				if ($reponses_justes[3] != "" && isset($reponses[3]) && html_entity_decode($reponses[3]) != $reponses_justes[3])
 					$success = false;
 				if ($success !== true)
 				{
-					$texte_array = explode("...",$exercice->getTexte());
+					$exercice_txt = str_replace("…", "...", stripslashes(html_entity_decode($enonce)));
+					$texte_array = explode("...",$exercice_txt);
 					$texte_reponse = $texte_array[0];
 					if (sizeof($texte_array)>1)
-						$texte_reponse .= " ".$exercice->getReponse1()." ".$texte_array[1];
+						$texte_reponse .= " ".$reponses_justes[0]." ".$texte_array[1];
 					if (sizeof($texte_array)>2)
-						$texte_reponse .= " ".$exercice->getReponse2()." ".$texte_array[2];
+						$texte_reponse .= " ".$reponses_justes[1]." ".$texte_array[2];
 					if (sizeof($texte_array)>3)
-						$texte_reponse .= " ".$exercice->getReponse3()." ".$texte_array[3];
+						$texte_reponse .= " ".$reponses_justes[2]." ".$texte_array[3];
 					if (sizeof($texte_array)>4)
-						$texte_reponse .= " ".$exercice->getReponse4()." ".$texte_array[4];
+						$texte_reponse .= " ".$reponses_justes[3]." ".$texte_array[4];
 					
 					return array(false,$texte_reponse);
 				}

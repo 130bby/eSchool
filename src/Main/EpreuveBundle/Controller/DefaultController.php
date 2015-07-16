@@ -30,13 +30,14 @@ class DefaultController extends Controller
 			$reponse4 = $this->container->get('request')->request->get('reponse4');
 			$type_exo = $this->container->get('request')->request->get('type_exo');
 			$reponse_juste = $this->container->get('request')->request->get('reponse_juste');
+			$enonce = $this->container->get('request')->request->get('enonce');
 			
 			//cas particulier des exercices a variables aléatoires, type réponse simple
-				if ($reponse1 !== NULL)	$reponses[] = $reponse1;
-				if ($reponse2 !== NULL)	$reponses[] = $reponse2;
-				if ($reponse3 !== NULL)	$reponses[] = $reponse3;
-				if ($reponse4 !== NULL)	$reponses[] = $reponse4;
-				$success = $em->getRepository('MainExerciceBundle:Exercice')->getReponseExercice($exercice,$type_exo,$reponses,$reponse_juste);
+			if ($reponse1 !== NULL)	$reponses[] = $reponse1;
+			if ($reponse2 !== NULL)	$reponses[] = $reponse2;
+			if ($reponse3 !== NULL)	$reponses[] = $reponse3;
+			if ($reponse4 !== NULL)	$reponses[] = $reponse4;
+			$success = $em->getRepository('MainExerciceBundle:Exercice')->getReponseExercice($exercice,$type_exo,$reponses,$reponse_juste,$enonce);
 		}
 		
 		$em->getRepository('MainExerciceBundle:ExerciceStats')->updateStats($exercice, $success);

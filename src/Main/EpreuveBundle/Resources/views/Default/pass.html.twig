@@ -25,7 +25,7 @@
 				<img src="/uploads/exercice/{{exercice.id}}.{{exercice.path}}" class="imgExercice" alt="{{exercice.titre}}" />
 				{% endif %}
 				{% if exercice.type == 3 %}
-					{% set enonce_array = exercice.texte|split('...') %}
+					{% set enonce_array = exercice.texte|replace('…',"...")|split('...') %}
 					{% for enonce_part in enonce_array %}
 						<span class="text-center" > {{ enonce_part | raw }} </span>
 						{% if loop.index < enonce_array|length %}
@@ -211,6 +211,13 @@
 			else
 				DATA += '&type_exo=2&reponse_juste='+encodeURIComponent(exercice_array[numero_exo-1]["reponse1"]);
 
+		// type texte à trous
+		if($("#droppable_exo_"+id_exo+"_1").html() != undefined)
+		{
+			var reponses = [ exercice_array[numero_exo-1]["reponse1"] , exercice_array[numero_exo-1]["reponse2"], exercice_array[numero_exo-1]["reponse3"], exercice_array[numero_exo-1]["reponse4"]]
+			DATA += '&type_exo=3&enonce=' + encodeURIComponent(exercice_array[numero_exo-1]["texte"]) + '&reponse_juste=' + encodeURIComponent(reponses);
+		}
+				
 //		alert(DATA);
 		  $.ajax({
 			type: "POST",
