@@ -427,11 +427,50 @@ width: 35px;
 
 .modal_login_user{
 top: 100px;
-width: 525px;
-height: 350px;
-text-align:center;
+width: 503px;
+height: 494px;
+text-align:left;
+padding-left:30px;
 right:100px;
+border-radius:20px;
 }
+
+.modal_login_user h3{
+padding-top:23px;
+}
+
+.form_login_user a{
+font-weight: normal;
+display: block;
+padding-right:50px;
+margin-top:50px;
+text-align:center;
+}
+
+
+@media screen and (max-width: 502px) {
+.modal_login_user{
+top: 50px;
+width: 360px;
+height: 350px;
+text-align:left;
+padding-left:0px;
+right:10px;
+}
+
+.modal_login_user h3{
+padding-top:7px;
+}
+
+.form_login_user a{
+font-weight: normal;
+display: block;
+padding-right:120px;
+margin-top:17px;
+}
+}
+
+
 
 .modal_sign_up_user{
 top: 100px;
@@ -446,7 +485,6 @@ margin-top: 15px;
 }
 
 .modal_login_user input, .modal_login_user label{
-margin: auto;
 display: block;
 }
 
@@ -455,12 +493,8 @@ text-align:center;
 }
 
 .form_login_user{
-width: 250px;
+width: 450px;
 margin: auto;
-}
-
-.form_login_user a{
-margin: 2px;
 }
 
 #school_note{
