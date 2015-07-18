@@ -1,14 +1,18 @@
 {% trans_default_domain 'FOSUserBundle' %}
-<h1 style="text-align:center;"> Inscription </h1>
-<div class="container blocCentre">
+<div class="container blocCentre register-bg">
 	<div class="row">
-		<div class="col-xs-6 col-lg-6 col-lg-offset-3">
-			<form action="{{ path(app.request.attributes.get('_route')) }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
-				{{ form_widget(form) }}
-				<div>
-					<input type="submit" class="btn btn-info" value="{{ 'registration.submit'|trans }}" />
-				</div>
-			</form>
-		</div>
+		<h3 style="text-align:left;font-weight:bold;padding-left:55px;padding-top:50px;color:#506590;font-family: Verdana;"> S'inscrire </h3>
+		<form action="{{ path(app.request.attributes.get('_route')) }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
+			{{ form_widget(form) }}
+			<div style="margin-top:32px;">
+			{% if app.request.get('_route') == "main_prof_register"%}<br /><br /><br /><br />{% endif %}
+				<input type="submit" class="btn register-submit" value="S'inscrire" />
+			</div>
+			<div>
+				<br /><br /><br />
+				<span style="color:#fffefc;">Tu as déjà un compte ?</span><br />
+				<a id="link_login_user2" href="#">Connecte toi !</a>
+			</div>
+		</form>
 	</div>
 </div>

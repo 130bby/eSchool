@@ -160,9 +160,9 @@
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 						<h3>Inscription</h3>
 					</div>
-					<div class="modal-body">
-						<a href="{{ path('main_student_register')}}"><button type="submit" id="_submit" name="_submit" class="btn btn-primary">Je suis un élève </button> </a>
-						<a href="{{ path('main_prof_register')}}"><button type="submit" id="_submit" name="_submit" class="btn btn-primary">Je suis un professeur </button> </a>
+					<div class="modal-body modal-signup-body">
+						<a href="{{ path('main_student_register')}}">Je suis un élève</a>
+						<a class="bg-orange" href="{{ path('main_prof_register')}}">Je suis un professeur</a>
 					</div>
 				</div>
 			</div>
@@ -183,7 +183,14 @@
 				});
 			});
 			
+			$("#link_login_user2").click(function(){
+				$("#modal_login_user").modal({
+					show: true
+				});
+			});
+
 			$("#link_sign_up_user").click(function(){
+				$("#bs-example-navbar-collapse-1").hide();
 				$("#modal_sign_up_user").modal({
 					show: true
 				});

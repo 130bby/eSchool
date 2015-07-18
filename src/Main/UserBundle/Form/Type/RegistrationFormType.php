@@ -26,11 +26,11 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('first_name', null, array('label' => 'Prénom'))
-            ->add('last_name', null, array('label' => 'Nom'))
+            ->add('first_name', null, array('label' => 'Prénom :' , 'attr' => array('placeholder' => 'Prénom :')))
+            ->add('last_name', null, array('label' => 'Nom :' , 'attr' => array('placeholder' => 'Nom :')))
 			
-            ->add('birthday', 'birthday', array('label' => 'Date de naissance'))
-            ->add('country', 'country', array('label' => 'Pays'))
+            ->add('birthday', 'birthday', array('label' => 'Date de naissance' , 'attr' => array('placeholder' => 'Date de naissance')))
+            ->add('country', 'country', array('label' => 'Pays' , 'attr' => array('placeholder' => 'Pays')))
 			;
 		//	var_dump($options);
 		if($this->request->attributes->get('_route') == "main_student_register" || ($this->securityContext->isGranted('ROLE_ELEVE')) ) {

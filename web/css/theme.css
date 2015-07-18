@@ -144,6 +144,44 @@ font-family: Verdana;
     margin: 0 auto;
 }
 
+
+.form-control{
+  background-color:#e3e9f1;
+  color:#5b74a9;
+  max-width:390px;
+  height:50px;
+  text-align:left;
+  border-radius:10px;
+}
+
+
+#fos_user_registration_form .form-control {
+  margin:auto;
+  background-color:#e3e9f1;
+  color:#5b74a9;
+  max-width:290px;
+  height:40px;
+  text-align:left;
+  border-radius:10px;
+}
+
+@media screen and (min-width: 768px) {
+#fos_user_registration_form .form-control {
+  margin:auto;
+  background-color:#e3e9f1;
+  color:#5b74a9;
+  max-width:390px;
+  height:50px;
+  text-align:left;
+  border-radius:10px;
+}
+}
+
+.control-label
+{
+  color:#5b74a9;
+}
+
 .bg_login{
 	background-image:url(/img/bg_login.png);
 }
@@ -157,7 +195,7 @@ font-family: Verdana;
 font-weight:bold;
 }
 
-.modal-login-body input[type="password"], input[type="text"]
+.modal-login-body > form > input[type="password"], input[type="text"]
 {
   background-color:#e3e9f1;
   color:#5b74a9;
@@ -167,7 +205,7 @@ font-weight:bold;
   border-radius:10px;
 }
 
-.modal-login-body input[type="submit"]
+.modal-login-body > form > input[type="submit"]
 {
   background-color:#5d76aa;
   color:#fffefc;
@@ -180,12 +218,28 @@ font-weight:bold;
   font-size:16px;
 }
 
+.modal-signup-body a{
+  display: block;
+  background-color:#5d76aa;
+  color:#fffefc;
+  width:225px;
+  height:30px;
+  text-align:center;
+  border-radius:20px;
+  margin-top:13px;
+  margin-left:45px;
+  padding-top:2px;
+  font-weight:bold;
+  font-size:16px;
+}
+
+
 @media screen and (max-width: 360px) {
 .bg_login{
 	background-image:url(/img/bg_login_mobile.png);
 }
 
-.modal-login-body input[type="password"], input[type="text"]
+.modal-login-body > form > input[type="password"], input[type="text"]
 {
   width:325px;
   height:35px;
@@ -199,7 +253,7 @@ font-weight:bold;
   margin:auto;
 }
 
-.modal-login-body input[type="submit"]
+.modal-login-body > form > input[type="submit"]
 {
   background-color:#5d76aa;
   color:#fffefc;
@@ -215,6 +269,56 @@ font-weight:bold;
 
 }
 
+@media screen and (max-width: 320px) {
+.bg_login{
+	background-image:url(/img/bg_login_mobile.png);
+}
+
+.modal-login-body > form > input[type="password"], input[type="text"]
+{
+  width:290px;
+  height:35px;
+  border-radius:10px;
+}
+
+.modal-login-body a
+{
+  color:#5d76aa;
+  text-align:center;
+  margin:auto;
+}
+
+.modal-login-body > form > input[type="submit"]
+{
+  background-color:#5d76aa;
+  color:#fffefc;
+  width:290px;
+  height:25px;
+  text-align:center;
+  border-radius:20px;
+  margin-top:13px;
+  padding-top:0px;
+  font-weight:bold;
+  font-size:16px;
+}
+
+.modal-signup-body a{
+  display: block;
+  background-color:#5d76aa;
+  color:#fffefc;
+  width:225px;
+  height:30px;
+  text-align:center;
+  border-radius:20px;
+  margin-top:13px;
+  margin-left:25px;
+  padding-top:2px;
+  font-weight:bold;
+  font-size:16px;
+}
+
+
+}
 
 .modal-login-body input[type="text"]::-webkit-input-placeholder { color:#5b74a9; }
 .modal-login-body input[type="text"]::-moz-placeholder { color:#5b74a9; } /* firefox 19+ */
@@ -231,3 +335,59 @@ font-weight:bold;
   font-size:18px;
 
 }
+
+.modal-signup-body a:hover{
+  background-color:#7290b8;
+  text-decoration: none;
+}
+
+.modal-signup-body .bg-orange
+{
+  background-color:#dd922d;
+}
+
+.blocCentre
+{
+  background-image:url(/img/bg_register.png);
+}
+
+.register-submit{
+  display: block;
+  background-color:#5d76aa;
+  color:#fffefc;
+  width:225px;
+  height:30px;
+  text-align:center;
+  border-radius:20px;
+  margin-top:10px;
+  margin:auto;
+  top:10px;
+  padding-top:2px;
+  font-weight:bold;
+  font-size:16px;
+}
+
+.register-submit:hover{
+  background-color:#f6a000;
+  color:#fffefc;
+}
+
+#link_login_user2 {
+  display: block;
+  background-color:#96BBCF;
+  color:#fffefc;
+  width:150px;
+  height:23px;
+  text-align:center;
+  border-radius:20px;
+  margin: 8px auto;
+  font-weight:bold;
+  font-size:16px;
+}
+
+#link_login_user2:hover {
+  background-color:#f6a000;
+  color:#fffefc;
+  text-decoration:none;
+}
+
