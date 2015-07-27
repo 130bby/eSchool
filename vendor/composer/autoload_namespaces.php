@@ -17,6 +17,7 @@ return array(
     'PHPExcel' => array($vendorDir . '/phpoffice/phpexcel/Classes'),
     'Liuggio\\ExcelBundle' => array($vendorDir . '/liuggio/ExcelBundle'),
     'Knp\\Menu\\' => array($vendorDir . '/knplabs/knp-menu/src'),
+    'Knp\\Bundle\\TimeBundle' => array($vendorDir . '/knplabs/knp-time-bundle'),
     'Knp\\Bundle\\MenuBundle' => array($vendorDir . '/knplabs/knp-menu-bundle'),
     'Incenteev\\ParameterHandler' => array($vendorDir . '/incenteev/composer-parameter-handler'),
     'Exporter' => array($vendorDir . '/sonata-project/exporter/lib'),

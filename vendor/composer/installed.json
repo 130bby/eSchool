@@ -487,7 +487,7 @@
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/c2eba41d1c3cdda3ad4d97c0f6f47ff623a9646a",
+            "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/3efbc08a97f218d0a4524dee926fc4381e3d0947",
             "reference": "c2eba41d1c3cdda3ad4d97c0f6f47ff623a9646a",
             "shasum": ""
         },
@@ -2389,6 +2389,67 @@
             "bundle",
             "excel",
             "xls"
+        ]
+    },
+    {
+        "name": "knplabs/knp-time-bundle",
+        "version": "v1.3",
+        "version_normalized": "1.3.0.0",
+        "target-dir": "Knp/Bundle/TimeBundle",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/KnpLabs/KnpTimeBundle.git",
+            "reference": "abf7c17ab817d9b991445f56297c44b2217f6a5d"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/KnpLabs/KnpTimeBundle/zipball/abf7c17ab817d9b991445f56297c44b2217f6a5d",
+            "reference": "abf7c17ab817d9b991445f56297c44b2217f6a5d",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.3",
+            "symfony/framework-bundle": "~2.0"
+        },
+        "suggest": {
+            "symfony/twig-bundle": "to use the Twig time_diff function"
+        },
+        "time": "2013-12-12 12:04:14",
+        "type": "symfony-bundle",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Knp\\Bundle\\TimeBundle": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "KnpLabs Team",
+                "homepage": "http://knplabs.com"
+            },
+            {
+                "name": "Symfony Community",
+                "homepage": "http://github.com/KnpLabs/KnpTimeBundle/contributors"
+            }
+        ],
+        "description": "Knplabs time bundle makes your dates look sensible and descriptive",
+        "homepage": "http://github.com/KnpLabs/KnpTimeBundle",
+        "keywords": [
+            "bundle",
+            "date",
+            "descriptive time",
+            "knp",
+            "knplabs",
+            "time"
         ]
     }
 ]

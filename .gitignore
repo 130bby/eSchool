@@ -5,3 +5,5 @@
 !app/cache/.gitkeep
 !app/logs/.gitkeep
 /build/
+/web/uploads/*
+/vendor/*
