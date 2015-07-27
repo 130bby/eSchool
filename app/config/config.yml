@@ -115,3 +115,13 @@ sonata_admin:
     title_logo: img/papilo.jpg
     templates:
       layout:  SonataAdminBundle::layout.html.twig
+
+services:
+    twig.extension.date:
+        class: Twig_Extensions_Extension_Date
+        tags:
+            - { name: twig.extension }
+    twig.extension.intl:
+        class: Twig_Extensions_Extension_Intl
+        tags:
+            - { name: twig.extension }

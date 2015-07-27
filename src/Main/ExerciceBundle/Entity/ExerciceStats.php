@@ -22,8 +22,8 @@ class ExerciceStats
     private $id;
 
 	/**
-	 * @ORM\ManyToOne(targetEntity="Main\ExerciceBundle\Entity\Exercice", cascade={"remove"})
-	 * @ORM\JoinColumn(name="exercice_id", referencedColumnName="id")
+	 * @ORM\ManyToOne(targetEntity="Main\ExerciceBundle\Entity\Exercice")
+	 * @ORM\JoinColumn(name="exercice_id", referencedColumnName="id", onDelete="CASCADE")
 	*/
 	protected $exercice;
 

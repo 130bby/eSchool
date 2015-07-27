@@ -88,7 +88,6 @@ font-family: Verdana;
 
 .footer-home {
 	display:inline-block;
-	margin-top: 50px;
 	width:100%;
 	background-color: #f6a000;
 	height: 50px;
@@ -389,5 +388,126 @@ font-weight:bold;
   background-color:#f6a000;
   color:#fffefc;
   text-decoration:none;
+}
+
+.btn-modify-profile{
+background-color:#f6ecc0;
+color:#202121;
+font-size:14px;
+border-radius:10px;
+padding: 0 12px;
+}
+
+.profile-themes-main {
+background-color:#f6edc2;
+border-radius:20px;
+color:#5b74a9;
+padding:20px;
+}
+
+.profile-themes {
+background-color:#ffffff;
+display: block;
+border-radius:10px;
+font-size:20px;
+width:80%;
+padding:5px;
+text-align:center;
+margin:auto;
+font-weight:bold;
+}
+
+.profile-themes:hover {
+text-decoration:none;
+background-color:#f6a000;
+opacity:0.7;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+    color: #ffffff;
+}
+
+.navbar-inverse .navbar-nav > li > a:hover {
+    color: #f6a000;
+}
+
+.title-modify-profile {
+padding-top:40px;
+padding-left:20px;
+text-align:left;
+width:90%;
+}
+
+.fos_user_profile_edit {
+margin:auto;
+text-align:center;
+}
+
+.fos_user_profile_edit button, input, optgroup, select, textarea {
+margin:auto;
+}
+
+.fos_user_profile_edit > input[type="password"], input[type="text"] {
+    border-radius: 10px;
+    height: 50px;
+    width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+	.fos_user_profile_edit .form-control{
+		height: 40px;
+	}
+}
+
+
+@media screen and (min-width: 768px) {
+	#fos_user_registration_form .form-control {
+	  margin:auto;
+	  background-color:#e3e9f1;
+	  color:#5b74a9;
+	  max-width:390px;
+	  height:50px;
+	  text-align:left;
+	  border-radius:10px;
+	}
+}
+
+
+@media screen and (max-width: 768px) {
+.footer-mer-1 {
+	height: 100px;
+}
+}
+
+@media screen and (max-width: 1152px) and (min-width: 768px) {
+.footer-mer-1 {
+	height: 200px;
+}
+}
+
+@media screen and (min-width: 1152px) {
+.footer-mer-1 {
+	height: 345px;
+}
+}
+
+.footer-mer-1 {
+	display:inline-block;
+	background-image:url(/img/footer_mer.png);
+	margin:0;
+	padding:0;
+	width:100%;
+	background-size: 100% 100%; 
+}
+
+
+.footer-mer-2 {
+	display:inline-block;
+	width:100%;
+	background-color: #f6a000;
+	height: 50px;
+	text-align:right;
+	padding-top: 15px;
+	padding-right: 70px;
 }
 

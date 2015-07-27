@@ -29,13 +29,13 @@ class RegistrationFormType extends AbstractType
             ->add('first_name', null, array('label' => 'Prénom :' , 'attr' => array('placeholder' => 'Prénom :')))
             ->add('last_name', null, array('label' => 'Nom :' , 'attr' => array('placeholder' => 'Nom :')))
 			
-            ->add('birthday', 'birthday', array('label' => 'Date de naissance' , 'attr' => array('placeholder' => 'Date de naissance')))
-            ->add('country', 'country', array('label' => 'Pays' , 'attr' => array('placeholder' => 'Pays')))
+            ->add('birthday', 'birthday', array('label' => 'Date de naissance :' , 'attr' => array('placeholder' => 'Date de naissance')))
+            ->add('country', 'country', array('label' => 'Pays :' , 'attr' => array('placeholder' => 'Pays')))
 			;
 		//	var_dump($options);
 		if($this->request->attributes->get('_route') == "main_student_register" || ($this->securityContext->isGranted('ROLE_ELEVE')) ) {
 		$builder
-            ->add('classe', 'choice', array('label' => 'Classe', 'choices'   => array(
+            ->add('classe', 'choice', array('label' => 'Classe :', 'choices'   => array(
 					'6' => '6ème','5' => '5ème','4' => '4ème','3' => '3ème')));
 		}
 			

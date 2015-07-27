@@ -37,9 +37,13 @@ class ProfileController extends Controller
         if (!is_object($user) || !$user instanceof UserInterface) {
             throw new AccessDeniedException('This user does not have access to this section.');
         }
+		$em = $this->getDoctrine()->getManager();
+		$themes = $em->getRepository('MainUserBundle:ThemeUser')->findByUser($user);
+		$last_badge = $em->getRepository('MainUserBundle:BadgeUser')->findOneBy(array('user'=> $user),array('date' => 'DESC'));
+		$last_epreuves = $em->getRepository('MainUserBundle:SavoirUser')->findBy(array('user'=> $user),array('date' => 'DESC'),4);
 
         return $this->render('MainUserBundle:Profile:show.html.twig', array(
-            'user' => $user
+            'user' => $user,'themes' => $themes,'last_badge' => $last_badge,'last_epreuves' => $last_epreuves
         ));
     }
 

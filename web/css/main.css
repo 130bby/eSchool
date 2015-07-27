@@ -247,8 +247,11 @@ a.infobulle:hover div {
 }
 
 .div_profile{
-	font-family: 'Quattrocento Sans', sans-serif;
-	font-size:17px;
+border:5px solid #5d76aa;
+border-radius:20px;
+background-color:#f6a103;
+padding:20px;
+margin-bottom:20px;
 }
 
 .h1_profile{
@@ -551,4 +554,33 @@ opacity: 0.5;
 /* BUGFIX pour la modal (qui décalait le contenu legerement a gauche)*/
 .modal-open, .modal-open .navbar-fixed-top {
   padding-right: 0 !important;
+}
+
+.container-profile{
+margin:auto;
+max-width:900px;
+}
+
+.profile-picture{
+display: inline-block;
+width:140px;
+margin-right:5px;
+float:left;
+vertical-align: middle;
+height:100%;
+}
+
+.profile-description{
+width:68%;
+float:left;
+border-left:2px solid #fef4e1;
+padding-left:30px;
+}
+
+.div_profile_last_exercices{
+margin-top:20px;
+border-radius: 20px;
+border:5px solid #5d76aa;
+padding:20px;
+margin-bottom:20px;
 }

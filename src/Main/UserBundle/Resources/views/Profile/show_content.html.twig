@@ -1,16 +1,50 @@
 {% trans_default_domain 'FOSUserBundle' %}
-<h1 style="text-align:center;"> Profil </h1>
+<div class="container-profile">
+	<h2 style="text-align:left;color:#f39f03;margin-bottom:20px;"> TON PROFIL </h2>
 
-<div class="fos_user_user_show blocCentre div_profile">
-    <p>{{ 'profile.show.username'|trans }}: {{ user.username }}</p>
-    <p>{{ 'profile.show.email'|trans }}: {{ user.email }}</p>
-    <p>{{ 'Prénom'|trans }}: {{ user.firstName }}</p>
-    <p>{{ 'Nom'|trans }}: {{ user.lastName }}</p>
-	{% if is_granted('ROLE_ELEVE') %}
-    <p>{{ 'Classe'|trans }}: {{ user.classe }}ème</p>
-	{% endif %}
-	<p>{{ 'Date de naissance'|trans }}: {{ user.birthday|date("d/m/Y") }}</p>
-    <p>{{ 'Pays'|trans }}: {{ user.country }}</p>
-	<a href="{{ path('main_user_profil_edit')}}" ><button type="button" class="btn btn-info"> Modifier </button></a>
-
+	<!--<div class="col-xs-12 fos_user_user_show blocCentre div_profile">-->
+	<div class="col-xs-12 col-sm-7 fos_user_user_show div_profile">
+		<div class="profile-picture">
+		<img src="/img/profile.png" />
+		</div>
+		<div class="profile-description">
+			<p style="color:#ffffff;font-size:30px;margin:0px;">{{ user.username }}</p>
+			<p style="color:#202121;margin-bottom:20px;">{{ user.firstName }} {{ user.lastName }}</p>
+			<p><i>{{ 'profile.show.email'|trans }}:</i> {{ user.email }}</p>
+			{% if is_granted('ROLE_ELEVE') %}
+			<p><i>{{ 'Classe'|trans }}:</i> {{ user.classe }}ème</p>
+			{% endif %}
+			<p><i>{{ 'Date de naissance'|trans }}:</i> {{ user.birthday|date("d/m/Y") }}</p>
+			<p><i>{{ 'Pays'|trans }}:</i> {{ user.country }}</p>
+			<a href="{{ path('main_user_profil_edit')}}" ><button type="button" class="btn btn-modify-profile"> Modifier ton profil</button></a>
+		</div>
+	</div>
+	<div class="col-sm-4 col-xs-12 col-sm-offset-1 profile-themes-main">
+		<p style="color:#5b74a9;font-size:20px;">Tes thèmes :</p>
+		{% for theme in themes%}
+			<a class="profile-themes" href="{{ path('main_savoir_arbre_theme', { 'theme_id': theme.theme.id })}}">{{ theme.theme.name }}</a><br />
+		{% endfor %}
+	</div>
+	<div class="col-xs-12 col-sm-7 fos_user_user_show div_profile_last_exercices">
+		<p style="color:#5b74a9;font-size:20px;text-align:center;">Tes dernières épreuves :</p>
+		{% for epreuve in last_epreuves %}
+			<p style="color:#859fc1;margin:0px;">{{time_diff(epreuve.date)}}</p>
+			<p style="font-weight:bold;" class="">{{epreuve.savoir.theme.matiere.name}} / {{epreuve.savoir.theme.name}}</p>
+			<p class="">{{epreuve.savoir.name}} - 
+				{% if epreuve.score > 20 %}Epreuve validé <img src="/img/epreuve_valide.png" />
+				{% else %}Epreuve invalidé <img src="/img/epreuve_invalide.png" />{% endif %}</p>
+		{% endfor %}
+		<a href="{{ path('main_user_my_history')}}">Voir ton historique complet</a>
+	</div>
+	<div class="col-sm-4 col-xs-12 col-sm-offset-1 profile-themes-main">
+		<p style="color:#5b74a9;font-size:20px;">Ton dernier badge :</p>
+		{% if last_badge %}
+			{% if last_badge.id == 1 %}
+				<img style="margin:auto; display: block;" src="/uploads/badges/1.jpg" data-html="true" data-toggle="tooltip" data-placement="top" title="{{badges.1.badge.name}} :{% for theme in badges.1.themes %}<br />- {{theme}}{% endfor %}" />
+			{% else %}
+				<img style="margin:auto; display: block;" src="/uploads/badges/{{last_badge.badge.id}}.jpg" data-html="true" data-toggle="tooltip" data-placement="top" title="{{last_badge.badge.name}}" />
+			{% endif %}
+		{% endif %}
+	</div>
 </div>
+<div class="footer-mer-1"></div>
