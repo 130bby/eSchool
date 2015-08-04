@@ -96,7 +96,7 @@ class SavoirRepository extends EntityRepository
 						{
 							foreach ($savoirs_user as $savoir_user)
 							{
-								if 	($savoir_user['score'] >= $current_prerequis_object['score_mini'])
+								if 	($savoir_user['success'])
 								{
 									$prerequis_passed[$i] = true;
 									break;
@@ -111,16 +111,24 @@ class SavoirRepository extends EntityRepository
 						{
 							$current_prerequis_object = $this->getEntityManager()
 							->createQuery('SELECT s FROM MainSavoirBundle:Savoir s WHERE s.id ='.$current_prerequis)->getOneOrNullResult();
-
-							foreach ($savoirs_user as $savoir_user)
+						
+							// cas ou le prérequis vient d'un theme différent
+							if 	((int)$current_prerequis_object->getTheme()->getId() != $theme_id)
 							{
-								if 	($savoir_user['score'] >= $current_prerequis_object->getScoreMini())
+								$prerequis_passed[$i] = true;
+							}
+							else
+							{
+								foreach ($savoirs_user as $savoir_user)
 								{
-									$prerequis_passed[$i] = true;
-									break;
+									if 	($savoir_user['success'])
+									{
+										$prerequis_passed[$i] = true;
+										break;
+									}
+									else
+										$prerequis_passed[$i] = false;
 								}
-								else
-									$prerequis_passed[$i] = false;
 							}
 							//On rajoute le nom du prérequis
 							$savoir['prerequis_name'][] = $current_prerequis_object->getName();

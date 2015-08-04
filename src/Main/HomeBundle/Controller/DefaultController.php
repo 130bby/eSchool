@@ -3,11 +3,26 @@
 namespace Main\HomeBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
 class DefaultController extends Controller
 {
-    public function indexAction()
+    public function indexAction($data = false)
     {
+
+        // get the error if bad login credentials
+		$request = $this->getRequest();
+		$session = $request->getSession();
+        if ($request->attributes->has(SecurityContextInterface::AUTHENTICATION_ERROR)) {
+            $error = $request->attributes->get(SecurityContextInterface::AUTHENTICATION_ERROR);
+        } elseif (null !== $session && $session->has(SecurityContextInterface::AUTHENTICATION_ERROR)) {
+            $error = $session->get(SecurityContextInterface::AUTHENTICATION_ERROR);
+            $session->remove(SecurityContextInterface::AUTHENTICATION_ERROR);
+        } else {
+            $error = null;
+        }
+		
 		$em = $this->getDoctrine()->getManager();
 		$matieres = array();
 		if ($this->container->get('security.context')->isGranted('ROLE_ELEVE'))
@@ -34,7 +49,7 @@ class DefaultController extends Controller
 			}
 		}
 
-        return $this->render('MainHomeBundle:Default:index.html.twig', array('matieres' => $matieres));
+        return $this->render('MainHomeBundle:Default:index.html.twig', array('matieres' => $matieres,'error' => $error));
     }
 	
 }

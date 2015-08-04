@@ -30,7 +30,7 @@ class Theme
 
 	/**
 	 * @ORM\ManyToOne(targetEntity="Main\MatiereBundle\Entity\Matiere")
-	 * @ORM\JoinColumn(name="matiere_id", referencedColumnName="id")
+	 * @ORM\JoinColumn(name="matiere_id", referencedColumnName="id", onDelete="CASCADE")
 	*/
 	protected $matiere;
 

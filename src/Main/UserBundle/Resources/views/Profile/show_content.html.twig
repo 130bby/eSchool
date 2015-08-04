@@ -31,7 +31,7 @@
 			<p style="color:#859fc1;margin:0px;">{{time_diff(epreuve.date)}}</p>
 			<p style="font-weight:bold;" class="">{{epreuve.savoir.theme.matiere.name}} / {{epreuve.savoir.theme.name}}</p>
 			<p class="">{{epreuve.savoir.name}} - 
-				{% if epreuve.score > 20 %}Epreuve validé <img src="/img/epreuve_valide.png" />
+				{% if epreuve.success %}Epreuve validé <img src="/img/epreuve_valide.png" />
 				{% else %}Epreuve invalidé <img src="/img/epreuve_invalide.png" />{% endif %}</p>
 		{% endfor %}
 		<a href="{{ path('main_user_my_history')}}">Voir ton historique complet</a>

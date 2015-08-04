@@ -14,7 +14,7 @@
         </thead>
         <tbody>
 		{% for epreuve in epreuves %}
-            <tr {% if epreuve.score >= epreuve.savoir.scoreMini %}class="success" {% else %}class="danger"{% endif %}>
+            <tr {% if epreuve.success == 1 %}class="success" {% else %}class="danger"{% endif %}>
                 <td>{{ epreuve.savoir.name }}</td>
                 <td>{{ epreuve.temps|date("i:s") }}</td>
                 <td>{{ epreuve.score }}</td>

@@ -23,7 +23,7 @@ class BadgeUser
 
 	/**
 	 * @ORM\ManyToOne(targetEntity="Main\UserBundle\Entity\User")
-	 * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+	 * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
 	*/
 	protected $user;
 

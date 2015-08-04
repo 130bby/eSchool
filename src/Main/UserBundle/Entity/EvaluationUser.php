@@ -23,13 +23,13 @@ class EvaluationUser
 
 	/**
 	 * @ORM\ManyToOne(targetEntity="Main\UserBundle\Entity\User")
-	 * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+	 * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
 	*/
 	protected $user;
 
 	/**
 	 * @ORM\ManyToOne(targetEntity="Main\EvaluationBundle\Entity\Evaluation")
-	 * @ORM\JoinColumn(name="evaluation_id", referencedColumnName="id")
+	 * @ORM\JoinColumn(name="evaluation_id", referencedColumnName="id", onDelete="CASCADE")
 	*/
 	protected $evaluation;
 	
@@ -39,6 +39,13 @@ class EvaluationUser
      * @ORM\Column(name="score", type="integer")
      */
     private $score;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="success", type="boolean")
+     */
+    private $success;
 
     /**
      * @var \DateTime
@@ -178,5 +185,28 @@ class EvaluationUser
     public function getEvaluation()
     {
         return $this->evaluation;
+    }
+
+    /**
+     * Set success
+     *
+     * @param boolean $success
+     * @return EvaluationUser
+     */
+    public function setSuccess($success)
+    {
+        $this->success = $success;
+
+        return $this;
+    }
+
+    /**
+     * Get success
+     *
+     * @return boolean 
+     */
+    public function getSuccess()
+    {
+        return $this->success;
     }
 }

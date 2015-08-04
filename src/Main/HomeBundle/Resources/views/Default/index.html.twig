@@ -78,6 +78,19 @@
 	
 {% endblock %}
 	
-
-
-
+{% block javascripts %}
+	{{ parent() }}
+	{% if error %}
+		<script type="text/javascript">
+			$("#bs-example-navbar-collapse-1").hide();
+			$("#modal_login_user").modal({
+				show: true
+			});
+			$('form').find("input[type=password]").each(function(ev)
+			{
+				$(this).val("");
+				$(this).attr("placeholder", "Mauvais nom d'utilisateur ou mot de passe !");
+			});
+		</script>
+	{% endif %}
+{% endblock %}

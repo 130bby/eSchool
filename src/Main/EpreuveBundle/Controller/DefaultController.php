@@ -63,6 +63,10 @@ class DefaultController extends Controller
 		$savoir_user->setUser($this->container->get('security.context')->getToken()->getUser());
 		$savoir_user->setSavoir($savoir);
 		$savoir_user->setScore(((int)$request->get('score')/20)*100);
+		if (((int)$request->get('score')/20)*100 >= $savoir->getScoreMini())
+			$savoir_user->setSuccess(true);
+		else
+			$savoir_user->setSuccess(false);
 		$savoir_user->setTemps($temps);
 		$savoir_user->setDate(new \Datetime());
 		$em->persist($savoir_user);

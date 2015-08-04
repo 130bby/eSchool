@@ -101,7 +101,7 @@ class Savoir
 
 	/**
 	 * @ORM\ManyToOne(targetEntity="Main\ThemeBundle\Entity\Theme")
-	 * @ORM\JoinColumn(name="theme_id", referencedColumnName="id")
+	 * @ORM\JoinColumn(name="theme_id", referencedColumnName="id", onDelete="CASCADE")
 	*/
 	protected $theme;
 

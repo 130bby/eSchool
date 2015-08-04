@@ -39,7 +39,7 @@ class DefaultController extends Controller
 		$data_epreuve_passees = json_encode($data_epreuve_passees);
 		
 		//epreuves réussies
-		$epreuves_reussies = $em->createQuery("SELECT COUNT(s.id), SUBSTRING(s.date, 1, 10) as day FROM MainUserBundle:SavoirUser s WHERE s.score > 70 AND s.date > '".date('Y-m-d', strtotime('-1 week'))."' GROUP BY day ")->getArrayResult();
+		$epreuves_reussies = $em->createQuery("SELECT COUNT(s.id), SUBSTRING(s.date, 1, 10) as day FROM MainUserBundle:SavoirUser s WHERE s.success = 1 AND s.date > '".date('Y-m-d', strtotime('-1 week'))."' GROUP BY day ")->getArrayResult();
 		$data_epreuve_reussies = array();
 		for($i=0;$i<7;$i++)
 		{

@@ -24,13 +24,13 @@ class ThemeUser
 	
 	/**
 	 * @ORM\ManyToOne(targetEntity="Main\UserBundle\Entity\User")
-	 * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+	 * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
 	*/
 	protected $user;
 
 	/**
 	 * @ORM\ManyToOne(targetEntity="Main\ThemeBundle\Entity\Theme")
-	 * @ORM\JoinColumn(name="theme_id", referencedColumnName="id")
+	 * @ORM\JoinColumn(name="theme_id", referencedColumnName="id", onDelete="CASCADE")
 	*/
 	protected $theme;
 	

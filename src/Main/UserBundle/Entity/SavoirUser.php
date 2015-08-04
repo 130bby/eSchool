@@ -24,13 +24,13 @@ class SavoirUser
 	
 	/**
 	 * @ORM\ManyToOne(targetEntity="Main\UserBundle\Entity\User")
-	 * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+	 * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
 	*/
 	protected $user;
 
 	/**
 	 * @ORM\ManyToOne(targetEntity="Main\SavoirBundle\Entity\Savoir")
-	 * @ORM\JoinColumn(name="savoir_id", referencedColumnName="id")
+	 * @ORM\JoinColumn(name="savoir_id", referencedColumnName="id", onDelete="CASCADE")
 	*/
 	protected $savoir;
 	
@@ -41,6 +41,13 @@ class SavoirUser
      */
     private $score;
 	
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="success", type="boolean")
+     */
+    private $success;
+
     /**
      * @var time
      *
@@ -178,5 +185,28 @@ class SavoirUser
     public function getDate()
     {
         return $this->date;
+    }
+
+    /**
+     * Set success
+     *
+     * @param boolean $success
+     * @return SavoirUser
+     */
+    public function setSuccess($success)
+    {
+        $this->success = $success;
+
+        return $this;
+    }
+
+    /**
+     * Get success
+     *
+     * @return boolean 
+     */
+    public function getSuccess()
+    {
+        return $this->success;
     }
 }

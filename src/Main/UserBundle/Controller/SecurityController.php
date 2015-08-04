@@ -44,7 +44,7 @@ class SecurityController extends Controller
             ? $this->get('form.csrf_provider')->generateCsrfToken('authenticate')
             : null;
 
-        return $this->renderLogin(array(
+		return $this->renderLogin(array(
             'last_username' => $lastUsername,
             'error'         => $error,
             'csrf_token' => $csrfToken,
