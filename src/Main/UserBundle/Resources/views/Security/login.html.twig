@@ -15,7 +15,7 @@
 
 		<input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" class="btn btn-primary" />
 		
-		<a href="#">Mot de passe oublié ?</a><br />
+		<a href="{{ path('fos_user_resetting_request') }}">Mot de passe oublié ?</a><br />
 		
 		<a id="link_sign_up_user_login" href="#">S'inscrire</a>
 	</form>

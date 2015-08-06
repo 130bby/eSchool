@@ -28,6 +28,29 @@ class SavoirRepository extends EntityRepository
 				$arbre['level1'][] = $savoir;
 				unset($savoirs[$key]);
 			}
+			// cas ou un theme a des prerequis seulement d'un theme différent
+			else
+			{
+				$prerequis = $this->getEntityManager()
+					->createQuery('SELECT s, t FROM MainSavoirBundle:Savoir s JOIN s.theme t WHERE s.id IN ('.implode(",",$savoir['prerequis']).')')->getArrayResult();
+				$is_level1 = true;	
+				foreach ($prerequis as $current_prerequis)
+				{
+					if($current_prerequis['theme']['id'] == $theme_id)
+					{
+						$is_level1 = false;	
+						break;
+					}
+				}
+				if ($is_level1)
+				{
+					$this->setStrength($savoir,$user);
+					$savoir['available'] = true;
+					$arbre['level1'][] = $savoir;
+					unset($savoirs[$key]);
+				}
+					
+			}
 		}
 
 		$evaluations = $this->getEntityManager()
