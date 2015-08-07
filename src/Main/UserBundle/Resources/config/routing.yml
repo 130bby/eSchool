@@ -19,6 +19,9 @@ main_user_my_stats:
 main_user_add_theme:
     path:     /add_theme/{theme_id}
     defaults: { _controller: MainUserBundle:Default:addTheme, theme_id: null  }
+main_user_remove_theme:
+    path:     /remove_theme/{theme_id}
+    defaults: { _controller: MainUserBundle:Default:removeTheme, theme_id: null  }
 main_eleve_stat_export:
     path:     /admin/eleve/export
     defaults: { _controller: MainUserBundle:Default:export }

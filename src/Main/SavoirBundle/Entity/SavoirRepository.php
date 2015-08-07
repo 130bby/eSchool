@@ -23,7 +23,8 @@ class SavoirRepository extends EntityRepository
 		{
 			if ($savoir['prerequis'] === array())
 			{
-				$this->setStrength($savoir,$user);
+				if ($user != "anon.")
+					$this->setStrength($savoir,$user);
 				$savoir['available'] = true;
 				$arbre['level1'][] = $savoir;
 				unset($savoirs[$key]);
@@ -44,7 +45,8 @@ class SavoirRepository extends EntityRepository
 				}
 				if ($is_level1)
 				{
-					$this->setStrength($savoir,$user);
+					if ($user != "anon.")
+						$this->setStrength($savoir,$user);
 					$savoir['available'] = true;
 					$arbre['level1'][] = $savoir;
 					unset($savoirs[$key]);
@@ -81,8 +83,10 @@ class SavoirRepository extends EntityRepository
 					$eval_bool = false;
 			if 	($eval_bool === true)
 			{
-				$evaluation_user = $this->getEntityManager()
-				->createQuery('SELECT e FROM MainUserBundle:EvaluationUser e WHERE e.user ='.$user->getId().' AND e.evaluation ='.$evaluation['id'])->getOneOrNullResult();
+				$evaluation_user = NULL;
+				if ($user != "anon.")
+					$evaluation_user = $this->getEntityManager()
+					->createQuery('SELECT e FROM MainUserBundle:EvaluationUser e WHERE e.user ='.$user->getId().' AND e.evaluation ='.$evaluation['id'])->getOneOrNullResult();
 				if ($evaluation_user !== NULL)
 					$evaluation['passed'] = true;
 				
@@ -106,8 +110,10 @@ class SavoirRepository extends EntityRepository
 					// on check si les prérequis du savoir sont remplis
 					foreach ($savoir['prerequis'] as $current_prerequis)
 					{
-						$savoirs_user = $this->getEntityManager()
-						->createQuery('SELECT s FROM MainUserBundle:SavoirUser s WHERE s.user ='.$user->getId().' AND s.savoir ='.$current_prerequis)->getArrayResult();
+						$savoirs_user = array();
+						if ($user != "anon.")
+							$savoirs_user = $this->getEntityManager()
+							->createQuery('SELECT s FROM MainUserBundle:SavoirUser s WHERE s.user ='.$user->getId().' AND s.savoir ='.$current_prerequis)->getArrayResult();
 						$i++;
 						// on parcours le tableau des savoirs pour trouver le prerequis
 						foreach ($savoirs as $savoir_prerequis)
@@ -167,7 +173,8 @@ class SavoirRepository extends EntityRepository
 					if ($j == sizeof($savoir['prerequis']))
 						$savoir['available'] = true;
 					
-					$this->setStrength($savoir,$user);
+					if ($user != "anon.")
+						$this->setStrength($savoir,$user);
 					
 					$arbre['level'.$level][] = $savoir;
 					unset($savoirs[$key]);

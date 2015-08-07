@@ -21,6 +21,8 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use FOS\UserBundle\Model\UserInterface;
+use Main\UserBundle\Entity\ThemeUser as ThemeUser;
+use Main\UserBundle\Entity\SavoirUser as SavoirUser;
 
 /**
  * Controller managing the registration
@@ -49,7 +51,8 @@ class RegistrationController extends Controller
             return $event->getResponse();
         }
 
-        $form = $formFactory->createForm();
+
+		$form = $formFactory->createForm();
         $form->setData($user);
         $form->handleRequest($request);
 
@@ -61,8 +64,34 @@ class RegistrationController extends Controller
 			if ($currentRoute == 'main_prof_register')
 				$user->addRole('ROLE_PROF_TBC');
 			elseif ($currentRoute == 'main_student_register')
+			{
 				$user->addRole('ROLE_ELEVE');
-
+				$theme_id = $this->get('session')->get('theme_id');
+				$savoir_user_data = $this->get('session')->get('savoir_user');
+				// si l'utilisateur a passé une épreuve avant de s'inscrire
+				if (isset($theme_id))
+				{
+					$userManager->updateUser($user);
+					$em = $this->getDoctrine()->getManager();
+					$theme = $em->getRepository('MainThemeBundle:Theme')->find($theme_id);
+					$theme_user = new ThemeUser();
+					$theme_user->setUser($user);
+					$theme_user->setTheme($theme);
+					$theme_user->setDate(new \DateTime("now"));
+					$em->persist($theme_user);
+					
+					$savoir = $em->getRepository('MainSavoirBundle:Savoir')->find($savoir_user_data['savoir_id']);
+					$savoir_user = new SavoirUser();
+					$savoir_user->setUser($user);
+					$savoir_user->setSavoir($savoir);
+					$savoir_user->setScore($savoir_user_data['score']);
+					$savoir_user->setSuccess($savoir_user_data['success']);
+					$savoir_user->setTemps($savoir_user_data['temps']);
+					$savoir_user->setDate(new \Datetime());
+					$em->persist($savoir_user);
+					$em->flush();
+				}
+			}
 			$userManager->updateUser($user);
 
             if (null === $response = $event->getResponse()) {
@@ -142,9 +171,11 @@ class RegistrationController extends Controller
         if (!is_object($user) || !$user instanceof UserInterface) {
             throw new AccessDeniedException('This user does not have access to this section.');
         }
-
+		return $this->redirect($this->generateUrl('main_user_profil'));
+		/*
         return $this->render('FOSUserBundle:Registration:confirmed.html.twig', array(
             'user' => $user,
         ));
+		*/
     }
 }

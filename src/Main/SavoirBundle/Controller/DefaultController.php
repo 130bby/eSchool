@@ -30,7 +30,7 @@ class DefaultController extends Controller
 			$evaluation = true;
 		else
 			$evaluation = false;
-		return $this->render('MainSavoirBundle:Default:arbre.html.twig', array('arbre' => $arbre, 'evaluation' => $evaluation, 'evaluations' => $evaluations));
+		return $this->render('MainSavoirBundle:Default:arbre.html.twig', array('arbre' => $arbre, 'evaluation' => false, 'evaluations' => $evaluations));
     }
 	
 }

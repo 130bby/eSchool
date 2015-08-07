@@ -20,6 +20,9 @@
 
 body, html { 
     overflow-x: hidden; 
+	height:100%;
+	margin:0;
+	padding:0;
 }
 
 /* When the body has the loading class, we turn
@@ -32,6 +35,11 @@ body.loading {
    modal element will be visible */
 body.loading .modal {
     display: block;
+}
+
+#wrapper {
+	min-height:100%;
+	position:relative;
 }
 
 .spanMarge{

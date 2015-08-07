@@ -11,4 +11,22 @@
 		Désolé, votre score est insuffisant pour acquérir le savoir : {{savoir.name}}
 	{% endif %}
 
+	{% if not app.user %}
+	<br /> <br /> 
+		Motivé pour continuer à apprendre et sauvegarder tes progrès ?
+			<a id="link_sign_up_user_2" href="#">Inscris toi !</a>
+		
+	{% endif %}
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script type="text/javascript">
+		$("#link_sign_up_user_2").click(function(){
+			$("#bs-example-navbar-collapse-1").hide();
+			$("#modal_sign_up_user").modal({
+				show: true
+			});
+		});
+	</script>
 {% endblock %}

@@ -94,7 +94,7 @@ fos_user:
         form:
             type: main_user_registration
         confirmation:
-            enabled:    true
+            enabled:    false
             from_email:
                 address:        bobby@becomeagosu.com
                 sender_name:    eSchool

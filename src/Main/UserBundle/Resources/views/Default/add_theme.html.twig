@@ -2,16 +2,27 @@
 
 {% block body %}
 	{% for flashMessage in app.session.flashbag.get('notice') %}
-		<div class="alert alert-success alert-dismissible fade in flash_message_home">
-			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			</button>
-			<span class="glyphicon glyphicon-ok icone_ok_flash_message"></span>
-			<p>{{ flashMessage }} </p>
-		</div>
+		{% if app.request.attributes.get("_route") == 'main_user_remove_theme' %}
+			<div class="alert alert-danger alert-dismissible fade in flash_message_home">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<span class="glyphicon glyphicon-remove icone_ok_flash_message"></span>
+				<p>{{ flashMessage }} </p>
+			</div>
+		{% else %}
+			<div class="alert alert-success alert-dismissible fade in flash_message_home">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<span class="glyphicon glyphicon-ok icone_ok_flash_message"></span>
+				<p>{{ flashMessage }} </p>
+			</div>
+		{% endif %}
+		
 	{% endfor %}
 	<p class="txt_home_eleve">  Envie de devenir un savant ? <br/>
-		Developpez vos arbres de savoir pour les thèmes qui vous interessent !  
+		Développe tes arbres de savoir pour les thèmes qui t'intéressent !  
 	</p>
 	<div class="col-lg-offset-5">
 		<ul id="menu-accordeon">
@@ -23,6 +34,8 @@
 								<div class="div_theme_name_home">{{theme.name}}</a></div>
 									{%if theme.available is not defined%}
 										<div class="div_icone_plus_home"><a href="{{ path('main_user_add_theme', { 'theme_id': theme.id })}}"><span id="icone_plus_home" class="glyphicon glyphicon-plus-sign"></span></a></div>
+									{%else%}
+										<div class="div_icone_plus_home"><a href="{{ path('main_user_remove_theme', { 'theme_id': theme.id })}}"><span id="icone_plus_home" class="glyphicon glyphicon-minus-sign"></span></a></div>
 									{%endif%}
 							</li>
 						{%endfor%} 

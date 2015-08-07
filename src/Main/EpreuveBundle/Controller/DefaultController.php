@@ -58,25 +58,46 @@ class DefaultController extends Controller
 		$temps_intervalle = $temps_limite->diff(new \Datetime('00:'.$request->get('temps')));
 		$temps = new \DateTime('00:00:00');
 		$temps->sub($temps_intervalle);
-
-		$savoir_user = new SavoirUser();
-		$savoir_user->setUser($this->container->get('security.context')->getToken()->getUser());
-		$savoir_user->setSavoir($savoir);
-		$savoir_user->setScore(((int)$request->get('score')/20)*100);
-		if (((int)$request->get('score')/20)*100 >= $savoir->getScoreMini())
-			$savoir_user->setSuccess(true);
-		else
-			$savoir_user->setSuccess(false);
-		$savoir_user->setTemps($temps);
-		$savoir_user->setDate(new \Datetime());
-		$em->persist($savoir_user);
-		$em->flush();
-		if (((int)$request->get('score')/20)*100 >= $savoir->getScoreMini())
-			$success = true;
-		else
-			$success = false;
 		
-		$badges = $em->getRepository('MainUserBundle:BadgeUser')->setBadges($this->container->get('security.context')->getToken()->getUser(),((int)$request->get('score')/20)*100,$savoir->getTheme(),$savoir);
+		if ($this->container->get('security.context')->isGranted('ROLE_ELEVE'))
+		{
+			$savoir_user = new SavoirUser();
+			$savoir_user->setUser($this->container->get('security.context')->getToken()->getUser());
+			$savoir_user->setSavoir($savoir);
+			$savoir_user->setScore(((int)$request->get('score')/20)*100);
+			if (((int)$request->get('score')/20)*100 >= $savoir->getScoreMini())
+				$savoir_user->setSuccess(true);
+			else
+				$savoir_user->setSuccess(false);
+			$savoir_user->setTemps($temps);
+			$savoir_user->setDate(new \Datetime());
+			$em->persist($savoir_user);
+			$em->flush();
+			if (((int)$request->get('score')/20)*100 >= $savoir->getScoreMini())
+				$success = true;
+			else
+				$success = false;
+			
+			$badges = $em->getRepository('MainUserBundle:BadgeUser')->setBadges($this->container->get('security.context')->getToken()->getUser(),((int)$request->get('score')/20)*100,$savoir->getTheme(),$savoir);
+		}
+		else
+		{
+			$savoir_user = array();
+			$savoir_user['savoir_id'] = $savoir_id;
+			$savoir_user['score'] = $request->get('score')*100/20;
+			if (((int)$request->get('score')/20)*100 >= $savoir->getScoreMini())
+				$savoir_user['success'] = true;
+			else
+				$savoir_user['success'] = false;
+			$savoir_user['temps'] = $temps;
+			
+			$session = $this->container->get('session');
+			$session->set('savoir_user', $savoir_user);
+			$session->save();
+			
+			$success = $savoir_user['success'];
+			$badges = null;
+		}
         return $this->render('MainEpreuveBundle:Default:passed.html.twig', array('success' => $success, 'savoir' => $savoir, 'badges' => $badges));
     }
 }

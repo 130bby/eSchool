@@ -87,22 +87,23 @@ font-family: Verdana;
 }
 
 .footer-home {
-	display:inline-block;
 	width:100%;
 	background-color: #f6a000;
 	height: 50px;
 	text-align:right;
 	padding-top: 15px;
 	padding-right: 70px;
+	position:absolute;
+	bottom:0;
+	left:0;
 }
 
 .btn-orange{
 	background-color: #dd922d;
 	color: #ffffff;
-	position:absolute;
-	top:12%;
-	left:46%;
-	display:inline;
+	display:inline-block;
+	position:relative;
+	top:150px;
 	width:150px;
 	height:30px;
 	padding-top:5px;
@@ -111,21 +112,16 @@ font-family: Verdana;
 
 @media screen and (max-width: 991px) {
 .btn-orange{
-	top:11%;
-	left:43%;
-	width:150px;
-	height:30px;
-	padding-top:5px;
+	top:100px;
 }
 }
 
 @media screen and (max-width: 400px) {
 .btn-orange{
-	top:10%;
-	left:36%;
 	width:100px;
 	height:25px;
 	padding-top:1px;
+	top:55px;
 }
 }
 
