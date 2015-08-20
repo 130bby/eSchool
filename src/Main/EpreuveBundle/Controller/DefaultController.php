@@ -13,7 +13,6 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
         $savoir = $em->getRepository('MainSavoirBundle:Savoir')->find($savoir_id);
         $exercices = $em->getRepository('MainExerciceBundle:Exercice')->getExercicesEpreuve($savoir);
-
         return $this->render('MainEpreuveBundle:Default:pass.html.twig', array('exercices' => $exercices, 'savoir' => $savoir));
     }
 
@@ -31,7 +30,7 @@ class DefaultController extends Controller
 			$type_exo = $this->container->get('request')->request->get('type_exo');
 			$reponse_juste = $this->container->get('request')->request->get('reponse_juste');
 			$enonce = $this->container->get('request')->request->get('enonce');
-			
+
 			//cas particulier des exercices a variables aléatoires, type réponse simple
 			if ($reponse1 !== NULL)	$reponses[] = $reponse1;
 			if ($reponse2 !== NULL)	$reponses[] = $reponse2;

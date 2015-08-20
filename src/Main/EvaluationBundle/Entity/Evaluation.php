@@ -23,7 +23,7 @@ class Evaluation
 
 	/**
 	 * @ORM\ManyToOne(targetEntity="Main\ThemeBundle\Entity\Theme", inversedBy="evaluation")
-	 * @ORM\JoinColumn(name="theme_id", referencedColumnName="id")
+	 * @ORM\JoinColumn(name="theme_id", referencedColumnName="id", onDelete="CASCADE")
 	*/
 	protected $theme;
 

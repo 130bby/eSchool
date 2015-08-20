@@ -198,8 +198,22 @@
 			var reponse_array = exercice_array[numero_exo-1]["reponseJuste"].toString();
 			var reponse_array = reponse_array.split(",");
 			var data_temp = "";
+			
 			for (var i=0; i<reponse_array.length; i++)
-				data_temp += $("label[for='reponse_"+id_exo+"_"+reponse_array[i]+"']").text()+" ";
+			{
+				if (reponse_array.length>1)
+				{
+					var reponse_juste_html = $("label[for='reponse_"+id_exo+"_"+reponse_array[i]+"']").html();
+					var reponse_juste_html = reponse_juste_html.substr(reponse_juste_html.indexOf('type="checkbox">') + 16);
+					data_temp += "<br />- "+reponse_juste_html+" ";
+				}
+				else
+				{
+					var reponse_juste_html = $("label[for='reponse_"+id_exo+"_"+reponse_array[i]+"']").html();
+					var reponse_juste_html = reponse_juste_html.substr(reponse_juste_html.indexOf('type="checkbox">') + 16);
+					data_temp += reponse_juste_html+" ";
+				}
+			}
 
 			DATA += '&type_exo=1&reponse_juste='+data_temp;
 		}

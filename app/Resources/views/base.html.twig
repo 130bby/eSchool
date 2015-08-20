@@ -14,13 +14,12 @@
 		<link rel="stylesheet" href="/css/main.css" />
 		<link rel="stylesheet" href="/css/panel.css" />
 		<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/qtip2/2.2.1/jquery.qtip.min.css"/>
-		<link href='http://fonts.googleapis.com/css?family=Quattrocento+Sans' rel='stylesheet' type='text/css'>
-		    <style>
-			body {
-				padding-top: 70px;
-				/* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
-			}
-			</style>
+		<style>
+		body {
+			padding-top: 70px;
+			/* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+		}
+		</style>
 		{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 		<!--[if lt IE 9]>
@@ -79,11 +78,11 @@
 							{% endif %}
 						{% endif %}
 						</ul>
-						<ul class="nav navbar-nav navbar-right">
+						<ul class="nav navbar-nav navbar-right menu-user">
 						{% if app.user %}
 							{% if is_granted('ROLE_ELEVE') %}
-								<li>
-									<a href="#" data-toggle="dropdown" class="glyphicon glyphicon-user "></a>
+								<li class="menu-user">
+									<a href="#" data-toggle="dropdown" class="menu-user"><img src="/img/picto_menu.png" />  {{app.user.username}} &nu;</a>
 										<ul id="menu_user_eleve" class="dropdown-menu">
 										<li>
 											<span class="glyphicon glyphicon-plus-sign icone_menu_eleve"></span><a href="{{ path('main_user_add_theme')}}" style="display:inline" class="icone_menu_eleve">Gérer mes thèmes</a>

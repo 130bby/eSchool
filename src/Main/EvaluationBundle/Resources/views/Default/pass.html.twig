@@ -54,7 +54,7 @@
 				{% elseif exercice.type == 3 %}
 					<p class="text-center">
 						<ul id="drag_it_{{exercice.id}}" class="list-inline">
-						{% if exercice.reponse1 %}<li class ="repTrous " style="display:inline;" id="reponse_draggable_{{exercice.id}}_1">{{exercice.reponse1 | raw }}</li>{% endif %}
+						{% if exercice.reponse1 %}<li class ="repTrous" style="display:inline;" id="reponse_draggable_{{exercice.id}}_1">{{exercice.reponse1 | raw }}</li>{% endif %}
 						{% if exercice.reponse2 %}<li class ="repTrous" style="display:inline;" id="reponse_draggable_{{exercice.id}}_2">{{exercice.reponse2 | raw }}</li>{% endif %}
 						{% if exercice.reponse3 %}<li class ="repTrous" style="display:inline;" id="reponse_draggable_{{exercice.id}}_3">{{exercice.reponse3 | raw }}</li>{% endif %}
 						{% if exercice.reponse4 %}<li class ="repTrous" style="display:inline;" id="reponse_draggable_{{exercice.id}}_4">{{exercice.reponse4 | raw }}</li>{% endif %}
@@ -197,7 +197,20 @@
 			var reponse_array = reponse_array.split(",");
 			var data_temp = "";
 			for (var i=0; i<reponse_array.length; i++)
-				data_temp += $("label[for='reponse_"+id_exo+"_"+reponse_array[i]+"']").text()+" ";
+			{
+				if (reponse_array.length>1)
+				{
+					var reponse_juste_html = $("label[for='reponse_"+id_exo+"_"+reponse_array[i]+"']").html();
+					var reponse_juste_html = reponse_juste_html.substr(reponse_juste_html.indexOf('type="checkbox">') + 16);
+					data_temp += "<br />- "+reponse_juste_html+" ";
+				}
+				else
+				{
+					var reponse_juste_html = $("label[for='reponse_"+id_exo+"_"+reponse_array[i]+"']").html();
+					var reponse_juste_html = reponse_juste_html.substr(reponse_juste_html.indexOf('type="checkbox">') + 16);
+					data_temp += reponse_juste_html+" ";
+				}
+			}
 
 			DATA += '&type_exo=1&reponse_juste='+data_temp;
 		}

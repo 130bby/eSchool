@@ -161,7 +161,6 @@ class ExerciceRepository extends EntityRepository
 								$exercices[$key]['reponse1'] = str_replace('&'.$nom_variable[0].'&',$valeur_variable,$exercices[$key]['reponse1']);
 							$i++;
 						}
-
 						if($exercice['reponse2'] != NULL)
 						{
 							$reponse2 = explode('&',$exercice['reponse2']);

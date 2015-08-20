@@ -229,11 +229,6 @@ font-weight:bold;
 }
 
 
-@media screen and (max-width: 360px) {
-.bg_login{
-	background-image:url(/img/bg_login_mobile.png);
-}
-
 .modal-login-body > form > input[type="password"], input[type="text"]
 {
   width:325px;
@@ -399,6 +394,7 @@ background-color:#f6edc2;
 border-radius:20px;
 color:#5b74a9;
 padding:20px;
+margin-bottom: 10px;
 }
 
 .profile-themes {
@@ -423,8 +419,30 @@ opacity:0.7;
     color: #ffffff;
 }
 
-.navbar-inverse .navbar-nav > li > a:hover {
-    color: #f6a000;
+.navbar-inverse .navbar-nav > li > a:hover,
+.navbar-inverse .navbar-nav > li > a:focus {
+	background-color: #7290b8;
+	border-radius:10px;
+  
+}
+
+.navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus {
+	background-color: #7290b8;
+	background-image:none;
+    color: #fff;
+}
+
+.navbar-nav > li > a {
+	margin-bottom: 10px;
+    margin-top: 10px;
+	padding-top:5px;
+	padding-bottom:5px;
+}
+
+.dropdown-menu > li > a:focus,
+.dropdown-menu > li > a:hover{
+	background-color: rgba(114, 144, 200, 0.5);
+	background-image:none;
 }
 
 .title-modify-profile {
@@ -522,4 +540,77 @@ margin:auto;
   font-size:16px;
 
 }
+
+.menu-user{
+font-weight:bold;
+padding-bottom:1px !important;
+padding-top:1px !important;
+margin:0 !important;
+}
+
+.navbar-right > li > a:hover,
+.navbar-right > li > a:focus{
+background-color:#7290b8;
+}
+
+.modal-arbre-savoir-content{
+color:#ffffff;
+display:block;
+background-color:#7290b8;
+text-align:left;
+border-radius:20px;
+font-weight:bold;
+margin:auto;
+text-align:left;
+}
+
+.modal-arbre-savoir{
+top: 100px;
+width: 503px;
+height: 400px;
+margin:auto;
+}
+
+
+@media screen and (max-width: 502px) {
+.modal-arbre-savoir{
+width: 360px;
+height: 350px;
+}
+}
+
+@media screen and (max-width: 360px) {
+.modal-arbre-savoir{
+width: 320px;
+}
+}
+
+.btn-epreuve{
+	background-color: #dd922d;
+	color: #ffffff;
+	text-align:center;
+	margin-left:55px;
+	display:inline-block;
+	width:150px;
+	height:30px;
+	padding-top:5px;
+	border-radius: 10px;
+}
+
+@media screen and (max-width: 502px) {
+.btn-epreuve{
+	width:100px;
+	height:25px;
+	padding-top:1px;
+	margin-left:40px;
+	top:55px;
+}
+}
+
+.btn-epreuve:hover{
+	background-color: #506590;
+	color: #ffffff;
+	text-decoration:none;
+}
+
 

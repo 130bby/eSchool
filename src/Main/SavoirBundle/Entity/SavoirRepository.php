@@ -142,7 +142,7 @@ class SavoirRepository extends EntityRepository
 							->createQuery('SELECT s FROM MainSavoirBundle:Savoir s WHERE s.id ='.$current_prerequis)->getOneOrNullResult();
 						
 							// cas ou le prérequis vient d'un theme différent
-							if 	((int)$current_prerequis_object->getTheme()->getId() != $theme_id)
+							if 	($current_prerequis_object && (int)$current_prerequis_object->getTheme()->getId() != $theme_id)
 							{
 								$prerequis_passed[$i] = true;
 							}
