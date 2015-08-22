@@ -43,7 +43,8 @@ body.loading .modal {
 }
 
 .spanMarge{
-	margin-left: 16px;
+	margin-left: 40px;
+	line-height:15px;
 }
 
 .link_arbre_panel:hover{
@@ -58,15 +59,6 @@ text-decoration: none
 	width: 150px;
 	font-size: 21px;
 	text-align: center;
-}
-
-.btnSuivant{
-	border: none;
-	border-radius: 28px;
-	background: #0DDE29; 
-	height: 45px;
-	width: 150px;
-	font-size: 21px;
 }
 
 .btnRecom{
@@ -105,6 +97,7 @@ text-decoration: none
 	border: 2px #E4E5E5 solid;
 	border-radius: 12px;
 	margin-left: 3px;
+	background-color:#f6edc2;
 }
 
 .spanImg{

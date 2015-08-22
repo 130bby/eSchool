@@ -105,7 +105,7 @@ class ExerciceRepository extends EntityRepository
 					$success = false;
 				if ($success !== true)
 				{
-					$exercice_txt = str_replace("…", "...", stripslashes(html_entity_decode($enonce)));
+					$exercice_txt = str_replace("…", "...", $enonce);
 					$texte_array = explode("...",$exercice_txt);
 					$texte_reponse = $texte_array[0];
 					if (sizeof($texte_array)>1)

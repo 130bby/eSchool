@@ -228,6 +228,7 @@ font-weight:bold;
   font-size:16px;
 }
 
+@media screen and (max-width: 360px) {
 
 .modal-login-body > form > input[type="password"], input[type="text"]
 {
@@ -613,4 +614,152 @@ width: 320px;
 	text-decoration:none;
 }
 
+.header-exo{
+	background: url('/img/header_exo.png');
+    background-size: cover;
+	text-transform: uppercase;
+	color:#f39f03;
+	font-weight:bold;
+	height:99px;
+	padding-top:55px;
+	text-align:center;
+	font-size:22px;
+}
 
+@media screen and (max-width: 900px) {
+.header-exo{
+font-size:18px;
+}
+}
+
+@media screen and (max-width: 700px) {
+.header-exo{
+font-size:16px;
+}
+}
+
+@media screen and (max-width: 500px) {
+.header-exo{
+font-size:14px;
+}
+}
+
+.content-exo{
+background-color:#5c74a6;
+}
+
+.bloc-exo{
+	width:90%;
+	max-width:800px;
+	margin:auto;
+	margin-bottom:50px;
+	background-color:#ffffff;
+	-webkit-border-top-left-radius: 20px;
+	-webkit-border-top-right-radius: 20px;
+	-moz-border-radius-topleft: 20px;
+	-moz-border-radius-topright: 20px;
+	border-top-left-radius: 20px;
+	border-top-right-radius: 20px;
+	text-align:center;
+	
+}
+
+.type-exo-indicator{
+	border-top: 2px solid #5c74a6;
+	border-bottom: 2px solid #5c74a6;
+	color:#5c74a6;
+	text-align:center;
+	padding:5px;
+	margin:20px;
+	font-weight:bold;
+}
+
+.titre-exo{
+	border-bottom: 2px solid #f6edc2;
+	padding-bottom:10px;
+	margin-left:15%;
+	margin-right:15%;
+}
+
+.btn-valid-exo-bg{
+	background-color:#f6edc2;
+	padding:10px;
+	margin-top:30px;
+	overflow:auto;
+}
+
+.btn-valid-exo{
+	background-color:#97bccf;
+	color:#000000;
+	border-radius:10px;
+	border: 0;
+	height:25px;
+	width:150px;
+}
+
+.enonce-exo{
+text-align:center;
+}
+
+.progress {
+    background-color: #96bbcf;
+    background-image: none;
+    border-radius: 10px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset;
+    height: 10px;
+    margin-bottom: 0px;
+    overflow: hidden;
+	width:50%;
+	display:inline-block;
+	margin-top:20px;
+	text-align:center;
+}
+
+.progress-bar {
+    background-color: #f39f03;
+    background-image: none;
+    border-radius: 10px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset;
+}
+
+.progress-label{
+color:#96bbcf;
+display:inline-block;
+}
+
+.textarea-reponse-simple{
+border-radius:20px;
+-webkit-box-shadow: inset 2px 2px 14px -5px rgba(0,0,0,0.75);
+-moz-box-shadow: inset 2px 2px 14px -5px rgba(0,0,0,0.75);
+box-shadow: inset 2px 2px 14px -5px rgba(0,0,0,0.75);
+    height: 100px;
+    margin: 10px;
+    overflow: auto;
+    padding: 7px 10px;
+    width: 60%;    
+    border: 1px solid #fff;
+	color:#97bccf;
+}
+
+
+.checkbox-circle{
+
+}
+
+.btn-success-exo{
+	background-color:#ffffff;
+	color:#a1cc9a;
+	border-radius:10px;
+	border: 0;
+	height:25px;
+	width:100px;
+}
+
+.btn-fail-exo{
+	background-color:#ffffff;
+	color:#ca1334;
+	border-radius:10px;
+	border: 0;
+	height:25px;
+	width:100px;
+}

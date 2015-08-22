@@ -4,79 +4,102 @@
 	<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
 	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
 {% endblock %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" href="/css/awesome-bootstrap-checkbox.css" />
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+{% endblock %}
 		
 {% block body -%}
-     <h1 class="text-center">Epreuve pour acquérir : {{savoir.name}}</h1>
-		<div id="timer" class="blocCentre"><span id="temps_restant">Temps restant : </span><span id="clock"></span>
-			<div id="pwidget">  
-				<div id="progressbar">
-					<div id="indicator"></div>
+<div class="container-fluid">
+	<div class="header-exo row">
+		<span class="text-center">Epreuve pour acquérir : {{savoir.name}}</span>
+	</div>
+	<div class="content-exo row">
+		<div class="bloc-exo">
+			<span class="progress-label">Progression :</span>
+			<div class="progress">
+			  <div class="progress-bar progress-bar-exo" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+				<span class="sr-only progress-screen-readers-exo">0% Complete</span>
+			  </div>
+			</div>
+			<span class="progress-label progress-percentage-exo">0%</span>
+			<br />
+			<span class="progress-label">Temps restant : </span>
+			<div class="progress">
+			  <div class="progress-bar progress-bar-time" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+				<span class="sr-only progress-screen-readers-time">0%</span>
+			  </div>
+			</div>
+			<span id="clock" class="progress-label"></span>
+<!--				<p id="school_note"></p>-->
+			{% for exercice in exercices %}
+			<form autocomplete="off">
+				<div id="exercice_{{loop.index}}_{{exercice.id}}" style="display: none;">
+					<p class="type-exo-indicator row">
+						{% if exercice.type == 1 %}Coche la(les) bonne(s) réponse(s):
+						{% elseif exercice.type == 2 %}Réponds correctement à la question:
+						{% elseif exercice.type == 3 %}Remplis les trous avec les bons mots:<br /><span style="font-size:12px;">(Tu peux glisser déposer les mots à leur place)</span>
+						{% endif%}
+					</p>
+					<p class="lead text-center titre-exo">{{ exercice.titre }}</p>
+					{% if exercice.path is not null%}
+					<img src="/uploads/exercice/{{exercice.id}}.{{exercice.path}}" class="imgExercice" alt="{{exercice.titre}}" />
+					{% endif %}
+					{% if exercice.type == 3 %}
+						{% set enonce_array = exercice.texte|replace('…',"...")|split('...') %}
+						{% for enonce_part in enonce_array %}
+							<span class="enonce-exo" > {{ enonce_part | raw }} </span>
+							{% if loop.index < enonce_array|length %}
+								<span class="text-center trous" id="droppable_exo_{{exercice.id}}_{{loop.index}}">_____</span>
+							{% endif %}
+						{% endfor %}
+					{% else %}
+						<p class="text-center">{{ exercice.texte | raw }}</p>
+					{% endif %}
+					{% if exercice.type == 1 %}
+						<div id="randomise_me_{{exercice.id}}" class="checkbox checkbox-info checkbox-circle">
+							{% if exercice.reponse1 %}<input type="checkbox" id="reponse_{{exercice.id}}_1" name="reponse_{{exercice.id}}_1" class="styled"><label for="reponse_{{exercice.id}}_1"  class="spanMarge">{{exercice.reponse1 | raw }}</label></span>{% endif %}
+							{% if exercice.reponse2 %}<input type="checkbox" id="reponse_{{exercice.id}}_2" name="reponse_{{exercice.id}}_2" class="styled"><label for="reponse_{{exercice.id}}_2"  class="spanMarge">{{exercice.reponse2 | raw }}</label></span>{% endif %}
+							{% if exercice.reponse3 %}<input type="checkbox" id="reponse_{{exercice.id}}_3" name="reponse_{{exercice.id}}_3" class="styled"><label for="reponse_{{exercice.id}}_3"  class="spanMarge">{{exercice.reponse3 | raw }}</label></span>{% endif %}
+							{% if exercice.reponse4 %}<input type="checkbox" id="reponse_{{exercice.id}}_4" name="reponse_{{exercice.id}}_4" class="styled"><label for="reponse_{{exercice.id}}_4"  class="spanMarge">{{exercice.reponse4 | raw }}</label></span>{% endif %}
+						</div>
+						<div class="text-center btn-valid-exo-bg"><button type="submit" id="submit_exo_{{exercice.id}}_{{loop.index}}" class="btn-valid-exo">Valider</button></div>
+					{% elseif exercice.type == 2 %}
+						<p class="text-center">
+							<textarea class="textarea-reponse-simple" id="reponse_{{exercice.id}}_1" name="reponse_{{exercice.id}}_1" placeholder="Tape ta réponse ici ..."></textarea>
+							{% if exercice.init %}
+								<input type="hidden" id="reponse_{{exercice.id}}_juste" name="reponse_{{exercice.id}}_juste" value="{{exercice.reponse1}}" />
+							{% endif %}
+						</p>
+						<div class="text-center btn-valid-exo-bg"><button type="submit" id="submit_exo_{{exercice.id}}_{{loop.index}}" class="btn-valid-exo">Valider</button></div>
+					{% elseif exercice.type == 3 %}
+						<p class="text-center">
+							<ul id="drag_it_{{exercice.id}}" class="list-inline">
+							{% if exercice.reponse1 %}<li class ="repTrous" style="display:inline;" id="reponse_draggable_{{exercice.id}}_1">{{exercice.reponse1 | raw }}</li>{% endif %}
+							{% if exercice.reponse2 %}<li class ="repTrous" style="display:inline;" id="reponse_draggable_{{exercice.id}}_2">{{exercice.reponse2 | raw }}</li>{% endif %}
+							{% if exercice.reponse3 %}<li class ="repTrous" style="display:inline;" id="reponse_draggable_{{exercice.id}}_3">{{exercice.reponse3 | raw }}</li>{% endif %}
+							{% if exercice.reponse4 %}<li class ="repTrous" style="display:inline;" id="reponse_draggable_{{exercice.id}}_4">{{exercice.reponse4 | raw }}</li>{% endif %}
+							</ul>
+						</p>
+						<div class="btn-valid-exo-bg" style="margin-top:0px;">
+						<p class="text-center"><button type="button" id="restart_exo_{{exercice.id}}_{{loop.index}}" class="btn-valid-exo" style="background-color:#f39f03;" >Recommencer</button></p>
+						<p class="text-center"><button type="submit" id="submit_exo_{{exercice.id}}_{{loop.index}}" class="btn-valid-exo">Valider</button></p>
+						</div>
+					{% endif %}
 				</div>
-			</div>
-			<span id="compteurReponses"> Questions : 1/20 </span>
-			<progress id="progressQuest" value="0" max="255"> </progress> 
-			<p id="school_note"></p>
+			</form>
+			{% endfor %}
 		</div>
-		{% for exercice in exercices %}
-		<form >
-			<div id="exercice_{{loop.index}}_{{exercice.id}}" style="display: none;" class="blocCentre">
-				<p class="lead text-center">{{ exercice.titre }}</p>
-				{% if exercice.path is not null%}
-				<img src="/uploads/exercice/{{exercice.id}}.{{exercice.path}}" class="imgExercice" alt="{{exercice.titre}}" />
-				{% endif %}
-				{% if exercice.type == 3 %}
-					{% set enonce_array = exercice.texte|replace('…',"...")|split('...') %}
-					{% for enonce_part in enonce_array %}
-						<span class="text-center" > {{ enonce_part | raw }} </span>
-						{% if loop.index < enonce_array|length %}
-							<span class="text-center trous" id="droppable_exo_{{exercice.id}}_{{loop.index}}">...</span>
-						{% endif %}
-					{% endfor %}
-				{% else %}
-					<p class="text-center">{{ exercice.texte | raw }}</p>
-				{% endif %}
-				{% if exercice.type == 1 %}
-					<p id="randomise_me_{{exercice.id}}" class="text-center checkbox">
-						{% if exercice.reponse1 %}<label for="reponse_{{exercice.id}}_1" class="spanMarge"><input type="checkbox" id="reponse_{{exercice.id}}_1" name="reponse_{{exercice.id}}_1" class="spanMarge"/>{{exercice.reponse1 | raw }}</label>{% endif %}
-						{% if exercice.reponse2 %}<label for="reponse_{{exercice.id}}_2" class="spanMarge"><input type="checkbox" id="reponse_{{exercice.id}}_2" name="reponse_{{exercice.id}}_2" class="spanMarge"/>{{exercice.reponse2 | raw }}</label>{% endif %}
-						{% if exercice.reponse3 %}<label for="reponse_{{exercice.id}}_3" class="spanMarge"><input type="checkbox" id="reponse_{{exercice.id}}_3" name="reponse_{{exercice.id}}_3" class="spanMarge"/>{{exercice.reponse3 | raw }}</label>{% endif %}
-						{% if exercice.reponse4 %}<label for="reponse_{{exercice.id}}_4" class="spanMarge"><input type="checkbox" id="reponse_{{exercice.id}}_4" name="reponse_{{exercice.id}}_4" class="spanMarge"/>{{exercice.reponse4 | raw }}</label>{% endif %}
-					</p>
-					<p class="text-center"><button type="submit" id="submit_exo_{{exercice.id}}_{{loop.index}}" class="btn btn-success">Valider</button></p>
-				{% elseif exercice.type == 2 %}
-					<p class="text-center">
-						<input type="text" id="reponse_{{exercice.id}}_1" name="reponse_{{exercice.id}}_1" />
-						{% if exercice.init %}
-							<input type="hidden" id="reponse_{{exercice.id}}_juste" name="reponse_{{exercice.id}}_juste" value="{{exercice.reponse1}}" />
-						{% endif %}
-					</p>
-					<p class="text-center"><button type="submit" id="submit_exo_{{exercice.id}}_{{loop.index}}" class="btn btn-success">Valider</button></p>
-				{% elseif exercice.type == 3 %}
-					<p class="text-center">
-						<ul id="drag_it_{{exercice.id}}" class="list-inline">
-						{% if exercice.reponse1 %}<li class ="repTrous" style="display:inline;" id="reponse_draggable_{{exercice.id}}_1">{{exercice.reponse1 | raw }}</li>{% endif %}
-						{% if exercice.reponse2 %}<li class ="repTrous" style="display:inline;" id="reponse_draggable_{{exercice.id}}_2">{{exercice.reponse2 | raw }}</li>{% endif %}
-						{% if exercice.reponse3 %}<li class ="repTrous" style="display:inline;" id="reponse_draggable_{{exercice.id}}_3">{{exercice.reponse3 | raw }}</li>{% endif %}
-						{% if exercice.reponse4 %}<li class ="repTrous" style="display:inline;" id="reponse_draggable_{{exercice.id}}_4">{{exercice.reponse4 | raw }}</li>{% endif %}
-						</ul>
-					</p>
-					<p class="text-center"><button type="button" id="restart_exo_{{exercice.id}}_{{loop.index}}" class="btn btn-warning" >Recommencer</button></p>
-					<p class="text-center"><button type="submit" id="submit_exo_{{exercice.id}}_{{loop.index}}" class="btn btn-success">Valider</button></p>
-				{% endif %}
-			</div>
-		</form>
-		{% endfor %}
-			<div id="msgReponse" class="blocCentre" style="display: none;">
-				<span id="icone_reponse"></span>
-				<div id="textMsgReponse"> </div>
-				<button id="btnSuivant" class="btn btn-success" type="button"> Suivant</button>
-			</div>
+
 		<form id="pass_epreuve" action="{{ path('main_epreuve_passed_student', { 'savoir_id': savoir.id }) }}" method="post" enctype="multipart/form-data">
 			<input type="hidden" name="score" id="score" value="0">
 			<input type="hidden" name="temps" id="temps" value="0">
 		</form>
 		<div class="modal"></div>
-
+	</div>
+</div>
 {% endblock %}
 
 {% block javascripts %}
@@ -93,7 +116,7 @@
 	d.setMinutes(d.getMinutes()+15);
 	$('#clock').countdown(d)
 	.on('update.countdown', function(event) {
-		var format = '%M minutes et %S secondes';
+		var format = '%M min %S sec';
 		$(this).html(event.strftime(format));
 		$('#temps').val(event.strftime('%M:%S'));
 	})
@@ -113,9 +136,9 @@
 	//shuffle des reponses QCM
 	$('[id^="randomise_me_"]').each( function() {
 		var divs = $(this).children();
-		while (divs.length) {
+/*		while (divs.length) {
 			$(this).append(divs.splice(Math.floor(Math.random() * divs.length), 1)[0]);
-		}
+		}*/
 	});
 	
 	
@@ -181,7 +204,7 @@
 			  DATA += '&reponse'+i+'='+i;
 			  
 			// type reponse simple
-			if ($("#reponse_"+id_exo+"_"+i).is(':text'))
+			if ($("#reponse_"+id_exo+"_"+i).is('textarea'))
 			  DATA += '&reponse1='+encodeURIComponent($("#reponse_"+id_exo+"_"+i).val());
 
 			// type texte a trous
@@ -204,13 +227,11 @@
 				if (reponse_array.length>1)
 				{
 					var reponse_juste_html = $("label[for='reponse_"+id_exo+"_"+reponse_array[i]+"']").html();
-					var reponse_juste_html = reponse_juste_html.substr(reponse_juste_html.indexOf('type="checkbox">') + 16);
 					data_temp += "<br />- "+reponse_juste_html+" ";
 				}
 				else
 				{
 					var reponse_juste_html = $("label[for='reponse_"+id_exo+"_"+reponse_array[i]+"']").html();
-					var reponse_juste_html = reponse_juste_html.substr(reponse_juste_html.indexOf('type="checkbox">') + 16);
 					data_temp += reponse_juste_html+" ";
 				}
 			}
@@ -219,7 +240,7 @@
 		}
 
 		// type reponse simple
-		if ($("#reponse_"+id_exo+"_1").is(':text'))
+		if ($("#reponse_"+id_exo+"_1").is('textarea'))
 			if($("#reponse_"+id_exo+"_juste").length)
 				DATA += '&type_exo=2&reponse_juste='+$("#reponse_"+id_exo+"_juste").val();
 			else
@@ -229,7 +250,7 @@
 		if($("#droppable_exo_"+id_exo+"_1").html() != undefined)
 		{
 			var reponses = [ exercice_array[numero_exo-1]["reponse1"] , exercice_array[numero_exo-1]["reponse2"], exercice_array[numero_exo-1]["reponse3"], exercice_array[numero_exo-1]["reponse4"]]
-			DATA += '&type_exo=3&enonce=' + encodeURIComponent(exercice_array[numero_exo-1]["texte"]) + '&reponse_juste=' + encodeURIComponent(reponses);
+			DATA += '&type_exo=3&enonce=' + exercice_array[numero_exo-1]["texte"] + '&reponse_juste=' + encodeURIComponent(reponses);
 		}
 				
 //		alert(DATA);
@@ -241,33 +262,36 @@
 			success: function(data){
 				if (data == 'ok')
 				{
-					
-					$('#textMsgReponse').html('. <p> Bonne réponse =)</p>');
-					$('#msgReponse').removeClass('reponseInvalide');
-					$('#msgReponse').addClass('reponseValide');
-					$('#icone_reponse').removeClass('glyphicon glyphicon-remove-circle');
-					$('#icone_reponse').addClass('glyphicon glyphicon-ok-circle');
-					$('#msgReponse').show();
+					var div_next = $( "div[id^='exercice_"+numero_exo+"_']" ).find(".btn-valid-exo-bg");
+					div_next.css('background-color',"#a1cc9a");
+					div_next.css('color',"#ffffff");
+					div_next.html('<div style="font-weight:bold;display:inline-block;width:calc(100% - 125px);text-align:center;"><img style="vertical-align:middle;" src="/img/exercice_success_icon.png" /><p style="font-size:20px;padding-left:20px;display:inline-block;">Bonne réponse !</p></div><div style="width:125px;display:inline-block;vertical-align:middle;"><button class="btn-success-exo btnSuivant" type="button">Continuer</button></div>');
 					$('body').attr('onkeypress','if (event.keyCode == 13) {btnSuivant('+numero_exo+');}')
 					reponses_justes++;
 					$('#score').val(reponses_justes);
+									
+
 				}
 				else
 				{
 					var array_data = JSON.parse(data);
-					$('#textMsgReponse').html('. <p> Mauvaise réponse =( <br />La bonne réponse était : '+array_data[1]+'</p>');
-					$('#msgReponse').removeClass('reponseValide');
-					$('#msgReponse').addClass('reponseInvalide');
-					$('#icone_reponse').removeClass('glyphicon glyphicon-ok-circle');
-					$('#icone_reponse').addClass('glyphicon glyphicon-remove-circle');
-					$('#msgReponse').show();
+					var div_next = $( "div[id^='exercice_"+numero_exo+"_']" ).find(".btn-valid-exo-bg");
+					div_next.css('background-color',"#ca1334");
+					div_next.css('color',"#ffffff");
+					div_next.html('<div style="font-weight:bold;display:inline-block;width:calc(100% - 125px);text-align:center;"><img style="vertical-align:bottom;" src="/img/exercice_fail_icon.png" /><p style="padding-left:20px;font-size:20px;display:inline-block;"> Mauvaise réponse ...<br/><span style="font-size:14px;">La bonne réponse était : '+array_data[1]+'</span></p></div><div style="width:125px;display:inline-block;vertical-align:text-bottom;"><button class="btn-fail-exo btnSuivant" type="button">Continuer</button></div>');
 					$('body').attr('onkeypress','if (event.keyCode == 13) {btnSuivant('+numero_exo+');}')
+					//pour les textes à trous, il faut réinterpréter la réponse avec mathjax
+					if(exercice_array[numero_exo-1]["type"] == 3)
+						$(document).ajaxComplete(function(){MathJax.Hub.Queue(["Typeset",MathJax.Hub]);});
 				}
 				
 				compteurReponse++;
-				$('[id^="exercice_' + numero_exo + '"]').hide();
-				$("#btnSuivant").attr('onclick','btnSuivant('+numero_exo+')');
-				school_note();
+				$(".btnSuivant").attr('onclick','btnSuivant('+numero_exo+')');
+				$(".progress-bar-exo").css('width', 5*numero_exo+'%');
+				$(".progress-bar-exo").attr('aria-valuenow', 5*numero_exo);
+				$(".progress-percentage-exo").html(5*numero_exo+'%');
+				$(".progress-screen-readers-exo").html(5*numero_exo+'% Complete');
+//				school_note();
 				
 				$('body').removeClass('loading');
 //				alert(reponses_justes);
@@ -287,10 +311,9 @@
 			$('#pass_epreuve').submit();	
 			return false;
 		}
-		$('#msgReponse').hide();
+		$('[id^="exercice_' + numero_exo + '_"]').hide();
 		$('[id^="exercice_' + (parseInt(numero_exo)+1) + '_"]').show();
 		$('body').removeAttr('onkeypress');
-		quest();
 		
 	}
 	
@@ -298,40 +321,21 @@
 	</script>
 	
 	<script type="text/javascript">  
-		setInterval(prog, 100);
-		//Gestion de la barre de progression du temps
-		var maxprogress = 101;   // total à atteindre
-		var actualprogress = 100;  // valeur courante
-		var itv = 0;  // id pour setinterval
-		function prog()
-		{
-		  if(actualprogress >= maxprogress) 
+		var auto_refresh = setInterval(
+		  function ()
 		  {
-			clearInterval(itv);   	
-			return;
-		  }	
-		  
-		  <!-- var progressnum = document.getElementById("progressnum"); -->
-		  var indicator = document.getElementById("indicator");
-		  var dateActuelle = new Date();
-		  var temp = d - dateActuelle ;
-		  actualprogress = 100 - (temp *100 / 897894);
-		  indicator.style.width=actualprogress + "%";
-		  <!-- progressnum.innerHTML = actualprogress; -->
-		  if(actualprogress == maxprogress) clearInterval(itv); 
-		}
-		
-		function quest()
-		{
-			var progressQuest = document.getElementById("progressQuest");
-			progressQuest.value = 12.7 * compteurReponse;
-			$('#compteurReponses').html('question : '+compteurReponse+'/20');
-		}
-		
+			var time_progress = parseInt($(".progress-bar-time").attr('aria-valuenow'));
+			$(".progress-bar-time").css('width', (time_progress+1)+'%');
+			$(".progress-bar-time").attr('aria-valuenow', (time_progress+1));
+			$(".progress-screen-readers-time").html((time_progress+1)+'% Spent');
+		  }, 9000); // rafraichis toutes les 9000 millisecondes
+ 
+	/*
 		function school_note()
 		{
 			$('#school_note').html('Bonnes réponses : '+reponses_justes +'/'+(compteurReponse-1) );
 		}
+	*/
 	</script> 
 	
 {% endblock %}

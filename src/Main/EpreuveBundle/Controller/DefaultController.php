@@ -38,7 +38,7 @@ class DefaultController extends Controller
 			if ($reponse4 !== NULL)	$reponses[] = $reponse4;
 			$success = $em->getRepository('MainExerciceBundle:Exercice')->getReponseExercice($exercice,$type_exo,$reponses,$reponse_juste,$enonce);
 		}
-		
+
 		$em->getRepository('MainExerciceBundle:ExerciceStats')->updateStats($exercice, $success);
 		if ($success === true)
 			return new Response('ok');
