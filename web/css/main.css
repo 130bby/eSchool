@@ -138,55 +138,68 @@ text-decoration: none
 
 .barForce5{
 	display: inline-block;
-	width: 39px;
-	height: 80px;
-	position: relative;
+	width: 110px;
+	height: 105px;
+	position:absolute;
+	top:-18px;
 	background-image:url(/img/bar_force.png);
+	background-position: 0 -553px;
+	z-index:5;
 }
 
 .barForce4{
 	display: inline-block;
-	width: 39px;
-	height: 80px;
-	position: relative;
+	width: 110px;
+	height: 105px;
+	position:absolute;
+	top:-18px;
 	background-image:url(/img/bar_force.png);
-	background-position: 16% 0%;
+	background-position: 0 -445px;
+	z-index:5;
 }
 
 .barForce3{
 	display: inline-block;
-	width: 39px;
-	height: 80px;
-	position: relative;
+	width: 110px;
+	height: 105px;
+	position:absolute;
+	top:-18px;
 	background-image:url(/img/bar_force.png);
-	background-position: 32% 0%;
+	background-position: 0 -332px;
+	z-index:5;
 }
 
 .barForce2{
 	display: inline-block;
-	width: 39px;
-	height: 80px;
-	position: relative;
+	width: 110px;
+	height: 105px;
+	position:absolute;
+	top:-18px;
 	background-image:url(/img/bar_force.png);
-	background-position: 48% 0%;
+	background-position: 0 -224px;
+	z-index:5;
 }
 
 .barForce1{
 	display: inline-block;
-	width: 39px;
-	height: 80px;
-	position: relative;
+	width: 110px;
+	height: 105px;
+	position:absolute;
+	top:-18px;
 	background-image:url(/img/bar_force.png);
-	background-position: 64% 0%;
+	background-position: 0 -112px;
+	z-index:5;
 }
 
 .barForce0{
 	display: inline-block;
-	width: 39px;
-	height: 80px;
-	position: relative;
+	width: 110px;
+	height: 105px;
+	position:absolute;
+	top:-18px;
 	background-image:url(/img/bar_force.png);
-	background-position: 80% 0%;
+	background-position: 0 -2px;
+	z-index:5;
 }
 
 
@@ -521,7 +534,8 @@ text-align:center;
 }
 
 .form_login_user{
-width: 450px;
+max-width: 450px;
+width: 100%;
 margin: auto;
 }
 
@@ -583,4 +597,12 @@ margin:auto;
 max-width:900px;
 background-color:#fffaf2;
 border-radius:20px;
+}
+
+.repTrous p {
+display:inline-block;
+}
+
+.enonce-exo p {
+display:inline-block;
 }

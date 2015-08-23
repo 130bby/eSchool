@@ -60,10 +60,10 @@
 					{% endif %}
 					{% if exercice.type == 1 %}
 						<div id="randomise_me_{{exercice.id}}" class="checkbox checkbox-info checkbox-circle">
-							{% if exercice.reponse1 %}<input type="checkbox" id="reponse_{{exercice.id}}_1" name="reponse_{{exercice.id}}_1" class="styled"><label for="reponse_{{exercice.id}}_1"  class="spanMarge">{{exercice.reponse1 | raw }}</label></span>{% endif %}
-							{% if exercice.reponse2 %}<input type="checkbox" id="reponse_{{exercice.id}}_2" name="reponse_{{exercice.id}}_2" class="styled"><label for="reponse_{{exercice.id}}_2"  class="spanMarge">{{exercice.reponse2 | raw }}</label></span>{% endif %}
-							{% if exercice.reponse3 %}<input type="checkbox" id="reponse_{{exercice.id}}_3" name="reponse_{{exercice.id}}_3" class="styled"><label for="reponse_{{exercice.id}}_3"  class="spanMarge">{{exercice.reponse3 | raw }}</label></span>{% endif %}
-							{% if exercice.reponse4 %}<input type="checkbox" id="reponse_{{exercice.id}}_4" name="reponse_{{exercice.id}}_4" class="styled"><label for="reponse_{{exercice.id}}_4"  class="spanMarge">{{exercice.reponse4 | raw }}</label></span>{% endif %}
+							{% if exercice.reponse1 is not null %}<input type="checkbox" id="reponse_{{exercice.id}}_1" name="reponse_{{exercice.id}}_1" class="styled"><label for="reponse_{{exercice.id}}_1"  class="spanMarge">{{exercice.reponse1 | raw }}</label></span>{% endif %}
+							{% if exercice.reponse2 is not null %}<input type="checkbox" id="reponse_{{exercice.id}}_2" name="reponse_{{exercice.id}}_2" class="styled"><label for="reponse_{{exercice.id}}_2"  class="spanMarge">{{exercice.reponse2 | raw }}</label></span>{% endif %}
+							{% if exercice.reponse3 is not null %}<input type="checkbox" id="reponse_{{exercice.id}}_3" name="reponse_{{exercice.id}}_3" class="styled"><label for="reponse_{{exercice.id}}_3"  class="spanMarge">{{exercice.reponse3 | raw }}</label></span>{% endif %}
+							{% if exercice.reponse4 is not null %}<input type="checkbox" id="reponse_{{exercice.id}}_4" name="reponse_{{exercice.id}}_4" class="styled"><label for="reponse_{{exercice.id}}_4"  class="spanMarge">{{exercice.reponse4 | raw }}</label></span>{% endif %}
 						</div>
 						<div class="text-center btn-valid-exo-bg"><button type="submit" id="submit_exo_{{exercice.id}}_{{loop.index}}" class="btn-valid-exo">Valider</button></div>
 					{% elseif exercice.type == 2 %}
@@ -77,10 +77,10 @@
 					{% elseif exercice.type == 3 %}
 						<p class="text-center">
 							<ul id="drag_it_{{exercice.id}}" class="list-inline">
-							{% if exercice.reponse1 %}<li class ="repTrous" style="display:inline;" id="reponse_draggable_{{exercice.id}}_1">{{exercice.reponse1 | raw }}</li>{% endif %}
-							{% if exercice.reponse2 %}<li class ="repTrous" style="display:inline;" id="reponse_draggable_{{exercice.id}}_2">{{exercice.reponse2 | raw }}</li>{% endif %}
-							{% if exercice.reponse3 %}<li class ="repTrous" style="display:inline;" id="reponse_draggable_{{exercice.id}}_3">{{exercice.reponse3 | raw }}</li>{% endif %}
-							{% if exercice.reponse4 %}<li class ="repTrous" style="display:inline;" id="reponse_draggable_{{exercice.id}}_4">{{exercice.reponse4 | raw }}</li>{% endif %}
+							{% if exercice.reponse1 is not null %}<li class ="repTrous" style="display:inline;" id="reponse_draggable_{{exercice.id}}_1">{{exercice.reponse1 | raw }}</li>{% endif %}
+							{% if exercice.reponse2 is not null %}<li class ="repTrous" style="display:inline;" id="reponse_draggable_{{exercice.id}}_2">{{exercice.reponse2 | raw }}</li>{% endif %}
+							{% if exercice.reponse3 is not null %}<li class ="repTrous" style="display:inline;" id="reponse_draggable_{{exercice.id}}_3">{{exercice.reponse3 | raw }}</li>{% endif %}
+							{% if exercice.reponse4 is not null %}<li class ="repTrous" style="display:inline;" id="reponse_draggable_{{exercice.id}}_4">{{exercice.reponse4 | raw }}</li>{% endif %}
 							</ul>
 						</p>
 						<div class="btn-valid-exo-bg" style="margin-top:0px;">

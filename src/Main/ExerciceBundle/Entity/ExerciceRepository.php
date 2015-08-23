@@ -128,6 +128,10 @@ class ExerciceRepository extends EntityRepository
 
 	public function handleRandomExercices(&$exercices)
 	{
+		//bugfix pour l'editeur enrichi
+		$exercices = json_decode(str_replace('&amp;','&',json_encode($exercices)),true);
+		$exercices = json_decode(str_replace('&hellip;','...',json_encode($exercices)),true);
+
 		foreach ($exercices as $key => $exercice)
 		{
 			if ($exercice['init'] != NULL)

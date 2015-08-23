@@ -190,16 +190,6 @@ font-family: Verdana;
 font-weight:bold;
 }
 
-.modal-login-body > form > input[type="password"], input[type="text"]
-{
-  background-color:#e3e9f1;
-  color:#5b74a9;
-  width:390px;
-  height:50px;
-  text-align:left;
-  border-radius:10px;
-}
-
 .modal-login-body > form > input[type="submit"]
 {
   background-color:#5d76aa;
@@ -310,6 +300,18 @@ font-weight:bold;
 
 
 }
+
+.modal-login-body > form > input[type="password"], input[type="text"]
+{
+  background-color:#e3e9f1;
+  color:#5b74a9;
+  width:390px;
+  max-width:100%;
+  height:50px;
+  text-align:left;
+  border-radius:10px;
+}
+
 
 .modal-login-body input[type="text"]::-webkit-input-placeholder { color:#5b74a9; }
 .modal-login-body input[type="text"]::-moz-placeholder { color:#5b74a9; } /* firefox 19+ */
@@ -466,6 +468,7 @@ margin:auto;
     border-radius: 10px;
     height: 50px;
     width: 100%;
+    max-width: 390px;
 }
 
 @media screen and (max-width: 768px) {

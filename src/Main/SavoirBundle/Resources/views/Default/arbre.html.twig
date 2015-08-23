@@ -43,9 +43,9 @@
 			{% if savoir.available %}
 				<a id="link_modal_{{savoir.id}}_{{savoir.name}}"class="link_arbre_panel" href="#">
 					<span class="spanBlocImg" data-html="true" data-toggle="tooltip" data-placement="top" title="{%if savoir.prerequis_name is defined %}  Prérequis :  {%for nom_prerequis in savoir.prerequis_name%} <br/>-{{nom_prerequis}} {%endfor%} <br/><br/>{%endif%} Niveau : {{loop.parent.loop.index}} ">
-						{%if savoir.strength is defined %}<span style="width:39px; height:80px; display: inline-block;" class="barForce{{savoir.strength}}" ></span>{%endif%}
+						{%if savoir.strength is defined %}<span class="barForce{{savoir.strength}}" ></span>{%endif%}
 						<span class="spanImg {%if savoir.strength is defined %} spanImg_2 {% endif %}" {% if savoir.path is not null%} style="background-image:url(/uploads/savoir/{{savoir.id}}.{{savoir.path}});"{% endif %} ></span>
-						<span class="spanTxt" {%if savoir.strength is defined %} style="width:150px; top:-15px;" {%endif%}>{{savoir.name}}</span> 
+						<span class="spanTxt" {%if savoir.strength is defined %} style="top:5px;left:15px;" {%endif%}>{{savoir.name}}</span> 
 					</span>
 				</a>
 				<div id="modal_savoir_arbre_{{savoir.id}}" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
