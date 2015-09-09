@@ -172,6 +172,13 @@ font-family: Verdana;
 }
 }
 
+.fos_user_profile_edit > input[type="password"], input[type="text"] {
+    border-radius: 10px;
+    height: 50px;
+    width: 100%;
+    max-width: 390px;
+}
+
 .control-label
 {
   color:#5b74a9;
@@ -190,11 +197,24 @@ font-family: Verdana;
 font-weight:bold;
 }
 
+.modal-login-body > form > input[type="password"], input[type="text"]
+{
+  background-color:#e3e9f1;
+  color:#5b74a9;
+  width:390px;
+  max-width:100%;
+  height:50px;
+  text-align:left;
+  border-radius:10px;
+}
+
+
 .modal-login-body > form > input[type="submit"]
 {
   background-color:#5d76aa;
   color:#fffefc;
-  width:390px;
+  max-width:390px;
+  width:100%;
   height:40px;
   text-align:center;
   border-radius:20px;
@@ -250,7 +270,7 @@ font-weight:bold;
 
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 360px) {
 .bg_login{
 	background-image:url(/img/bg_login_mobile.png);
 }
@@ -273,7 +293,8 @@ font-weight:bold;
 {
   background-color:#5d76aa;
   color:#fffefc;
-  width:290px;
+  max-width:290px;
+  width:100%;
   height:25px;
   text-align:center;
   border-radius:20px;
@@ -299,17 +320,6 @@ font-weight:bold;
 }
 
 
-}
-
-.modal-login-body > form > input[type="password"], input[type="text"]
-{
-  background-color:#e3e9f1;
-  color:#5b74a9;
-  width:390px;
-  max-width:100%;
-  height:50px;
-  text-align:left;
-  border-radius:10px;
 }
 
 
@@ -462,13 +472,6 @@ text-align:center;
 
 .fos_user_profile_edit button, input, optgroup, select, textarea {
 margin:auto;
-}
-
-.fos_user_profile_edit > input[type="password"], input[type="text"] {
-    border-radius: 10px;
-    height: 50px;
-    width: 100%;
-    max-width: 390px;
 }
 
 @media screen and (max-width: 768px) {

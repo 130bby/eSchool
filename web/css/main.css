@@ -138,67 +138,73 @@ text-decoration: none
 
 .barForce5{
 	display: inline-block;
-	width: 110px;
-	height: 105px;
+	width: 120px;
+	height: 120px;
 	position:absolute;
-	top:-18px;
+	top:-22px;
+	left:28px;
 	background-image:url(/img/bar_force.png);
-	background-position: 0 -553px;
+	background-position: 0 -671px;
 	z-index:5;
 }
 
 .barForce4{
 	display: inline-block;
-	width: 110px;
-	height: 105px;
+	width: 120px;
+	height: 110px;
 	position:absolute;
-	top:-18px;
+	top:-22px;
+	left:28px;
 	background-image:url(/img/bar_force.png);
-	background-position: 0 -445px;
+	background-position: 0 -548px;
 	z-index:5;
 }
 
 .barForce3{
 	display: inline-block;
-	width: 110px;
-	height: 105px;
+	width: 120px;
+	height: 110px;
 	position:absolute;
-	top:-18px;
+	top:-22px;
+	left:28px;
 	background-image:url(/img/bar_force.png);
-	background-position: 0 -332px;
+	background-position: 0 -419px;
 	z-index:5;
 }
 
 .barForce2{
 	display: inline-block;
-	width: 110px;
-	height: 105px;
+	width: 120px;
+	height: 110px;
 	position:absolute;
-	top:-18px;
+	top:-22px;
+	left:28px;
 	background-image:url(/img/bar_force.png);
-	background-position: 0 -224px;
+	background-position: 0 -286px;
 	z-index:5;
 }
 
 .barForce1{
 	display: inline-block;
-	width: 110px;
-	height: 105px;
+	width: 120px;
+	height: 110px;
 	position:absolute;
-	top:-18px;
+	top:-22px;
+	left:28px;
 	background-image:url(/img/bar_force.png);
-	background-position: 0 -112px;
+	background-position: 0 -146px;
 	z-index:5;
 }
 
 .barForce0{
 	display: inline-block;
-	width: 110px;
-	height: 105px;
+	width: 120px;
+	height: 110px;
 	position:absolute;
-	top:-18px;
+	top:-22px;
+	left:28px;
 	background-image:url(/img/bar_force.png);
-	background-position: 0 -2px;
+	background-position: 0 -14px;
 	z-index:5;
 }
 
@@ -442,11 +448,11 @@ width: 35px;
 
 .modal_login_user{
 top: 100px;
-width: 503px;
+max-width: 503px;
+width: 100%;
 height: 494px;
 text-align:left;
-padding-left:30px;
-right:100px;
+margin:auto;
 border-radius:20px;
 }
 
@@ -457,7 +463,6 @@ padding-top:23px;
 .form_login_user a{
 font-weight: normal;
 display: block;
-padding-right:50px;
 margin-top:50px;
 text-align:center;
 }
@@ -470,14 +475,15 @@ text-align:center;
 }
 
 
-@media screen and (max-width: 502px) {
+
+
+@media screen and (max-width: 360px) {
 .modal_login_user{
 top: 50px;
-width: 360px;
+width: 300px;
 height: 350px;
 text-align:left;
 padding-left:0px;
-right:10px;
 }
 
 .modal_login_user h3{
@@ -487,30 +493,9 @@ padding-top:7px;
 .form_login_user a{
 font-weight: normal;
 display: block;
-padding-right:120px;
 margin-top:17px;
-}
-}
-
-@media screen and (max-width: 320px) {
-.modal_login_user{
-top: 50px;
-width: 320px;
-height: 350px;
-text-align:left;
-padding-left:0px;
-right:10px;
-}
-
-.modal_login_user h3{
-padding-top:7px;
-}
-
-.form_login_user a{
-font-weight: normal;
-display: block;
-padding-right:150px;
-margin-top:17px;
+margin-left:auto;
+margin-right:auto;
 }
 
 .modal_sign_up_user{
@@ -606,3 +591,135 @@ display:inline-block;
 .enonce-exo p {
 display:inline-block;
 }
+
+/* affichage des badges en fin d'épreuve*/
+.badge2-1{
+	display: inline-block;
+	width: 150px;
+	height: 150px;
+	background-image:url(/img/badges.jpg);
+	background-position: 0 -700px;
+}
+
+.badge4-1{
+	display: inline-block;
+	width: 160px;
+	height: 150px;
+	background-image:url(/img/badges.jpg);
+	background-position: -230px -700px;
+}
+
+.badge7-1{
+	display: inline-block;
+	width: 150px;
+	height: 150px;
+	background-image:url(/img/badges.jpg);
+	background-position: -520px -702px;
+}
+
+.badge1-1{
+	display: inline-block;
+	width: 150px;
+	height: 150px;
+	background-image:url(/img/badges.jpg);
+	background-position: -620px -380px;
+}
+
+.badge3-1{
+	display: inline-block;
+	width: 160px;
+	height: 150px;
+	background-image:url(/img/badges.jpg);
+	background-position: -580px -30px;
+}
+
+.badge5-1{
+	display: inline-block;
+	width: 160px;
+	height: 160px;
+	background-image:url(/img/badges.jpg);
+	background-position: -5px -25px;
+}
+
+.badge5-2{
+	display: inline-block;
+	width: 160px;
+	height: 160px;
+	background-image:url(/img/badges.jpg);
+	background-position: -157px -25px;
+}
+
+.badge5-3{
+	display: inline-block;
+	width: 160px;
+	height: 160px;
+	background-image:url(/img/badges.jpg);
+	background-position: -305px -25px;
+}
+
+.badge5-4{
+	display: inline-block;
+	width: 160px;
+	height: 160px;
+	background-image:url(/img/badges.jpg);
+	background-position: -5px -185px;
+}
+
+.badge5-5{
+	display: inline-block;
+	width: 160px;
+	height: 160px;
+	background-image:url(/img/badges.jpg);
+	background-position: -157px -185px;
+}
+
+.badge6-1{
+	display: inline-block;
+	width: 150px;
+	height: 150px;
+	background-image:url(/img/badges.jpg);
+	background-position: -10px -375px;
+}
+
+.badge6-2{
+	display: inline-block;
+	width: 150px;
+	height: 150px;
+	background-image:url(/img/badges.jpg);
+	background-position: -157px -370px;
+}
+
+.badge6-3{
+	display: inline-block;
+	width: 150px;
+	height: 150px;
+	background-image:url(/img/badges.jpg);
+	background-position: -300px -375px;
+}
+
+.badge6-4{
+	display: inline-block;
+	width: 150px;
+	height: 150px;
+	background-image:url(/img/badges.jpg);
+	background-position: -10px -520px;
+}
+
+.badge6-5{
+	display: inline-block;
+	width: 150px;
+	height: 150px;
+	background-image:url(/img/badges.jpg);
+	background-position: -160px -520px;
+}
+
+.badge6-6{
+	display: inline-block;
+	width: 150px;
+	height: 150px;
+	background-image:url(/img/badges.jpg);
+	background-position: -302px -520px;
+}
+
+
+
