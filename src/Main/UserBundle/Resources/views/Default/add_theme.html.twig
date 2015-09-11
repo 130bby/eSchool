@@ -21,28 +21,36 @@
 		{% endif %}
 		
 	{% endfor %}
-	<p class="txt_home_eleve">  Envie de devenir un savant ? <br/>
+	<p class="orange-add-theme">  Envie de devenir un savant ? <br/>
 		Développe tes arbres de savoir pour les thèmes qui t'intéressent !  
-	</p>
-	<div class="col-lg-offset-5">
-		<ul id="menu-accordeon">
-			{%for matiere in matieres%}
-				<li><a id="a_home_matiere_{{matiere.name}}" href="#">{{matiere.name}}</a>
-					<ul>
-						{%for theme in matiere.themes%}
-							<li id="li_home_theme_{{matiere.name}}_{{theme.name}}" class="menu_index_closed">
-								<div class="div_theme_name_home">{{theme.name}}</a></div>
-									{%if theme.available is not defined%}
-										<div class="div_icone_plus_home"><a href="{{ path('main_user_add_theme', { 'theme_id': theme.id })}}"><span id="icone_plus_home" class="glyphicon glyphicon-plus-sign"></span></a></div>
-									{%else%}
-										<div class="div_icone_plus_home"><a href="{{ path('main_user_remove_theme', { 'theme_id': theme.id })}}"><span id="icone_plus_home" class="glyphicon glyphicon-minus-sign"></span></a></div>
-									{%endif%}
-							</li>
-						{%endfor%} 
-					</ul>
-			{%endfor%}
-		</ul>
+	</p><br /><br />
+	
+	<div class="container">
+		<div class="row">	
+		{%for matiere in matieres%}	
+			<div class="col-md-3 col-xs-6 padding-reduced">	
+			<div class="bg-blue-theme">	
+				<a class="btn-add-theme orange-add-theme" role="button" data-toggle="collapse" href="#{{matiere.id}}" aria-expanded="false" aria-controls="{{matiere.id}}">
+					<img class="btn-add-theme img-add-theme" src="/uploads/matiere/{{matiere.id}}.png">
+					<p style="margin-top:10px;">{{matiere.name|upper}}&nbsp;&#9658;</p>
+				</a>
+				<div class="collapse theme-add-theme" id="{{matiere.id}}">
+				{%for theme in matiere.themes%}
+					{%if theme.available is not defined%}
+						<a href="{{ path('main_user_add_theme', { 'theme_id': theme.id })}}" class="link-add-theme" {% if loop.first %}style="border-top:none;"{% endif %}><span id="icone_plus_home" class="glyphicon glyphicon-plus-sign"></span> <span>{{theme.name}}</span></a>
+					{%else%}
+						<a href="{{ path('main_user_remove_theme', { 'theme_id': theme.id })}}" class="link-add-theme" {% if loop.first %}style="border-top:none;"{% endif %}><span id="icone_plus_home" class="glyphicon glyphicon-minus-sign"></span> <span>{{theme.name}}</span></a>
+					{%endif%}
+					<br />
+				{%endfor%}
+				</div>
+			</div>
+			</div>
+		  {%endfor%}
+		</div>
 	</div>
+
+	<div class="footer-mer-1"></div>
 {% endblock %}
 {% block javascripts %}
 {{ parent() }}

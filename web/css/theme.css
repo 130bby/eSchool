@@ -769,3 +769,62 @@ box-shadow: inset 2px 2px 14px -5px rgba(0,0,0,0.75);
 	height:25px;
 	width:100px;
 }
+
+.orange-add-theme{
+	color:#f6a000;
+	font-size:20px;
+	font-weight:bold;
+	text-align:center;
+}
+
+.btn-add-theme{
+	display:inline-block;
+	background-color:#5c74a6;
+	width:100%;
+	color:#f39f03;
+}
+
+.img-add-theme{
+margin:auto;
+    display: block;
+    max-width:150px;
+    max-height:100px;
+    width: auto;
+    height: auto;
+}
+
+.bg-blue-theme{
+	background-color:#5c74a6;
+	padding-top:10px;
+	margin-top:10px;
+}
+
+.btn-add-theme:hover, .btn-add-theme:visited, .btn-add-theme:link{
+color:#f6a000;
+text-decoration: none;
+}
+
+@media screen and (max-width: 480px) {
+.orange-add-theme{
+font-size:13px;
+}
+}
+
+.theme-add-theme{
+background-color:#7290b8;
+font-weight:bold;
+text-align:center;
+}
+
+.link-add-theme{
+color:#fff;
+padding-top:10px;
+padding-bottom:10px;
+border-top: 2px solid #fff;
+display:inline-block;
+}
+
+.link-add-theme:hover, .link-add-theme:visited, .link-add-theme:link{
+color:#fff;
+text-decoration: none;
+}

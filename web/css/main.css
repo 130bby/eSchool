@@ -343,12 +343,6 @@ margin-bottom:20px;
 	right: 103px;
 }
 
-.div_icone_plus_home{
-	display: inline-block;
-	float: right;
-	top: -4px;
-}
-
 #textMsgReponse{
 	float: center;
 }
@@ -431,6 +425,7 @@ margin: 8px;
 	max-width: 150px;
 	display: inline-block;
 	margin: 5px;
+	
 }
 
 .flash_message_home{
@@ -721,5 +716,8 @@ display:inline-block;
 	background-position: -302px -520px;
 }
 
-
+.padding-reduced{
+padding-left:5px;
+padding-right:5px;
+}
 
