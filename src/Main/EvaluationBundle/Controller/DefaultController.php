@@ -61,6 +61,10 @@ class DefaultController extends Controller
 			$evaluation_user->setUser($this->container->get('security.context')->getToken()->getUser());
 			$evaluation_user->setEvaluation($evaluation);
 			$evaluation_user->setScore($score);
+			if ($score > 70)
+				$evaluation_user->setSuccess(1);
+			else
+				$evaluation_user->setSuccess(0);
 			$evaluation_user->setTemps($temps);
 			$evaluation_user->setDate(new \Datetime());
 			$em->persist($evaluation_user);
