@@ -57,7 +57,6 @@ class SavoirRepository extends EntityRepository
 
 		$evaluations = $this->getEntityManager()
 			->createQuery('SELECT e FROM MainEvaluationBundle:Evaluation e WHERE e.theme ='.$theme_id)->getArrayResult();
-		
 		$i=1;
 		// on récupère les niveaux suivants
 		while (!empty($savoirs))
@@ -65,7 +64,9 @@ class SavoirRepository extends EntityRepository
 			$this->getNextLevel($savoirs, $arbre, $user, $arbre['level'.$i], $i+1, $theme_id, $evaluations);
 			$i++;
 		}
-
+		if (!empty($evaluations))
+			foreach ($evaluations as $evaluation)
+				$arbre['evaluations'][$i+1] = $evaluation;
 		return $arbre;
 	}
 	

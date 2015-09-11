@@ -1,15 +1,158 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
+<div class="container-fluid">
+	<div class="header-exo row"></div>
+	{% if badges is not empty %}
+		<div id="myCarousel" class="carousel slide" data-ride="carousel">
+	  <!-- Indicators -->
+	  <ol class="carousel-indicators">
+		<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
 	{% for badge in badges %}
-		Bravo, vous avez acquis un nouveau badge : {{badge.badge.name}}<br /> 
+		<li data-target="#myCarousel" data-slide-to="{loop.index}"></li>
 	{% endfor %}
+	  </ol>
+
+	  <!-- Wrapper for slides -->
+	  <div class="carousel-inner" role="listbox">
+		<div class="item active">
+			<div class="content-exo row">
+				<div class="bloc-exo">
 	{% if success %}
-		Bravo ! Vous avez passé l'évaluation avec succès ! les savoirs suivants ont été débloqués automatiquement :
+						<br />
+						<p class="type-exo-indicator row">
+Bravo ! Tu viens de terminer l'évaluation avec succès ! les savoirs suivants ont été débloqués automatiquement :
+		{% for savoir in savoirs %}
+			<br />- {{savoir.name}} 
+		{% endfor %}						
+						</p>
+						<img src="/img/epreuve_success_icon.png">
+						{% if app.user %}
+							<div class="text-center btn-valid-exo-bg"><a href="{{ path('main_savoir_arbre_theme', { 'theme_id': savoir.theme.id })}}"><button type="submit" class="btn-valid-exo">Retour à l'arbre</button></a></div>
+	{% else %}
+							<br /> 
+							<p class="type-exo-indicator row">
+								Motivé pour continuer à apprendre et sauvegarder tes progrès ?
+								<div class="text-center btn-valid-exo-bg"><a id="link_sign_up_user_2" href="#"><button type="submit" class="btn-valid-exo">Inscris toi !</button></a></div>
+							</p>
+							<br />
+	{% endif %}
+
+						
+					{% else %}
+						<br />
+						<p class="type-exo-indicator row">
+						Quel dommage, ton score est insuffisant
+						</p>
+						<img src="/img/epreuve_fail_icon.png">
+						{% if app.user %}
+							<div class="text-center btn-valid-exo-bg"><a href="{{ path('main_savoir_arbre_theme', { 'theme_id': evaluation.theme.id })}}"><button type="submit" class="btn-valid-exo">Retour à l'arbre</button></a></div>
+						{% else %}
+							<br /> 
+							<p class="type-exo-indicator row">
+								Motivé pour continuer à apprendre et sauvegarder tes progrès ?
+								<div class="text-center btn-valid-exo-bg"><a id="link_sign_up_user_2" href="#"><button type="submit" class="btn-valid-exo">Inscris toi !</button></a></div>
+							</p>
+							<br />
+						{% endif %}
+						
+					{% endif %}
+
+				</div>
+			</div>
+		</div>
+
+		{% for badge in badges %}
+			<div class="item">
+			  <div class="content-exo row">
+				<div class="bloc-exo">
+					<br /><p class="type-exo-indicator row">Bravo, tu as acquis un nouveau badge : {{badge.badge.name}}</p>
+						<span class="badge{{badge.badge.id}}-{{badge.niveau}}"></span>
+						{% if app.user %}
+							<div class="text-center btn-valid-exo-bg"><a href="{{ path('main_badge_homepage')}}"><button type="submit" class="btn-valid-exo">Voir mes badges</button></a></div>
+						{% else %}
+							<br /> 
+							<p class="type-exo-indicator row">
+								Motivé pour continuer à apprendre et sauvegarder tes progrès ?
+								<div class="text-center btn-valid-exo-bg"><a id="link_sign_up_user_2" href="#"><button type="submit" class="btn-valid-exo">Inscris toi !</button></a></div>
+							</p>
+							<br />
+						{% endif %}
+				</div>
+			  </div>
+			</div>
+		{% endfor %}
+	  </div>
+
+	  <!-- Left and right controls -->
+	  <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+		<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+		<span class="sr-only">Previous</span>
+	  </a>
+	  <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+		<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+		<span class="sr-only">Next</span>
+	  </a>
+	</div>
+	
+	{% else %}
+	<div class="content-exo row">
+		<div class="bloc-exo">
+			{% if success %}
+				<br />
+				<p class="type-exo-indicator row">
+				Bravo ! Tu viens de terminer l'évaluation avec succès ! les savoirs suivants ont été débloqués automatiquement :
 		{% for savoir in savoirs %}
 			<br />- {{savoir.name}} 
 		{% endfor %}
-	{% else %}
-		Dommage, votre résultat à l'évaluation est insuffisant.
+				</p>
+				<img src="/img/epreuve_success_icon.png">
+				{% if app.user %}
+					<div class="text-center btn-valid-exo-bg"><a href="{{ path('main_savoir_arbre_theme', { 'theme_id': savoir.theme.id })}}"><button type="submit" class="btn-valid-exo">Retour à l'arbre</button></a></div>
+				{% else %}
+				<br /> 
+				<p class="type-exo-indicator row">
+					Motivé pour continuer à apprendre et sauvegarder tes progrès ?
+					<div class="text-center btn-valid-exo-bg"><a id="link_sign_up_user_2" href="#"><button type="submit" class="btn-valid-exo">Inscris toi !</button></a></div>
+				</p>
+				<br />
+				{% endif %}
+
+				
+			{% else %}
+				<br />
+				<p class="type-exo-indicator row">
+				Quel dommage, ton score est insuffisant
+				</p>
+				<img src="/img/epreuve_fail_icon.png">
+				{% if app.user %}
+					<div class="text-center btn-valid-exo-bg"><a href="{{ path('main_savoir_arbre_theme', { 'theme_id': evaluation.theme.id })}}"><button type="submit" class="btn-valid-exo">Retour à l'arbre</button></a></div>
+				{% else %}
+					<br /> 
+					<p class="type-exo-indicator row">
+						Motivé pour continuer à apprendre et sauvegarder tes progrès ?
+						<div class="text-center btn-valid-exo-bg"><a id="link_sign_up_user_2" href="#"><button type="submit" class="btn-valid-exo">Inscris toi !</button></a></div>
+					</p>
+					<br />
+				{% endif %}
+				
+			{% endif %}
+
+		</div>
+	</div>
 	{% endif %}
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script type="text/javascript">
+		$("#link_sign_up_user_2").click(function(){
+			$("#bs-example-navbar-collapse-1").hide();
+			$("#modal_sign_up_user").modal({
+				show: true
+			});
+		});
+	</script>
 {% endblock %}

@@ -79,6 +79,15 @@
 			{% endfor %}
 		</li> 
 		{% endfor %}
+		{% if evaluations[arbre|length+1] is defined and evaluations[arbre|length+1]['passed'] is not defined %}
+			<li style="margin-top:20px;">
+				<a href="{{ path('main_evaluation_pass_student', { 'evaluation_id': evaluations[arbre|length+1]['id'] }) }}">
+					<button type="button" class="btn btn-primary" >
+						Passer une évaluation : {{evaluations[arbre|length+1]['name']}}
+					</button>
+				</a>
+			</li> 
+		{% endif %}		
 	</ul>
 </div>
 

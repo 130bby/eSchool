@@ -57,8 +57,6 @@ class DefaultController extends Controller
 		$score = (int)$request->get('score')*100/(count($evaluation->getSavoirs())*6);
 		$savoirs = array();
 
-		if ($score > 70)
-		{
 			$evaluation_user = new EvaluationUser();
 			$evaluation_user->setUser($this->container->get('security.context')->getToken()->getUser());
 			$evaluation_user->setEvaluation($evaluation);
@@ -67,6 +65,8 @@ class DefaultController extends Controller
 			$evaluation_user->setDate(new \Datetime());
 			$em->persist($evaluation_user);
 			
+		if ($score > 70)
+		{
 			foreach ($evaluation->getSavoirs() as $savoir_id)
 			{
 				$savoir = $em->getRepository('MainSavoirBundle:Savoir')->find($savoir_id);
@@ -89,7 +89,7 @@ class DefaultController extends Controller
 			$success = false;
 
 		$badges = $em->getRepository('MainUserBundle:BadgeUser')->setBadges($this->container->get('security.context')->getToken()->getUser(),$score,$evaluation->getTheme(),false,true);
-        return $this->render('MainEvaluationBundle:Default:passed.html.twig', array('success' => $success, 'savoirs' => $savoirs, 'badges' => $badges));
+        return $this->render('MainEvaluationBundle:Default:passed.html.twig', array('success' => $success, 'evaluation' => $evaluation,'savoirs' => $savoirs, 'badges' => $badges));
     }
 	
 	
