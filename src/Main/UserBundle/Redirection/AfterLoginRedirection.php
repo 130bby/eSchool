@@ -41,8 +41,13 @@ class AfterLoginRedirection implements AuthenticationSuccessHandlerInterface
         elseif (in_array('ROLE_USER', $rolesTab, true))
 		{
 			$last_epreuve = $this->em->getRepository('MainUserBundle:SavoirUser')->findOneBy(array('user' => $token->getUser()->getId()),array('date' => 'DESC'));
-			$savoir = $this->em->getRepository('MainSavoirBundle:Savoir')->find($last_epreuve->getSavoir()->getId());
-			$redirection = new RedirectResponse($this->router->generate('main_savoir_arbre_theme', array('theme_id' => $savoir->getTheme()->getId())));
+			if ($last_epreuve)
+			{
+				$savoir = $this->em->getRepository('MainSavoirBundle:Savoir')->find($last_epreuve->getSavoir()->getId());
+				$redirection = new RedirectResponse($this->router->generate('main_savoir_arbre_theme', array('theme_id' => $savoir->getTheme()->getId())));
+			}
+			else
+				$redirection = new RedirectResponse($this->router->generate('fos_user_profile_show'));
 		}
         // otherwise we redirect user to the member area
         else
