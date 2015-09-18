@@ -37,7 +37,7 @@ class Cours
 
 	/**
 	 * @ORM\ManyToOne(targetEntity="Main\SavoirBundle\Entity\Savoir")
-	 * @ORM\JoinColumn(name="savoir_id", referencedColumnName="id")
+	 * @ORM\JoinColumn(name="savoir_id", referencedColumnName="id", onDelete="CASCADE")
 	*/
 	protected $savoir;
 

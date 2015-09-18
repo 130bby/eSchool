@@ -71,24 +71,6 @@ class DefaultController extends Controller
 			$matieres[$key] = $matiere_array;
 		}	
 
-		$themes = $em->createQuery("SELECT IDENTITY(t.matiere) as matiere, t.id as id, t.name as name FROM MainThemeBundle:Theme t")->getArrayResult();
-		if ($this->container->get('security.context')->isGranted('ROLE_ELEVE'))
-			$themes = $em->getRepository('MainUserBundle:ThemeUser')->setAvailable($themes,$this->container->get('security.context')->getToken()->getUser());
-		
-		foreach ($themes as $theme)
-		{
-			foreach ($matieres as $key => $matiere)
-			{
-				$current_matiere = $theme['matiere'];
-				if ($current_matiere !== NULL && $current_matiere == $matiere['id'])
-					$matieres[$key]['themes'][] = $theme;
-			}
-		}
-		$session = $this->container->get('session');
-		$session->set('matieres', $matieres);
-		$session->save();
-		
-		
 		if ($this->container->get('security.context')->isGranted('ROLE_ELEVE'))
 		{
 			if ($theme_id != NULL)
@@ -115,6 +97,23 @@ class DefaultController extends Controller
 			$session->save();
 			return $this->forward('MainSavoirBundle:Default:getArbre', array('theme_id'  => $theme_id));
 		}
+		
+		$themes = $em->createQuery("SELECT IDENTITY(t.matiere) as matiere, t.id as id, t.name as name FROM MainThemeBundle:Theme t")->getArrayResult();
+		if ($this->container->get('security.context')->isGranted('ROLE_ELEVE'))
+			$themes = $em->getRepository('MainUserBundle:ThemeUser')->setAvailable($themes,$this->container->get('security.context')->getToken()->getUser());
+		
+		foreach ($themes as $theme)
+		{
+			foreach ($matieres as $key => $matiere)
+			{
+				$current_matiere = $theme['matiere'];
+				if ($current_matiere !== NULL && $current_matiere == $matiere['id'])
+					$matieres[$key]['themes'][] = $theme;
+			}
+		}
+		$session = $this->container->get('session');
+		$session->set('matieres', $matieres);
+		$session->save();
 		
         return $this->render('MainUserBundle:Default:add_theme.html.twig', array('matieres' => $matieres));
     }

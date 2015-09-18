@@ -84,7 +84,7 @@ class ExerciceRepository extends EntityRepository
 			break;
 			//reponse simple
 			case 2:
-				if ($reponses[0] == $reponse_juste)
+				if ($this->compare_tolerant_text($reponses[0], $reponse_juste))
 					return true;
 				else
 					return array(false,$reponse_juste);
@@ -290,5 +290,25 @@ class ExerciceRepository extends EntityRepository
 			}
 		}
 	
+	}
+	
+	function compare_tolerant_text($reponse, $reponse_juste, $charset='utf-8')
+	{
+		$reponse = htmlentities($reponse, ENT_NOQUOTES, $charset);
+		
+		$reponse = preg_replace('#&([A-za-z])(?:acute|cedil|caron|circ|grave|orn|ring|slash|th|tilde|uml);#', '\1', $reponse);
+		$reponse = preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', $reponse); // pour les ligatures e.g. '&oelig;'
+		$reponse = preg_replace('#&[^;]+;#', '', $reponse); // supprime les autres caractères
+		
+		$reponse_juste = htmlentities($reponse_juste, ENT_NOQUOTES, $charset);
+		
+		$reponse_juste = preg_replace('#&([A-za-z])(?:acute|cedil|caron|circ|grave|orn|ring|slash|th|tilde|uml);#', '\1', $reponse_juste);
+		$reponse_juste = preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', $reponse_juste); // pour les ligatures e.g. '&oelig;'
+		$reponse_juste = preg_replace('#&[^;]+;#', '', $reponse_juste); // supprime les autres caractères
+		
+		if (strtolower(trim($reponse_juste)) == strtolower(trim($reponse)))
+			return true;
+		else
+			return false;
 	}
 }
