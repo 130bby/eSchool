@@ -22,7 +22,7 @@ security:
                 provider: fos_userbundle
                 csrf_provider: form.csrf_provider
                 failure_path: /
-                default_target_path: /profile
+                success_handler: redirect.after.login
             logout:       true
             anonymous:    true
         default:
