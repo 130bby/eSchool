@@ -241,5 +241,9 @@ class SavoirRepository extends EntityRepository
 		}
 			return $themes_TBP;
 	}
-	
+
+	public function findByTheme($theme)
+	{
+		return $this->getEntityManager()->createQuery('SELECT s FROM MainSavoirBundle:Savoir s WHERE s.theme ='.$theme->getId())->getResult();
+	}	
 }

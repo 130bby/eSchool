@@ -47,4 +47,65 @@
     </select>
     {% endif %}
 {% endspaceless %}
+
 {% endblock choice_widget %}
+
+{% block sonata_type_native_collection_widget %}
+{% spaceless %}
+    {% if prototype is defined %}
+        {% set child = prototype %}
+        {% set attr = attr|merge({'data-prototype': block('sonata_type_native_collection_widget_row'), 'data-prototype-name': prototype.vars.name, 'class': attr.class|default('') }) %}
+    {% endif %}
+    <div {{ block('widget_container_attributes') }}>
+        {{ form_errors(form) }}
+        {% for child in form %}
+			{{ block('sonata_type_native_collection_widget_row') }}
+			
+        {% endfor %}
+        {{ form_rest(form) }}
+        {% if allow_add %}
+            <div><a href="#" class="btn sonata-collection-add"><i class="fa fa-plus-circle"></i></a></div>
+        {% endif %}
+    </div>
+	<script language="javascript">
+	
+	$(".sonata-collection-add").on('sonata-collection-item-added', function(event) {
+		var element_number = $("#{{sonata_admin.admin.uniqid}}_prerequis > div").length-2;
+		$( "#{{sonata_admin.admin.uniqid}}_prerequis_"+element_number+"_theme" ).change(function() {
+			$("#s2id_{{sonata_admin.admin.uniqid}}_prerequis_"+element_number+"_savoir").find('.select2-chosen').html("");
+			$.ajax({
+				type: "POST",
+				url: "{{ path('main_savoir_admin_ajax')}}",
+				data: "id="+$(this).val(),
+				cache: false,
+				success: function(data){
+					$( "#{{sonata_admin.admin.uniqid}}_prerequis_"+element_number+"_savoir option").each(function()
+					{
+						if (data.indexOf($(this).val()) == -1)
+							$(this).remove();
+					});
+					if ($( "#{{sonata_admin.admin.uniqid}}_prerequis_"+element_number+"_savoir option").length <1)
+						alert("Vous ne pouvez pas changer de thème ! Merci de bien supprimer cet élément.");
+				}
+			});
+		});
+		$("#s2id_{{sonata_admin.admin.uniqid}}_prerequis_"+element_number+"_savoir").find('.select2-chosen').html("");
+    });
+	
+</script>
+
+{% endspaceless %}
+{% endblock sonata_type_native_collection_widget %}
+
+{% block sonata_type_native_collection_widget_row %}
+{% spaceless %}
+    <div class="sonata-collection-row">
+        {% if allow_delete %}
+            <a href="#" class="btn sonata-collection-delete"><i class="fa fa-minus-circle"></i></a>
+        {% endif %}
+        {{ form_row(child) }}
+    </div>
+{% endspaceless %}
+{% endblock sonata_type_native_collection_widget_row %}
+
+

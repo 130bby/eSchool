@@ -2,40 +2,47 @@
 
 {% block body -%}
 
-<ul class="list-style" style="text-align:center;list-style: none;">
+<ul class="list-style" style="text-align:center;list-style: none;background-color: #fffaf2;">
 	{% for theme in themes %}
 		<li style="margin-top:20px;">
-			<h1>{{theme.name}}</h1> <br/>
+			<h2 style="text-align:center;color:#f39f03;margin-bottom:20px;">{{theme.name}}</h2>
 			{% if theme.savoirs is defined %}
 				{% for savoir in theme.savoirs %}
-					<a id="link_slide_panel_{{savoir.id}}_{{savoir.name}}"class="link_arbre_panel" href="#">
-						<span class="spanBlocImg" data-html="true" data-toggle="tooltip" data-placement="top" title="{%if savoir.prerequis_name is defined %}  Prérequis :  {%for nom_prerequis in savoir.prerequis_name%} <br/>-{{nom_prerequis}} {%endfor%} <br/><br/>{%endif%} Niveau : {{loop.parent.loop.index}} ">
-							{%if savoir.strength is defined %}<span style="width:39px; height:80px; display: inline-block;" class="barForce{{savoir.strength}}" ></span>{%endif%}
-							<span class="spanImg {%if savoir.strength is defined %} spanImg_2 {% endif %}" {% if savoir.path is not null%} style="background-image:url(/uploads/savoir/{{savoir.id}}.{{savoir.path}});"{% endif %} ></span>
-							<span class="spanTxt" {%if savoir.strength is defined %} style="width:150px; top:-15px;" {%endif%}>{{savoir.name}}</span> 
-						</span>
-					</a>
+				<a id="link_modal_{{savoir.id}}_{{savoir.name}}"class="link_arbre_panel" href="#">
+					<span class="spanBlocImg" data-html="true" data-toggle="tooltip" data-placement="top" title="{%if savoir.prerequis_name is defined %}  Prérequis :  {%for nom_prerequis in savoir.prerequis_name%} <br/>-{{nom_prerequis}} {%endfor%} <br/><br/>{%endif%} Niveau : {{loop.parent.loop.index}} ">
+						{%if savoir.strength is defined %}<span class="barForce{{savoir.strength}}" ></span>{%endif%}
+						<span class="spanImg {%if savoir.strength is defined %} spanImg_2 {% endif %}" {% if savoir.path is not null%} style="background-image:url(/uploads/savoir/{{savoir.id}}.{{savoir.path}});"{% endif %} ></span>
+						<span class="spanTxt" {%if savoir.strength is defined %} style="top:5px;left:25px;" {%endif%}>{{savoir.name}}</span> 
+					</span>
+				</a>
+				<div id="modal_savoir_arbre_{{savoir.id}}" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+					<div class="modal-dialog modal-sm modal-arbre-savoir">
+						<div class="modal-content modal-arbre-savoir-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								<h6>{{savoir.theme.name}} > {{savoir.name}}</h6>
+							</div>
+							<div class="modal-body">
+							<h3 style="text-align:center;">{{savoir.name|upper}}</h3>
+							{% if savoir.path is not null%}
+								<img class="center-block" src="/uploads/savoir/{{savoir.id}}.{{savoir.path}}" />
+							{% else %}
+								<img class="center-block" src="/img/icones/sphynx.png" />
+							{% endif %}
+							<p style="color:#add292;text-align:center;">Niveau : {%if savoir.strength is defined %}{{savoir.strength}}{%else%}0{%endif%}</p><br />
+							<p style="text-align:center;">Aller à :</p><br />
+							<a href="{{ path('main_cours_show', { 'savoir_id': savoir.id }) }}" class="btn-epreuve">Cours</a>
+							<a href="{{ path('main_epreuve_pass_student', { 'savoir_id': savoir.id }) }}" class="btn-epreuve">Epreuve</a>
+							</div>
+						</div>
+					</div>
+				</div>
 				{% endfor %}
 			{% endif %}
 		</li> 
 	{% endfor %}
 </ul>
-
-<div  id="div_panel" class="cd-panel from-right">
-	<header class="cd-panel-header">
-		<h1 id="panel_title">Titre</h1>
-		<a id="btn_close_panel" class="glyphicon glyphicon-remove" href="#"></a>
-	</header>
- 
-	<div class="cd-panel-container">
-		<div class="cd-panel-content">
-			<a id="panel_link_lesson" class="cd-panel-content-link" style="text-decoration:none;"><button type="button" class="btn btn-info"> Cours </button> </a> <br/>
-			<a id="panel_link_exercice" class="cd-panel-content-link" style="text-decoration:none;"><button type="button" class="btn btn-info"> Epreuve </button></a>
-		</div> <!-- cd-panel-content -->
-	</div> <!-- cd-panel-container -->
-</div> <!-- cd-panel -->	
-	
-
+<div class="footer-mer-1"></div>
 {% endblock %}
 
 {% block javascripts %}
@@ -43,31 +50,19 @@
 
 <script type="text/javascript">
 
+$('[id^="link_modal_"]').click(function(){
+//	$("#bs-example-navbar-collapse-1").hide();
+	var temp_array = $(this).attr('id').split("_");
+	var id_savoir = temp_array[2];
+	$("#modal_savoir_arbre_"+id_savoir).modal({
+		show: true
+	});
+});
+
 $(function () {
   $('[data-toggle="tooltip"]').tooltip()
 })		
 
-$('[id^="link_slide_panel_"]').click(function(event) {
-	event.preventDefault();
-	var temp_array = $(this).attr('id').split("_");
-	var id_savoir = temp_array[3];
-	var name_savoir = temp_array[4];
-	var href = "{{ path('main_epreuve_pass_student')}}";
-	href = href+"/"+id_savoir;
-	var href_cours = "{{ path('main_cours_show')}}";
-	href_cours = href_cours+"/"+id_savoir;
-	$('#panel_title').html(name_savoir);
-	$('#panel_link_lesson').attr('href', href_cours );
-	$('#panel_link_exercice').attr("href", href );
-	$('#div_panel').addClass('is-visible');
-});
-
-$('#btn_close_panel').click(function(event) {
-	$('#div_panel').removeClass('is-visible');
-	$('#panel_link_lesson').removeAttr('href');
-	$('#panel_link_exercice').removeAttr('href');
-	event.preventDefault();
-});
 
 </script>
 {% endblock %}

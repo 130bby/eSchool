@@ -7,6 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Main\SavoirBundle\Entity\Savoir;
 use Main\SavoirBundle\Form\SavoirType;
+use Main\SavoirBundle\Form\ModelForPrerequisForm;
 
 use Sonata\AdminBundle\Controller\CRUDController as Controller;
 
@@ -42,8 +43,19 @@ class SavoirAdminController extends Controller
 
         /** @var $form \Symfony\Component\Form\Form */
         $form = $this->admin->getForm();
+		$em = $this->getDoctrine()->getManager();
+		$prerequis__objects_array = array();
+		foreach ($object->getPrerequis() as $prerequis)
+		{
+			$savoir = $em->getRepository('MainSavoirBundle:Savoir')->findById($prerequis);
+			$theme = $em->getRepository('MainThemeBundle:Theme')->findById($savoir[0]->getTheme()->getId());
+			$prerequis = new ModelForPrerequisForm();
+			$prerequis->savoir = $savoir;
+			$prerequis->theme = $theme;
+			$prerequis__objects_array[] = $prerequis;
+		}
+		$object->setPrerequis($prerequis__objects_array);
         $form->setData($object);
-
         if ($this->getRestMethod() == 'POST') {
             $form->submit($this->get('request'));
 
@@ -55,9 +67,13 @@ class SavoirAdminController extends Controller
                 try {
 					$request = $this->getRequest();
 					$data = $request->request->get($this->admin->getUniqid());	
-
 					if (isset($data['prerequis']))
-						$object->setPrerequis(array_values($data['prerequis']));
+					{
+						$prerequis = array();
+						foreach ($data['prerequis'] as $prerequis_full)
+							$prerequis[] = $prerequis_full['savoir'];
+						$object->setPrerequis($prerequis);
+					}
 					else
 						$object->setPrerequis(array());
 
@@ -192,6 +208,7 @@ class SavoirAdminController extends Controller
             'object' => $object,
         ));
     }
+	
 
 
 }

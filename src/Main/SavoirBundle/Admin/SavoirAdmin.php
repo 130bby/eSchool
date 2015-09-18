@@ -7,6 +7,8 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Doctrine\ORM\EntityRepository;
+use Main\SavoirBundle\Form\PrerequisType;
+use Main\SavoirBundle\Form\ModelForPrerequisForm;
 
 class SavoirAdmin extends Admin
 {
@@ -45,19 +47,27 @@ class SavoirAdmin extends Admin
             ->add('file', 'file', $fileFieldOptions)
             ->add('theme', 'entity', array( 'class' => 'MainThemeBundle:Theme','property' => 'name'));
 
-		if ($this->getSubject()->getId() > 0) {
-			$formMapper->add('prerequis', 'entity', array( 'class' => 'MainSavoirBundle:Savoir',
-				'query_builder' => function(EntityRepository $er) {
-					return $er->createQueryBuilder('s')
-					->where('s.id != :id')
-					->setParameter('id', $this->getSubject()->getId());
-				},
-				'property' => 'name', 'multiple' => true, 'expanded' => true));
+		$prerequis__objects_array = array();
+		foreach ($this->getSubject()->getPrerequis() as $prerequis_id)
+		{
+			$em = $this->getConfigurationPool()->getContainer()->get('doctrine')->getEntityManager();
+			$savoir = $em->getRepository('MainSavoirBundle:Savoir')->findById($prerequis_id);
+			$theme = $em->getRepository('MainThemeBundle:Theme')->findById($savoir[0]->getTheme()->getId());
+			$prerequis = new ModelForPrerequisForm();
+			$prerequis->savoir = $savoir;
+			$prerequis->theme = $theme;
+			$prerequis__objects_array[] = $prerequis;
 		}
-		else {
-			$formMapper->add('prerequis', 'entity', array( 'class' => 'MainSavoirBundle:Savoir',
-				'property' => 'name', 'multiple' => true, 'expanded' => true));
-		}
+
+		$formMapper->add('prerequis','collection', array(
+				'type'               => new PrerequisType($prerequis__objects_array),
+				'allow_add'          => true,
+				'allow_delete'       => true,
+				'cascade_validation' => false,
+				'by_reference'       => false,
+				'delete_empty'       => true,
+				'options'            => array( 'label' => false ),
+		));
     }
 
     // Fields to be shown on filter forms

@@ -4,3 +4,6 @@ main_savoir_improve:
 main_savoir_arbre_theme:
     path:     /arbre/{theme_id}
     defaults: { _controller: MainSavoirBundle:Default:getArbre }
+main_savoir_admin_ajax:
+    path:     /savoir/ajax
+    defaults: { _controller: MainSavoirBundle:Default:ajaxAdminPrerequis }

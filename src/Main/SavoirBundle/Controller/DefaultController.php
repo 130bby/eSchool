@@ -3,6 +3,7 @@
 namespace Main\SavoirBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends Controller
 {
@@ -32,5 +33,18 @@ class DefaultController extends Controller
 			$evaluation = false;
 		return $this->render('MainSavoirBundle:Default:arbre.html.twig', array('arbre' => $arbre, 'evaluation' => false, 'evaluations' => $evaluations));
     }
+
+	public function ajaxAdminPrerequisAction()
+	{
+		$em = $this->getDoctrine()->getManager();
+		$savoirs_array = array();
+		$theme = $em->getRepository('MainThemeBundle:Theme')->find($this->container->get('request')->request->get('id'));
+		$savoirs = $em->getRepository('MainSavoirBundle:Savoir')->findByTheme($theme);
+		foreach ($savoirs as $savoir)
+		{
+			$savoirs_array[] = $savoir->getId();
+		}
+		return new Response(json_encode($savoirs_array));
+	}
 	
 }
