@@ -68,6 +68,7 @@ class RegistrationController extends Controller
 				$user->addRole('ROLE_ELEVE');
 				$theme_id = $this->get('session')->get('theme_id');
 				$savoir_user_data = $this->get('session')->get('savoir_user');
+				$evaluation_user_data = $this->get('session')->get('evaluation_user');
 				// si l'utilisateur a passé une épreuve avant de s'inscrire
 				if (isset($theme_id))
 				{
@@ -80,16 +81,55 @@ class RegistrationController extends Controller
 					$theme_user->setDate(new \DateTime("now"));
 					$em->persist($theme_user);
 					
-					$savoir = $em->getRepository('MainSavoirBundle:Savoir')->find($savoir_user_data['savoir_id']);
-					$savoir_user = new SavoirUser();
-					$savoir_user->setUser($user);
-					$savoir_user->setSavoir($savoir);
-					$savoir_user->setScore($savoir_user_data['score']);
-					$savoir_user->setSuccess($savoir_user_data['success']);
-					$savoir_user->setTemps($savoir_user_data['temps']);
-					$savoir_user->setDate(new \Datetime());
-					$em->persist($savoir_user);
-					$em->flush();
+					//passage d'évaluation avant inscription
+					if(isset($evaluation_user_data))
+					{
+						$userManager->updateUser($user);
+						$em = $this->getDoctrine()->getManager();
+						$evaluation = $em->getRepository('MainEvaluationBundle:Evaluation')->find($evaluation_user_data['evaluation_id']);
+						
+						$evaluation_user = new EvaluationUser();
+						$evaluation_user->setUser($user);
+						$evaluation_user->setEvaluation($evaluation);
+						$evaluation_user->setScore($evaluation_user_data['score']);
+						if ($score > 70)
+							$evaluation_user->setSuccess(1);
+						else
+							$evaluation_user->setSuccess(0);
+						$evaluation_user->setTemps($temps);
+						$evaluation_user->setDate(new \Datetime());
+						$em->persist($evaluation_user);
+
+						
+						foreach($evaluation->getSavoirs() as $savoir_tba)
+						{
+							$savoir = $em->getRepository('MainSavoirBundle:Savoir')->find($savoir_tba);
+							$savoir_user = new SavoirUser();
+							$savoir_user->setUser($user);
+							$savoir_user->setSavoir($savoir);
+							$savoir_user->setScore($savoir->getScoreMini());
+							$savoir_user->setSuccess($evaluation_user_data['success']);
+							$savoir_user->setTemps($evaluation_user_data['temps']);
+							$savoir_user->setDate(new \Datetime());
+							$em->persist($savoir_user);
+						}
+						$em->flush();
+					}
+
+					//passage d'épreuve avant inscription
+					if(isset($savoir_user_data))
+					{
+						$savoir = $em->getRepository('MainSavoirBundle:Savoir')->find($savoir_user_data['savoir_id']);
+						$savoir_user = new SavoirUser();
+						$savoir_user->setUser($user);
+						$savoir_user->setSavoir($savoir);
+						$savoir_user->setScore($savoir_user_data['score']);
+						$savoir_user->setSuccess($savoir_user_data['success']);
+						$savoir_user->setTemps($savoir_user_data['temps']);
+						$savoir_user->setDate(new \Datetime());
+						$em->persist($savoir_user);
+						$em->flush();
+					}
 				}
 			}
 			$userManager->updateUser($user);

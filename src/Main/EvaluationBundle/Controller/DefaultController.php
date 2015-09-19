@@ -57,6 +57,8 @@ class DefaultController extends Controller
 		$score = (int)$request->get('score')*100/(count($evaluation->getSavoirs())*6);
 		$savoirs = array();
 
+		if ($this->container->get('security.context')->isGranted('ROLE_ELEVE'))
+		{
 			$evaluation_user = new EvaluationUser();
 			$evaluation_user->setUser($this->container->get('security.context')->getToken()->getUser());
 			$evaluation_user->setEvaluation($evaluation);
@@ -68,22 +70,41 @@ class DefaultController extends Controller
 			$evaluation_user->setTemps($temps);
 			$evaluation_user->setDate(new \Datetime());
 			$em->persist($evaluation_user);
+		}
+		else
+		{
+			$evaluation_user = array();
+			$evaluation_user['evaluation_id'] = $evaluation_id;
+			$evaluation_user['score'] = $score;
+			if ($score >= 70)
+				$evaluation_user['success'] = true;
+			else
+				$evaluation_user['success'] = false;
+			$evaluation_user['temps'] = $temps;
 			
+			$session = $this->container->get('session');
+			$session->set('evaluation_user', $evaluation_user);
+			$session->save();
+			$badges = null;
+		}
 		if ($score > 70)
 		{
 			foreach ($evaluation->getSavoirs() as $savoir_id)
 			{
 				$savoir = $em->getRepository('MainSavoirBundle:Savoir')->find($savoir_id);
 				$savoirs[] = $savoir;
-				$savoir_user = new SavoirUser();
-				$savoir_user->setUser($this->container->get('security.context')->getToken()->getUser());
-				$savoir_user->setSavoir($savoir);
-				$savoir_user->setScore($savoir->getScoreMini());
-				$savoir_user->setTemps($temps);
-				$savoir_user->setDate(new \Datetime());
-				$em->persist($savoir_user);
+
+				if ($this->container->get('security.context')->isGranted('ROLE_ELEVE'))
+				{
+					$savoir_user = new SavoirUser();
+					$savoir_user->setUser($this->container->get('security.context')->getToken()->getUser());
+					$savoir_user->setSavoir($savoir);
+					$savoir_user->setScore($savoir->getScoreMini());
+					$savoir_user->setTemps($temps);
+					$savoir_user->setDate(new \Datetime());
+					$em->persist($savoir_user);
+				}
 			}
-	
 		}
 
 		$em->flush();
@@ -91,9 +112,10 @@ class DefaultController extends Controller
 			$success = true;
 		else
 			$success = false;
-
-		$badges = $em->getRepository('MainUserBundle:BadgeUser')->setBadges($this->container->get('security.context')->getToken()->getUser(),$score,$evaluation->getTheme(),false,true);
-        return $this->render('MainEvaluationBundle:Default:passed.html.twig', array('success' => $success, 'evaluation' => $evaluation,'savoirs' => $savoirs, 'badges' => $badges));
+		if ($this->container->get('security.context')->isGranted('ROLE_ELEVE'))
+			$badges = $em->getRepository('MainUserBundle:BadgeUser')->setBadges($this->container->get('security.context')->getToken()->getUser(),$score,$evaluation->getTheme(),false,true);
+        
+		return $this->render('MainEvaluationBundle:Default:passed.html.twig', array('success' => $success, 'evaluation' => $evaluation,'savoirs' => $savoirs, 'badges' => $badges));
     }
 	
 	
