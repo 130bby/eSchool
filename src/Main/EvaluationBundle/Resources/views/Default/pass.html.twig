@@ -77,10 +77,10 @@
 				{% elseif exercice.type == 3 %}
 					<p class="text-center">
 						<ul id="drag_it_{{exercice.id}}" class="list-inline">
-							{% if exercice.reponse1 is not null %}<li class ="repTrous" style="display:inline;" id="reponse_draggable_{{exercice.id}}_1">{{exercice.reponse1 | raw }}</li>{% endif %}
-							{% if exercice.reponse2 is not null %}<li class ="repTrous" style="display:inline;" id="reponse_draggable_{{exercice.id}}_2">{{exercice.reponse2 | raw }}</li>{% endif %}
-							{% if exercice.reponse3 is not null %}<li class ="repTrous" style="display:inline;" id="reponse_draggable_{{exercice.id}}_3">{{exercice.reponse3 | raw }}</li>{% endif %}
-							{% if exercice.reponse4 is not null %}<li class ="repTrous" style="display:inline;" id="reponse_draggable_{{exercice.id}}_4">{{exercice.reponse4 | raw }}</li>{% endif %}
+							{% if exercice.reponse1 is not null %}<li class ="repTrous" style="display:inline;" id="reponse_draggable_{{exercice.id}}_1">{{exercice.reponse1 | raw }}<input type="hidden" value="1" /></li>{% endif %}
+							{% if exercice.reponse2 is not null %}<li class ="repTrous" style="display:inline;" id="reponse_draggable_{{exercice.id}}_2">{{exercice.reponse2 | raw }}<input type="hidden" value="2" /></li>{% endif %}
+							{% if exercice.reponse3 is not null %}<li class ="repTrous" style="display:inline;" id="reponse_draggable_{{exercice.id}}_3">{{exercice.reponse3 | raw }}<input type="hidden" value="3" /></li>{% endif %}
+							{% if exercice.reponse4 is not null %}<li class ="repTrous" style="display:inline;" id="reponse_draggable_{{exercice.id}}_4">{{exercice.reponse4 | raw }}<input type="hidden" value="4" /></li>{% endif %}
 						</ul>
 					</p>
 						<div class="btn-valid-exo-bg" style="margin-top:0px;">
@@ -205,7 +205,7 @@
 
 			// type texte a trous
 			if($("#droppable_exo_"+id_exo+"_"+i).html() != undefined)
-			  DATA += '&reponse'+i+'=' + encodeURIComponent($("#droppable_exo_"+id_exo+"_"+i).html());
+			  DATA += '&reponse'+i+'=' + $("#droppable_exo_"+id_exo+"_"+i+" :input").val();
 
 		}
 

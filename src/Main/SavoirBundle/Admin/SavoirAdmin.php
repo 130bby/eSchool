@@ -48,16 +48,18 @@ class SavoirAdmin extends Admin
             ->add('theme', 'entity', array( 'class' => 'MainThemeBundle:Theme','property' => 'name'));
 
 		$prerequis__objects_array = array();
-		foreach ($this->getSubject()->getPrerequis() as $prerequis_id)
-		{
-			$em = $this->getConfigurationPool()->getContainer()->get('doctrine')->getEntityManager();
-			$savoir = $em->getRepository('MainSavoirBundle:Savoir')->findById($prerequis_id);
-			$theme = $em->getRepository('MainThemeBundle:Theme')->findById($savoir[0]->getTheme()->getId());
-			$prerequis = new ModelForPrerequisForm();
-			$prerequis->savoir = $savoir;
-			$prerequis->theme = $theme;
-			$prerequis__objects_array[] = $prerequis;
-		}
+		$prereq_temp = $this->getSubject()->getPrerequis();
+		if (isset($prereq_temp))
+			foreach ($this->getSubject()->getPrerequis() as $prerequis_id)
+			{
+				$em = $this->getConfigurationPool()->getContainer()->get('doctrine')->getEntityManager();
+				$savoir = $em->getRepository('MainSavoirBundle:Savoir')->findById($prerequis_id);
+				$theme = $em->getRepository('MainThemeBundle:Theme')->findById($savoir[0]->getTheme()->getId());
+				$prerequis = new ModelForPrerequisForm();
+				$prerequis->savoir = $savoir;
+				$prerequis->theme = $theme;
+				$prerequis__objects_array[] = $prerequis;
+			}
 
 		$formMapper->add('prerequis','collection', array(
 				'type'               => new PrerequisType($prerequis__objects_array),
