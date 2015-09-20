@@ -93,16 +93,11 @@ class ExerciceRepository extends EntityRepository
 			case 3:
 				$success = true;
 				//attention, faille possible sur le split à la virgule
-				//a refaire, avec des for ?
 				$reponses_justes = explode(",",$reponse_juste);
-				if ($reponses_justes[0] != "" && isset($reponses[0]) && html_entity_decode($reponses[0]) != $reponses_justes[0])
-					$success = false;
-				if ($reponses_justes[1] != "" && isset($reponses[1]) && html_entity_decode($reponses[1]) != $reponses_justes[1])
-					$success = false;
-				if ($reponses_justes[2] != "" && isset($reponses[2]) && html_entity_decode($reponses[2]) != $reponses_justes[2])
-					$success = false;
-				if ($reponses_justes[3] != "" && isset($reponses[3]) && html_entity_decode($reponses[3]) != $reponses_justes[3])
-					$success = false;
+				for ($i=0;$i<count($reponses_justes);$i++)
+					if ($reponses_justes[$i] != "" && isset($reponses[$i]) && $reponses[$i] != $i+1)
+						$success = false;
+				
 				if ($success !== true)
 				{
 					$exercice_txt = str_replace("…", "...", $enonce);
@@ -216,8 +211,11 @@ class ExerciceRepository extends EntityRepository
 				
 				//gestion des variables temporaires, on les remplacde par leur valeur dans l'enonce et les reponses
 				$temp_array = explode(';',trim($exercices[$key]['temp']));
+				//on enlève le dernier élément, qui est vide car le temp finit par ";"
+				array_pop($temp_array);
 				foreach ($temp_array as $variable_temp_full)
 				{
+					$variable_temp_full = trim($variable_temp_full);
 					$variable = explode('=',$variable_temp_full);
 					if (isset($variable[1]))
 					{
