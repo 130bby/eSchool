@@ -333,9 +333,3 @@ div.select2-container {
 div.select2-drop ul {
     margin: 0 !important;
 }
-
-/* Image preview for admin */
-img.admin-preview {
-    max-height: 200px;
-    max-width: 200px;
-}

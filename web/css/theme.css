@@ -828,3 +828,11 @@ display:inline-block;
 color:#fff;
 text-decoration: none;
 }
+
+.badge-section-title{
+color:#5c74a6;
+font-weight:bold;
+text-align:center;
+padding-top:20px;
+}
+

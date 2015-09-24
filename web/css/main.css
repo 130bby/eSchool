@@ -255,8 +255,8 @@ a.infobulle:hover div {
 }
 
 .imgExercice{
-	max-width: 400px;
-	max-height: 200px;
+	max-width: 320px;
+	max-height: 400px;
 }
 
 .div_profile{
@@ -588,12 +588,28 @@ display:inline-block;
 }
 
 /* affichage des badges en fin d'épreuve*/
+.badge2-0{
+	display: inline-block;
+	width: 150px;
+	height: 150px;
+	background-image:url(/img/badges.jpg);
+	background-position: 0 -855px;
+}
+
 .badge2-1{
 	display: inline-block;
 	width: 150px;
 	height: 150px;
 	background-image:url(/img/badges.jpg);
 	background-position: 0 -700px;
+}
+
+.badge4-0{
+	display: inline-block;
+	width: 160px;
+	height: 150px;
+	background-image:url(/img/badges.jpg);
+	background-position: -230px -855px;
 }
 
 .badge4-1{
@@ -612,6 +628,14 @@ display:inline-block;
 	background-position: -520px -702px;
 }
 
+.badge1-0{
+	display: inline-block;
+	width: 150px;
+	height: 150px;
+	background-image:url(/img/badges.jpg);
+	background-position: -620px -530px;
+}
+
 .badge1-1{
 	display: inline-block;
 	width: 150px;
@@ -620,12 +644,28 @@ display:inline-block;
 	background-position: -620px -380px;
 }
 
+.badge3-0{
+	display: inline-block;
+	width: 160px;
+	height: 150px;
+	background-image:url(/img/badges.jpg);
+	background-position: -580px -180px;
+}
+
 .badge3-1{
 	display: inline-block;
 	width: 160px;
 	height: 150px;
 	background-image:url(/img/badges.jpg);
 	background-position: -580px -30px;
+}
+
+.badge5-0{
+	display: inline-block;
+	width: 160px;
+	height: 160px;
+	background-image:url(/img/badges.jpg);
+	background-position: -305px -190px;
 }
 
 .badge5-1{
@@ -641,7 +681,7 @@ display:inline-block;
 	width: 160px;
 	height: 160px;
 	background-image:url(/img/badges.jpg);
-	background-position: -157px -25px;
+	background-position: -156px -25px;
 }
 
 .badge5-3{
@@ -666,6 +706,14 @@ display:inline-block;
 	height: 160px;
 	background-image:url(/img/badges.jpg);
 	background-position: -157px -185px;
+}
+
+.badge6-0{
+	display: inline-block;
+	width: 150px;
+	height: 150px;
+	background-image:url(/img/badges.jpg);
+	background-position: -450px -455px;
 }
 
 .badge6-1{
