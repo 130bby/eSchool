@@ -101,6 +101,7 @@ class DefaultController extends Controller
 					$savoir_user->setSavoir($savoir);
 					$savoir_user->setScore($savoir->getScoreMini());
 					$savoir_user->setTemps($temps);
+					$savoir_user->setSuccess(true);
 					$savoir_user->setDate(new \Datetime());
 					$em->persist($savoir_user);
 				}

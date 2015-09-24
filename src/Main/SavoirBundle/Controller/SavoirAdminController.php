@@ -161,7 +161,12 @@ class SavoirAdminController extends Controller
 					$data = $request->request->get($this->admin->getUniqid());	
 
 					if (isset($data['prerequis']))
-						$object->setPrerequis(array_values($data['prerequis']));
+					{
+						$prerequis = array();
+						foreach ($data['prerequis'] as $prerequis_full)
+							$prerequis[] = $prerequis_full['savoir'];
+						$object->setPrerequis($prerequis);
+					}
 					else
 						$object->setPrerequis(array());
 				

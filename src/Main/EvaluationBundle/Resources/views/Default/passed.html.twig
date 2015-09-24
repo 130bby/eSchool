@@ -28,7 +28,7 @@ Bravo ! Tu viens de terminer l'évaluation avec succès ! les savoirs suivants o
 						</p>
 						<img src="/img/epreuve_success_icon.png">
 						{% if app.user %}
-							<div class="text-center btn-valid-exo-bg"><a href="{{ path('main_savoir_arbre_theme', { 'theme_id': savoir.theme.id })}}"><button type="submit" class="btn-valid-exo">Retour à l'arbre</button></a></div>
+							<div class="text-center btn-valid-exo-bg"><a href="{{ path('main_savoir_arbre_theme', { 'theme_id': evaluation.theme.id })}}"><button type="submit" class="btn-valid-exo">Retour à l'arbre</button></a></div>
 	{% else %}
 							<br /> 
 							<p class="type-exo-indicator row">
@@ -108,7 +108,7 @@ Bravo ! Tu viens de terminer l'évaluation avec succès ! les savoirs suivants o
 				</p>
 				<img src="/img/epreuve_success_icon.png">
 				{% if app.user %}
-					<div class="text-center btn-valid-exo-bg"><a href="{{ path('main_savoir_arbre_theme', { 'theme_id': savoir.theme.id })}}"><button type="submit" class="btn-valid-exo">Retour à l'arbre</button></a></div>
+					<div class="text-center btn-valid-exo-bg"><a href="{{ path('main_savoir_arbre_theme', { 'theme_id': evaluation.theme.id })}}"><button type="submit" class="btn-valid-exo">Retour à l'arbre</button></a></div>
 				{% else %}
 				<br /> 
 				<p class="type-exo-indicator row">
