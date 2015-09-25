@@ -10,7 +10,7 @@ class DefaultController extends Controller
     public function myHistoryAction()
     {
         $em = $this->getDoctrine()->getManager();
-		$epreuves = $em->getRepository('MainUserBundle:SavoirUser')->findByUser($this->container->get('security.context')->getToken()->getUser());
+		$epreuves = $em->getRepository('MainUserBundle:SavoirUser')->findByUser($this->container->get('security.context')->getToken()->getUser(),array("date" => "DESC"));
 
         return $this->render('MainUserBundle:Default:my_history.html.twig', array('epreuves' => $epreuves));
     }

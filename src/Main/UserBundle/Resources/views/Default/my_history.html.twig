@@ -1,29 +1,54 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>Mon historique</h1>
-
-    <table class="records_list table table-hover">
-        <thead>
-            <tr>
-                <th>Savoir</th>
-                <th>Temps</th>
-                <th>Score</th>
-                <th>Date</th>
-            </tr>
-        </thead>
-        <tbody>
-		{% for epreuve in epreuves %}
-            <tr {% if epreuve.success == 1 %}class="success" {% else %}class="danger"{% endif %}>
-                <td>{{ epreuve.savoir.name }}</td>
-                <td>{{ epreuve.temps|date("i:s") }}</td>
-                <td>{{ epreuve.score }}</td>
-                <td>{{ epreuve.date|date("d/m/Y H:i:s") }}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+<div class="container">
+	<h3 style="color:#f39f03;margin-bottom:20px;font-weight:bold;">HISTORIQUE</h3>
+	<div class="row">
+		<div class="col-md-7" style="text-align:center;padding-top:20px;margin:auto;background-color:#fffaf2;border-radius:20px;">
+			<img src="/img/profile.png" />
+				<p style="color:#5b74a9;font-weight:bold;font-size:24px;margin:0px;">{{ app.user.username|upper }}</p>
+				<p style="color:#f6a000;font-weight:bold;font-size:16px;margin-bottom:20px;">{{ app.user.firstName|upper }} {{ app.user.lastName|upper }}</p>
+			<div style="border-bottom:2px solid #f6a000;"></div>
+			<ul style="list-style:none outside none;padding:0;" id="history_list">
+			{% for epreuve in epreuves %}
+			<li>
+				<p style="color:#7290b8;margin:5px;"><i>{{time_diff(epreuve.date)}}</i></p>
+				<p style="color:#5b74a9;font-weight:bold;font-size:16px;margin:10px;">{{ app.user.username|upper }}</p>
+					{% if epreuve.success %}<p style="color:#7290b8;margin:5px;">A réussi l'épreuve : </p>
+					{% else %}<p style="color:#7290b8;margin:5px;">A échoué à l'épreuve : </p>{% endif %}
+				<p style="color:#5b74a9;font-weight:bold;font-size:16px;margin:5px;">{{epreuve.savoir.name}}</p>
+				<img src="/uploads/savoir/{{epreuve.savoir.id}}.jpeg">
+				<ul style="list-style:disc inside none;padding:0;"><li style="color:#7290b8;margin:auto;"></li><li style="color:#7290b8"></li><li style="color:#7290b8"></li></ul>
+			</li>
+			{% endfor %}
+			</ul>
+			<div id="loadMoreHistory">Voir plus ...</div>
+		</div>
+		<div class="col-md-4 col-md-offset-1 side-menu">
+			<p style="color:#f6a000;font-size:22px;">Voir aussi :</p>
+			<a class="side-menu-button" href="{{ path('main_savoir_improve')}}">Mes savoirs à améliorer</a><br />
+			<a class="side-menu-button" href="{{ path('main_badge_homepage')}}">Mes Badges</a><br />
+			<a class="side-menu-button" href="{{ path('main_user_my_stats')}}">Mes statistiques</a><br />
+		</div>
+	</div>
+</div>
+<div class="footer-mer-1"></div>
 
     {% endblock %}
 
-
+{% block javascripts -%}
+{{parent()}}
+<script language="javascript">
+$(document).ready(function () {
+    size_li = $("#history_list li").size();
+    x=12;
+    $('#history_list li:lt('+x+')').show();
+    $('#loadMoreHistory').click(function () {
+        x= (x+12 <= size_li) ? x+12 : size_li;
+        $('#history_list li:lt('+x+')').show();
+		if (x==size_li)
+			$('#loadMoreHistory').hide();
+    });
+});
+</script>
+{% endblock %}

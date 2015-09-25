@@ -769,3 +769,19 @@ padding-left:5px;
 padding-right:5px;
 }
 
+#loadMoreHistory{
+	width:200px;
+	height:30px;
+	border-radius:10px;
+	background-color:#5c74a6;
+	cursor:pointer;
+	color:#fff;
+	margin:auto;
+	padding-left:10px;
+	font-size:18px;
+	font-weight:bold;
+	margin-bottom:20px;
+}
+
+#history_list li { display:none;}
+
