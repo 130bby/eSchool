@@ -15,15 +15,15 @@
 <div class="container-fluid">
 	<div class="header-exo row">
 		<span class="text-center">{{evaluation.name}}</span>
-				</div>
+	</div>
 	<div class="content-exo row">
 		<div class="bloc-exo">
 			<span class="progress-label">Progression :</span>
 			<div class="progress">
 			  <div class="progress-bar progress-bar-exo" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
 				<span class="sr-only progress-screen-readers-exo">0% Complete</span>
+			  </div>
 			</div>
-		</div>
 			<span class="progress-label progress-percentage-exo">0%</span>
 			<br />
 			<span class="progress-label">Temps restant : </span>
@@ -88,16 +88,17 @@
 						<p class="text-center"><button type="submit" id="submit_exo_{{exercice.id}}_{{loop.index}}" class="btn-valid-exo">Valider</button></p>
 						</div>
 				{% endif %}
-			</div>
-		</form>
+				</div>
+			</form>
 		{% endfor %}
-			</div>
+		</div>
 		<form id="pass_evaluation" action="{{ path('main_evaluation_passed_student', { 'evaluation_id': evaluation.id }) }}" method="post" enctype="multipart/form-data">
 			<input type="hidden" name="score" id="score" value="0">
 			<input type="hidden" name="temps" id="temps" value="0">
 		</form>
 		<div class="modal"></div>
-
+	</div>
+</div>
 {% endblock %}
 
 {% block javascripts %}
@@ -219,16 +220,12 @@
 			var data_temp = "";
 			for (var i=0; i<reponse_array.length; i++)
 			{
+				var reponse_juste_html = $("label[for='reponse_"+id_exo+"_"+reponse_array[i]+"']").html();
+				reponse_juste_html = reponse_juste_html.replace("<p>", "<span>").replace("</p>", "</span>");
 				if (reponse_array.length>1)
-				{
-					var reponse_juste_html = $("label[for='reponse_"+id_exo+"_"+reponse_array[i]+"']").html();
 					data_temp += "<br />- "+reponse_juste_html+" ";
-				}
 				else
-				{
-					var reponse_juste_html = $("label[for='reponse_"+id_exo+"_"+reponse_array[i]+"']").html();
 					data_temp += reponse_juste_html+" ";
-				}
 			}
 
 			DATA += '&type_exo=1&reponse_juste='+data_temp;
@@ -244,8 +241,8 @@
 		// type texte à trous
 		if($("#droppable_exo_"+id_exo+"_1").html() != undefined)
 		{
-			var reponses = [ exercice_array[numero_exo-1]["reponse1"] , exercice_array[numero_exo-1]["reponse2"], exercice_array[numero_exo-1]["reponse3"], exercice_array[numero_exo-1]["reponse4"]]
-			DATA += '&type_exo=3&enonce=' + exercice_array[numero_exo-1]["texte"] + '&reponse_juste=' + encodeURIComponent(reponses);
+			var reponses = [ exercice_array[numero_exo-1]["reponse1"].replace("<p>", "<span>").replace("</p>", "</span>") , exercice_array[numero_exo-1]["reponse2"].replace("<p>", "<span>").replace("</p>", "</span>"), exercice_array[numero_exo-1]["reponse3"].replace("<p>", "<span>").replace("</p>", "</span>"), exercice_array[numero_exo-1]["reponse4"].replace("<p>", "<span>").replace("</p>", "</span>")]
+			DATA += '&type_exo=3&enonce=' + encodeURIComponent(exercice_array[numero_exo-1]["texte"]) + '&reponse_juste=' + encodeURIComponent(reponses);
 		}
 				
 		//alert(DATA);
