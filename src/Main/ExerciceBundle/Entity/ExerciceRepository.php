@@ -111,7 +111,6 @@ class ExerciceRepository extends EntityRepository
 						$texte_reponse .= " ".$reponses_justes[2]." ".$texte_array[3];
 					if (sizeof($texte_array)>4)
 						$texte_reponse .= " ".$reponses_justes[3]." ".$texte_array[4];
-					
 					return array(false,$texte_reponse);
 				}
 				else

@@ -103,7 +103,7 @@
 {% endblock %}
 
 {% block javascripts %}
-	<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.2-latest/MathJax.js?config=TeX-AMS_HTML"></script>
+	<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 	<script src="/js/bootstrap.min.js"></script>
 	<script src="/js/jquery.countdown.min.js"></script>
 	<script type="text/javascript">
@@ -224,16 +224,12 @@
 			
 			for (var i=0; i<reponse_array.length; i++)
 			{
+				var reponse_juste_html = $("label[for='reponse_"+id_exo+"_"+reponse_array[i]+"']").html();
+				reponse_juste_html = reponse_juste_html.replace("<p>", "<span>").replace("</p>", "</span>");
 				if (reponse_array.length>1)
-				{
-					var reponse_juste_html = $("label[for='reponse_"+id_exo+"_"+reponse_array[i]+"']").html();
 					data_temp += "<br />- "+reponse_juste_html+" ";
-				}
 				else
-				{
-					var reponse_juste_html = $("label[for='reponse_"+id_exo+"_"+reponse_array[i]+"']").html();
 					data_temp += reponse_juste_html+" ";
-				}
 			}
 
 			DATA += '&type_exo=1&reponse_juste='+data_temp;
@@ -249,8 +245,8 @@
 		// type texte à trous
 		if($("#droppable_exo_"+id_exo+"_1").html() != undefined)
 		{
-			var reponses = [ exercice_array[numero_exo-1]["reponse1"] , exercice_array[numero_exo-1]["reponse2"], exercice_array[numero_exo-1]["reponse3"], exercice_array[numero_exo-1]["reponse4"]]
-			DATA += '&type_exo=3&enonce=' + exercice_array[numero_exo-1]["texte"] + '&reponse_juste=' + encodeURIComponent(reponses);
+			var reponses = [ exercice_array[numero_exo-1]["reponse1"].replace("<p>", "<span>").replace("</p>", "</span>") , exercice_array[numero_exo-1]["reponse2"].replace("<p>", "<span>").replace("</p>", "</span>"), exercice_array[numero_exo-1]["reponse3"].replace("<p>", "<span>").replace("</p>", "</span>"), exercice_array[numero_exo-1]["reponse4"].replace("<p>", "<span>").replace("</p>", "</span>")]
+			DATA += '&type_exo=3&enonce=' + encodeURIComponent(exercice_array[numero_exo-1]["texte"]) + '&reponse_juste=' + encodeURIComponent(reponses);
 		}
 				
 //		alert(DATA);
@@ -291,10 +287,8 @@
 				$(".progress-bar-exo").attr('aria-valuenow', 5*numero_exo);
 				$(".progress-percentage-exo").html(5*numero_exo+'%');
 				$(".progress-screen-readers-exo").html(5*numero_exo+'% Complete');
-//				school_note();
 				
 				$('body').removeClass('loading');
-//				alert(reponses_justes);
 				return false;
 			}
 			
