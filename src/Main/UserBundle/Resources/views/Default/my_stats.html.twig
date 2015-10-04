@@ -1,9 +1,43 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>Mes statistiques</h1>
-	<canvas id="myChart" width="400" height="400"></canvas>
-	<div id="js-legend" class="chart-legend"></div>
+
+<div class="container">
+	<h3 style="color:#f39f03;margin-bottom:20px;font-weight:bold;">STATISTIQUES</h3>
+	<div class="row">
+		<div class="col-md-7" style="text-align:center;padding-top:20px;margin:auto;background-color:#fffaf2;border-radius:20px;">
+		  <!-- Nav tabs -->
+		  <ul class="nav nav-tabs" role="tablist">
+			<li role="presentation" class="active"><a id="tab1" href="#progression" aria-controls="progression" role="tab" data-toggle="tab">Progression</a></li>
+			<li role="presentation"><a id="tab2" href="#efficacite" aria-controls="efficacite" role="tab" data-toggle="tab">Efficacité</a></li>
+			<li role="presentation"><a id="tab3" href="#notes" aria-controls="notes" role="tab" data-toggle="tab">Notes</a></li>
+		  </ul>
+
+		  <!-- Tab panes -->
+		  <div class="tab-content">
+			<div role="tabpanel" class="tab-pane active" id="progression">
+				<canvas id="Chart1" width="400" height="400"></canvas>
+				<div id="js-legend-chart1" class="chart-legend"></div>
+			</div>
+			<div role="tabpanel" class="tab-pane" id="efficacite">
+				<canvas id="Chart2" width="400" height="400"></canvas>
+				<div id="js-legend-chart2" class="chart-legend"></div>
+			</div>
+			<div role="tabpanel" class="tab-pane" id="notes">...
+				<canvas id="Chart3" width="400" height="400"></canvas>
+				<div id="js-legend-chart3" class="chart-legend"></div>
+			</div>
+		  </div>
+		</div>
+		<div class="col-md-4 col-md-offset-1 side-menu">
+			<p style="color:#f6a000;font-size:22px;">Voir aussi :</p>
+			<a class="side-menu-button" href="{{ path('main_savoir_improve')}}">Mes savoirs à améliorer</a><br />
+			<a class="side-menu-button" href="{{ path('main_badge_homepage')}}">Mes Badges</a><br />
+			<a class="side-menu-button" href="{{ path('main_user_my_history')}}">Mon Historique</a><br />
+		</div>
+	</div>
+</div>
+<div class="footer-mer-1"></div>
 
 {% endblock %}
 
@@ -11,11 +45,38 @@
 	{{ parent() }}
 	<script src="/js/Chart.min.js"></script>
 	<script type="text/javascript">
-		var ctx = document.getElementById("myChart").getContext("2d");
+	$(function() {
+		var ctx1 = $("#Chart1").get(0).getContext("2d");
+		var data1 = {
+			labels: ["January", "February", "March", "April", "May", "June", "July"],
+			datasets: [
+				{
+					label: "My First dataset",
+					fillColor: "rgba(220,220,220,0.5)",
+					strokeColor: "rgba(220,220,220,0.8)",
+					highlightFill: "rgba(220,220,220,0.75)",
+					highlightStroke: "rgba(220,220,220,1)",
+					data: [65, 59, 80, 81, 56, 55, 40]
+				},
+				{
+					label: "My Second dataset",
+					fillColor: "rgba(151,187,205,0.5)",
+					strokeColor: "rgba(151,187,205,0.8)",
+					highlightFill: "rgba(151,187,205,0.75)",
+					highlightStroke: "rgba(151,187,205,1)",
+					data: [28, 48, 40, 19, 86, 27, 90]
+				}
+			]
+		};
+		
+		var BarChart1 = new Chart(ctx1).Bar(data1);
+		$('#js-legend-chart1').append(BarChart1.generateLegend());
+		
+		var ctx2 = $("#Chart2").get(0).getContext("2d");
 		var labels = $.parseJSON('{{ legend | raw }}');
 		var data_epreuve_passees = $.parseJSON('{{ data_epreuve_passees | raw }}');
-		var data_epreuve_reussies = $.parseJSON('{{ data_epreuve_reussies | raw }}');
-		var data = {
+		var data_savoirs_aquis = $.parseJSON('{{ data_savoirs_aquis | raw }}');
+		var data2 = {
 			labels: labels ,
 			datasets: [
 			{
@@ -29,18 +90,18 @@
 				data: data_epreuve_passees
 			},
 			{
-				label: "Epreuves réussies",
+				label: "Savoirs aquis",
 				fillColor: "rgba(220,220,220,0.2)",
 				strokeColor: "rgba(220,220,220,1)",
 				pointColor: "rgba(220,220,220,1)",
 				pointStrokeColor: "#fff",
 				pointHighlightFill: "#fff",
 				pointHighlightStroke: "rgba(220,220,220,1)",
-				data: data_epreuve_reussies
+				data: data_savoirs_aquis
 			}
 			]
 		};
-		var options = {
+		var options2 = {
 		  legendTemplate : '<ul>'
 						  +'<% for (var i=0; i<datasets.length; i++) { %>'
 							+'<li>'
@@ -50,9 +111,57 @@
 						+'<% } %>'
 					  +'</ul>'
 		}
-		var myLineChart = new Chart(ctx).Line(data,options);
-		$('#js-legend').append(myLineChart.generateLegend());
+		var LineChart;
+		
+		var ctx3 = $("#Chart3").get(0).getContext("2d");
+		var data3 = {
+			labels: ["January", "February", "March", "April", "May", "June", "July"],
+			datasets: [
+				{
+					label: "My Third dataset",
+					fillColor: "rgba(220,220,220,0.5)",
+					strokeColor: "rgba(220,220,220,0.8)",
+					highlightFill: "rgba(220,220,220,0.75)",
+					highlightStroke: "rgba(220,220,220,1)",
+					data: [65, 59, 80, 81, 56, 55, 40]
+				},
+				{
+					label: "My Fourth dataset",
+					fillColor: "rgba(151,187,205,0.5)",
+					strokeColor: "rgba(151,187,205,0.8)",
+					highlightFill: "rgba(151,187,205,0.75)",
+					highlightStroke: "rgba(151,187,205,1)",
+					data: [28, 48, 40, 19, 86, 27, 90]
+				}
+			]
+		};
+		
+		var BarChart2;
+		
+		//tabs
+		$('#tab1').on('shown.bs.tab', function (e) {
+			if (typeof LineChart !== 'undefined') LineChart.destroy();
+			if (typeof BarChart2 !== 'undefined') BarChart2.destroy();
+			BarChart1 = new Chart(ctx1).Bar(data1);
+		});
+
+		$('#tab2').on('shown.bs.tab', function (e) {
+			if (typeof BarChart1 !== 'undefined') BarChart1.destroy();
+			if (typeof BarChart2 !== 'undefined') BarChart2.destroy();
+			LineChart = new Chart(ctx2).Line(data2, options2);
+			$('#js-legend-chart2').append(LineChart.generateLegend());
+		});		
+		$('#tab3').on('shown.bs.tab', function (e) {
+			if (typeof LineChart !== 'undefined') LineChart.destroy();
+			if (typeof BarChart1 !== 'undefined') BarChart1.destroy();
+			BarChart2 = new Chart(ctx3).Bar(data3);
+			$('#js-legend-chart3').append(BarChart2.generateLegend());
+		});		
+	});
+
 	</script>
+	
+	
 {% endblock %}
 
 

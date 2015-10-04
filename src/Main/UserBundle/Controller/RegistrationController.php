@@ -23,6 +23,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use FOS\UserBundle\Model\UserInterface;
 use Main\UserBundle\Entity\ThemeUser as ThemeUser;
 use Main\UserBundle\Entity\SavoirUser as SavoirUser;
+use Main\UserBundle\Entity\EvaluationUser as EvaluationUser;
 
 /**
  * Controller managing the registration
@@ -92,11 +93,11 @@ class RegistrationController extends Controller
 						$evaluation_user->setUser($user);
 						$evaluation_user->setEvaluation($evaluation);
 						$evaluation_user->setScore($evaluation_user_data['score']);
-						if ($score > 70)
+						if ($evaluation_user_data['score'] > 70)
 							$evaluation_user->setSuccess(1);
 						else
 							$evaluation_user->setSuccess(0);
-						$evaluation_user->setTemps($temps);
+						$evaluation_user->setTemps($evaluation_user_data['temps']);
 						$evaluation_user->setDate(new \Datetime());
 						$em->persist($evaluation_user);
 

@@ -72,7 +72,10 @@ doctrine:
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
         auto_mapping: true
-
+        dql:
+            datetime_functions:
+                week: DoctrineExtensions\Query\Mysql\Week
+                from_unixtime: DoctrineExtensions\Query\Mysql\FromUnixtime
 # Swiftmailer Configuration
 swiftmailer:
     transport: "%mailer_transport%"
