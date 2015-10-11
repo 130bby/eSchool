@@ -27,7 +27,7 @@ class DefaultController extends Controller
 		}
 		$legend = json_encode($weeks);
 		
-		//epreuves passées
+		//EPREUVES PASSEES
 		$epreuves = $em->createQuery("SELECT COUNT(s.id), WEEK(s.date) as week_number FROM MainUserBundle:SavoirUser s WHERE s.date > '".date('Y-m-d', strtotime('-7 week'))."' AND s.user = ".$this->container->get('security.context')->getToken()->getUser()->getId()." GROUP BY week_number ")->getArrayResult();
 		$data_epreuve_passees = array();
 		for($i=0;$i<7;$i++)
@@ -49,7 +49,7 @@ class DefaultController extends Controller
 		}
 		$data_epreuve_passees = json_encode($data_epreuve_passees);
 		
-		//savoirs aquis
+		//SAVOIRS AQUIS
 		$savoirs_aquis = $em->createQuery("SELECT IDENTITY(s.savoir) as savoir, WEEK(s.date) as week_number FROM MainUserBundle:SavoirUser s WHERE s.success = 1 AND s.date > '".date('Y-m-d', strtotime('-7 week'))."' AND s.user = ".$this->container->get('security.context')->getToken()->getUser()->getId()." GROUP BY week_number, savoir ")->getArrayResult();
 		$data_savoirs_aquis = array();
 		foreach ($savoirs_aquis as $savoir)
@@ -63,11 +63,37 @@ class DefaultController extends Controller
 				$cumul += count($data_by_week[date("W",strtotime('-'.(8-$i).' week'))]);
 			$data_savoirs_aquis[$i] = $cumul;
 		}
-	
 		$data_savoirs_aquis = json_encode($data_savoirs_aquis);
-
 		
-        return $this->render('MainUserBundle:Default:my_stats.html.twig', array('legend' => $legend,'data_epreuve_passees' => $data_epreuve_passees,'data_savoirs_aquis' => $data_savoirs_aquis));
+		// NOTES PAR THEMES
+		$themesUser = $em->createQuery("SELECT IDENTITY(t.theme) as theme, th.name as theme_name FROM MainUserBundle:ThemeUser t JOIN MainThemeBundle:Theme th WHERE t.theme = th.id AND t.user =".$this->container->get('security.context')->getToken()->getUser()->getId())->getResult();
+		$i = 0;
+		foreach ($themesUser as $themeUser)
+		{
+			$savoirs_array = array();
+			$savoirs_scores_array = array();
+			$savoirs = $em->createQuery("SELECT s.id as savoir FROM MainSavoirBundle:Savoir s WHERE s.theme =".$themeUser['theme'])->getResult();
+			foreach ($savoirs as $savoir)
+				$savoirs_array[] = $savoir['savoir'];
+			$savoirs_scores = $em->createQuery("SELECT s.score as score, WEEK(s.date) as week_number FROM MainUserBundle:SavoirUser s WHERE s.savoir IN ('".implode("','",$savoirs_array)."') AND s.date > '".date('Y-m-d', strtotime('-7 week'))."' AND s.user = ".$this->container->get('security.context')->getToken()->getUser()->getId())->getResult();
+			foreach ($savoirs_scores as $score)
+				$savoirs_scores_array[$score['week_number']][] = $score['score'];
+			for($j=0;$j<7;$j++)
+			{
+				if (isset($savoirs_scores_array[date("W",strtotime('-'.(8-$j).' week'))]))
+					$data_notes_by_themes[$i][$j] = array_sum($savoirs_scores_array[date("W",strtotime('-'.(8-$j).' week'))]) / count($savoirs_scores_array[date("W",strtotime('-'.(8-$j).' week'))]);
+				else
+					$data_notes_by_themes[$i][$j] = 0;
+			}
+			$i++;
+			$legend_notes_by_themes[$i] = $themeUser['theme_name'];
+		}
+		var_dump($data_notes_by_themes); 
+		var_dump($legend_notes_by_themes); 
+		
+        return $this->render('MainUserBundle:Default:my_stats.html.twig', 
+			array('legend' => $legend,'data_epreuve_passees' => $data_epreuve_passees,'data_savoirs_aquis' => $data_savoirs_aquis,
+			'data_notes_by_themes' => json_encode($data_notes_by_themes), 'legend_notes_by_themes' => json_encode($legend_notes_by_themes)));
     }
 
     public function addThemeAction($theme_id)
