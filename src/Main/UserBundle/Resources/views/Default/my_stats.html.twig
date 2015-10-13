@@ -46,88 +46,88 @@
 	<script src="/js/Chart.min.js"></script>
 	<script type="text/javascript">
 	var colors = [[],[],[],[],[],[],[]];
-	colors[0]["fillColor"] = "rgba(151,187,205,0.5)";
-	colors[0]["strokeColor"] = "rgba(151,187,205,0.8)";
-	colors[0]["highlightFill"] = "rgba(151,187,205,0.75)";
-	colors[0]["highlightStroke"] = "rgba(151,187,205,1)";
-	colors[1]["fillColor"] = "rgba(101,137,205,0.5)";
-	colors[1]["strokeColor"] = "rgba(101,137,205,0.8)";
-	colors[1]["highlightFill"] = "rgba(101,137,205,0.75)";
-	colors[1]["highlightStroke"] = "rgba(101,137,205,1)";
-	colors[2]["fillColor"] = "rgba(51,187,205,0.5)";
-	colors[2]["strokeColor"] = "rgba(51,187,205,0.8)";
-	colors[2]["highlightFill"] = "rgba(51,187,205,0.75)";
-	colors[2]["highlightStroke"] = "rgba(51,187,205,1)";
-	colors[3]["fillColor"] = "rgba(51,87,205,0.5)";
-	colors[3]["strokeColor"] = "rgba(51,87,205,0.8)";
-	colors[3]["highlightFill"] = "rgba(51,87,205,0.75)";
-	colors[3]["highlightStroke"] = "rgba(51,87,205,1)";
-	colors[4]["fillColor"] = "rgba(151,187,155,0.5)";
-	colors[4]["strokeColor"] = "rgba(151,187,155,0.8)";
-	colors[4]["highlightFill"] = "rgba(151,187,155,0.75)";
-	colors[4]["highlightStroke"] = "rgba(151,187,155,1)";
-	colors[5]["fillColor"] = "rgba(151,187,105,0.5)";
-	colors[5]["strokeColor"] = "rgba(151,187,105,0.8)";
-	colors[5]["highlightFill"] = "rgba(151,187,105,0.75)";
-	colors[5]["highlightStroke"] = "rgba(151,187,105,1)";
-	colors[6]["fillColor"] = "rgba(151,87,105,0.5)";
-	colors[6]["strokeColor"] = "rgba(151,87,105,0.8)";
-	colors[6]["highlightFill"] = "rgba(151,87,105,0.75)";
-	colors[6]["highlightStroke"] = "rgba(151,87,105,1)";
+	colors[0]["fillColor"] = "rgba(93,118,165,0.5)";
+	colors[0]["strokeColor"] = "rgba(93,118,165,0.8)";
+	colors[0]["highlightFill"] = "rgba(93,118,165,0.75)";
+	colors[0]["highlightStroke"] = "rgba(93,118,165,1)";
+	colors[1]["fillColor"] = "rgba(246,160,0,0.5)";
+	colors[1]["strokeColor"] = "rgba(246,160,0,0.8)";
+	colors[1]["highlightFill"] = "rgba(246,160,0,0.75)";
+	colors[1]["highlightStroke"] = "rgba(246,160,0,1)";
+	colors[2]["fillColor"] = "rgba(93,165,104,0.5)";
+	colors[2]["strokeColor"] = "rgba(93,165,104,0.8)";
+	colors[2]["highlightFill"] = "rgba(93,165,104,0.75)";
+	colors[2]["highlightStroke"] = "rgba(93,165,104,1)";
+	colors[3]["fillColor"] = "rgba(165,93,154,0.5)";
+	colors[3]["strokeColor"] = "rgba(165,93,154,0.8)";
+	colors[3]["highlightFill"] = "rgba(165,93,154,0.75)";
+	colors[3]["highlightStroke"] = "rgba(165,93,154,1)";
+	colors[4]["fillColor"] = "rgba(241,90,43,0.5)";
+	colors[4]["strokeColor"] = "rgba(241,90,43,0.8)";
+	colors[4]["highlightFill"] = "rgba(241,90,43,0.75)";
+	colors[4]["highlightStroke"] = "rgba(241,90,43,1)";
+	colors[5]["fillColor"] = "rgba(165,140,93,0.5)";
+	colors[5]["strokeColor"] = "rgba(165,140,93,0.8)";
+	colors[5]["highlightFill"] = "rgba(165,140,93,0.75)";
+	colors[5]["highlightStroke"] = "rgba(165,140,93,1)";
+	colors[6]["fillColor"] = "rgba(46,59,83,0.5)";
+	colors[6]["strokeColor"] = "rgba(46,59,83,0.8)";
+	colors[6]["highlightFill"] = "rgba(46,59,83,0.75)";
+	colors[6]["highlightStroke"] = "rgba(46,59,83,1)";
 	
 	
 	$(function() {
-		var ctx1 = $("#Chart1").get(0).getContext("2d");
-		var labels = $.parseJSON('{{ legend | raw }}');
-		var data_epreuve_passees = $.parseJSON('{{ data_epreuve_passees | raw }}');
-		var data_savoirs_aquis = $.parseJSON('{{ data_savoirs_aquis | raw }}');
-		var data1 = {
-			labels: labels,
+		var ctx3 = $("#Chart3").get(0).getContext("2d");
+		var labels_savoirs = $.parseJSON('{{ legend_savoirs | raw |escape("js") }}');
+		var notes_savoir = $.parseJSON('{{ notes_savoir | raw }}');
+		var notes_medianes = $.parseJSON('{{ notes_medianes | raw }}');
+		var data3 = {
+			labels: labels_savoirs,
 			datasets: [
 				{
-					label: "Savoirs aquis",
-					fillColor: "rgba(151,187,205,0.5)",
-					strokeColor: "rgba(151,187,205,0.8)",
-					highlightFill: "rgba(151,187,205,0.75)",
-					highlightStroke: "rgba(151,187,205,1)",
-					data: data_savoirs_aquis
+					label: "Meilleure note",
+					type: "bar",
+					fillColor: colors[0]["fillColor"],
+					strokeColor: colors[0]["strokeColor"],
+					highlightFill: colors[0]["highlightFill"],
+					highlightStroke: colors[0]["highlightStroke"],
+					data: notes_savoir
 				},
 				{
-					label: "Epreuves passées",
-					fillColor: "rgba(220,220,220,0.5)",
-					strokeColor: "rgba(220,220,220,0.8)",
-					highlightFill: "rgba(220,220,220,0.75)",
-					highlightStroke: "rgba(220,220,220,1)",
-					data: data_epreuve_passees
+					label: "Note mediane",
+					type: "line",
+					fillColor: colors[1]["fillColor"],
+					strokeColor: colors[1]["strokeColor"],
+					highlightFill: colors[1]["highlightFill"],
+					highlightStroke: colors[1]["highlightStroke"],
+					data: notes_medianes
 				}
 			]
 		};
 		
-		var BarChart1 = new Chart(ctx1).Bar(data1);
-		$('#js-legend-chart1').append(BarChart1.generateLegend());
+		var BarLineChart;
 		
 		var ctx2 = $("#Chart2").get(0).getContext("2d");
+		var labels = $.parseJSON('{{ legend | raw }}');
+		var data_epreuve_passees = $.parseJSON('{{ data_epreuve_passees | raw }}');
+		var data_savoirs_aquis = $.parseJSON('{{ data_savoirs_aquis | raw }}');
 		var data2 = {
 			labels: labels ,
 			datasets: [
 			{
 				label: "Epreuves passées",
-				fillColor: "rgba(151,187,205,0.2)",
-				strokeColor: "rgba(151,187,205,1)",
-				pointColor: "rgba(151,187,205,1)",
-				pointStrokeColor: "#fff",
-				pointHighlightFill: "#fff",
-				pointHighlightStroke: "rgba(151,187,205,1)",
+				fillColor: colors[0]["fillColor"],
+				strokeColor: colors[0]["strokeColor"],
+				highlightFill: colors[0]["highlightFill"],
+				highlightStroke: colors[0]["highlightStroke"],
 				data: data_epreuve_passees
 			},
 			{
 				label: "Savoirs aquis",
-				fillColor: "rgba(220,220,220,0.2)",
-				strokeColor: "rgba(220,220,220,1)",
-				pointColor: "rgba(220,220,220,1)",
-				pointStrokeColor: "#fff",
-				pointHighlightFill: "#fff",
-				pointHighlightStroke: "rgba(220,220,220,1)",
+				fillColor: colors[1]["fillColor"],
+				strokeColor: colors[1]["strokeColor"],
+				highlightFill: colors[1]["highlightFill"],
+				highlightStroke: colors[1]["highlightStroke"],
 				data: data_savoirs_aquis
 			}
 			]
@@ -142,9 +142,9 @@
 						+'<% } %>'
 					  +'</ul>'
 		}
-		var LineChart;
+		var LineChart2;
 		
-		var ctx3 = $("#Chart3").get(0).getContext("2d");
+		var ctx1 = $("#Chart1").get(0).getContext("2d");
 		var legend_notes_by_themes = $.parseJSON('{{ legend_notes_by_themes | raw }}');
 		var data_notes_by_themes = $.parseJSON('{{ data_notes_by_themes | raw }}');
 		var datasets = [];
@@ -159,33 +159,34 @@
 			datasets[i].data = data_notes_by_themes[i];
 		}
 		console.log(datasets);
-		var data3 = {
+		var data1 = {
 			labels: labels,
 			datasets: datasets
 		};
 		
-		var LineChart2;
+		var LineChart = new Chart(ctx1).Line(data1);
+		$('#js-legend-chart1').append(LineChart.generateLegend());
 		
 		//tabs
 		$('#tab1').on('shown.bs.tab', function (e) {
-			if (typeof LineChart !== 'undefined') LineChart.destroy();
+			if (typeof BarLineChart !== 'undefined') BarLineChart.destroy();
 			if (typeof LineChart2 !== 'undefined') LineChart2.destroy();
-			BarChart1 = new Chart(ctx1).Bar(data1);
+			LineChart = new Chart(ctx1).Line(data1);
 		});
 
 		$('#tab2').on('shown.bs.tab', function (e) {
-			if (typeof BarChart1 !== 'undefined') BarChart1.destroy();
-			if (typeof LineChart2 !== 'undefined') LineChart2.destroy();
-			LineChart = new Chart(ctx2).Line(data2, options2);
+			if (typeof BarLineChart !== 'undefined') BarLineChart.destroy();
+			if (typeof LineChart !== 'undefined') LineChart.destroy();
+			LineChart2 = new Chart(ctx2).Line(data2);
 			if($('#js-legend-chart2').html() == '')
-				$('#js-legend-chart2').append(LineChart.generateLegend());
+				$('#js-legend-chart2').append(LineChart2.generateLegend());
 		});		
 		$('#tab3').on('shown.bs.tab', function (e) {
 			if (typeof LineChart !== 'undefined') LineChart.destroy();
-			if (typeof BarChart1 !== 'undefined') BarChart1.destroy();
-			LineChart2 = new Chart(ctx3).Line(data3);
+			if (typeof LineChart2 !== 'undefined') LineChart2.destroy();
+			BarLineChart = new Chart(ctx3).Overlay(data3);
 			if($('#js-legend-chart3').html() == '')
-				$('#js-legend-chart3').append(LineChart2.generateLegend());
+				$('#js-legend-chart3').append(BarLineChart.generateLegend());
 		});		
 	});
 

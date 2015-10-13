@@ -81,19 +81,44 @@ class DefaultController extends Controller
 			for($j=0;$j<7;$j++)
 			{
 				if (isset($savoirs_scores_array[date("W",strtotime('-'.(8-$j).' week'))]))
-					$data_notes_by_themes[$i][$j] = array_sum($savoirs_scores_array[date("W",strtotime('-'.(8-$j).' week'))]) / count($savoirs_scores_array[date("W",strtotime('-'.(8-$j).' week'))]);
+					$data_notes_by_themes[$i][$j] = array_sum($savoirs_scores_array[date("W",strtotime('-'.(8-$j).' week'))]) / (5*count($savoirs_scores_array[date("W",strtotime('-'.(8-$j).' week'))]));
 				else
 					$data_notes_by_themes[$i][$j] = 0;
 			}
 			$i++;
 			$legend_notes_by_themes[$i] = $themeUser['theme_name'];
 		}
-		var_dump($data_notes_by_themes); 
-		var_dump($legend_notes_by_themes); 
 		
+		// NOTES PAR SAVOIR VS MEDIANE
+		$epreuves = $em->getRepository('MainUserBundle:SavoirUser')->findBy(array("user" => $this->container->get('security.context')->getToken()->getUser()));
+		$legend_savoirs = array();
+		$notes_savoir = array();
+		foreach ($epreuves as $epreuve)
+		{
+			if (!isset($legend_savoirs[$epreuve->getSavoir()->getId()]))
+				$legend_savoirs[$epreuve->getSavoir()->getId()] = $epreuve->getSavoir()->getName();
+
+			if (!isset($notes_savoir[$epreuve->getSavoir()->getId()]) || $notes_savoir[$epreuve->getSavoir()->getId()] < $epreuve->getScore()/5)
+				$notes_savoir[$epreuve->getSavoir()->getId()] = $epreuve->getScore()/5;
+		}
+		
+		$savoirs_medianes = $em->createQuery("SELECT AVG(s.score) as score, IDENTITY(s.savoir) as savoir_id FROM MainUserBundle:SavoirUser s WHERE s.savoir IN ('".implode("','",array_keys($legend_savoirs))."') GROUP BY savoir_id")->getResult();
+		$notes_medianes_raw = array();
+		foreach ($savoirs_medianes as $savoir_mediane)
+			$notes_medianes_raw[$savoir_mediane["savoir_id"]] = $savoir_mediane["score"]/5;
+			
+		$notes_medianes = array();
+		foreach ($legend_savoirs as $key => $current_savoir)
+			$notes_medianes[] = $notes_medianes_raw[$key];
+			
+		$legend_savoirs = array_values($legend_savoirs);
+		$notes_savoir = array_values($notes_savoir);
+
         return $this->render('MainUserBundle:Default:my_stats.html.twig', 
 			array('legend' => $legend,'data_epreuve_passees' => $data_epreuve_passees,'data_savoirs_aquis' => $data_savoirs_aquis,
-			'data_notes_by_themes' => json_encode($data_notes_by_themes), 'legend_notes_by_themes' => json_encode($legend_notes_by_themes)));
+			'data_notes_by_themes' => json_encode($data_notes_by_themes), 'legend_notes_by_themes' => json_encode($legend_notes_by_themes)
+			, 'legend_savoirs' => json_encode($legend_savoirs), 'notes_savoir' => json_encode($notes_savoir), 'notes_medianes' => json_encode($notes_medianes)
+			));
     }
 
     public function addThemeAction($theme_id)
