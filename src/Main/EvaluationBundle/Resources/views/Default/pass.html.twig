@@ -270,9 +270,6 @@
 					div_next.css('color',"#ffffff");
 					div_next.html('<div style="font-weight:bold;display:inline-block;width:calc(100% - 125px);text-align:center;"><img style="vertical-align:bottom;" src="/img/exercice_fail_icon.png" /><p style="padding-left:20px;font-size:20px;display:inline-block;"> Mauvaise réponse ...<br/><span style="font-size:14px;">La bonne réponse était : '+array_data[1]+'</span></p></div><div style="width:125px;display:inline-block;vertical-align:text-bottom;"><button class="btn-fail-exo btnSuivant" type="button">Continuer</button></div>');
 					$('body').attr('onkeypress','if (event.keyCode == 13) {btnSuivant('+numero_exo+');}')
-					//pour les textes à trous, il faut réinterpréter la réponse avec mathjax
-					if(exercice_array[numero_exo-1]["type"] == 3)
-						$(document).ajaxComplete(function(){MathJax.Hub.Queue(["Typeset",MathJax.Hub]);});
 				}
 
 				compteurReponse++;
