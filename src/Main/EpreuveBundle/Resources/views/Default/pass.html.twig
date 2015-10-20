@@ -232,7 +232,7 @@
 					data_temp += reponse_juste_html+" ";
 			}
 
-			DATA += '&type_exo=1&reponse_juste='+data_temp;
+			DATA += '&type_exo=1&reponse_juste='+encodeURIComponent(data_temp);
 		}
 
 		// type reponse simple

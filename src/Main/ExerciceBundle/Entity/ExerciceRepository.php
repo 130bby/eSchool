@@ -146,7 +146,7 @@ class ExerciceRepository extends EntityRepository
 						$i=0;
 						foreach ($enonce as $cle => $enonce_part)
 						{
-							if ($i % 2 == 1 && $enonce_part == $nom_variable[0])
+							if ($enonce_part == $nom_variable[0])
 								$exercices[$key]['texte'] = str_replace('&'.$nom_variable[0].'&',$valeur_variable,$exercices[$key]['texte']);
 							$i++;
 						}
@@ -286,19 +286,19 @@ class ExerciceRepository extends EntityRepository
 				}
 			}
 		}
-	
 	}
 	
 	function compare_tolerant_text($reponse, $reponse_juste, $charset='utf-8')
 	{
-		$reponse = htmlentities($reponse, ENT_NOQUOTES, $charset);
 		
+		$reponse = strip_tags($reponse);
+		$reponse = htmlentities($reponse, ENT_NOQUOTES, $charset);
 		$reponse = preg_replace('#&([A-za-z])(?:acute|cedil|caron|circ|grave|orn|ring|slash|th|tilde|uml);#', '\1', $reponse);
 		$reponse = preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', $reponse); // pour les ligatures e.g. '&oelig;'
 		$reponse = preg_replace('#&[^;]+;#', '', $reponse); // supprime les autres caractères
 		
+		$reponse_juste = strip_tags($reponse_juste);
 		$reponse_juste = htmlentities($reponse_juste, ENT_NOQUOTES, $charset);
-		
 		$reponse_juste = preg_replace('#&([A-za-z])(?:acute|cedil|caron|circ|grave|orn|ring|slash|th|tilde|uml);#', '\1', $reponse_juste);
 		$reponse_juste = preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', $reponse_juste); // pour les ligatures e.g. '&oelig;'
 		$reponse_juste = preg_replace('#&[^;]+;#', '', $reponse_juste); // supprime les autres caractères
