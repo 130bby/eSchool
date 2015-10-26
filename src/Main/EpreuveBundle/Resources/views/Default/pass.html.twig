@@ -106,6 +106,7 @@
 	<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 	<script src="/js/bootstrap.min.js"></script>
 	<script src="/js/jquery.countdown.min.js"></script>
+	<script src="/js/jquery.ui.touch-punch.min.js"></script>
 	<script type="text/javascript">
 
 	$('body').addClass('loading');
@@ -245,7 +246,16 @@
 		// type texte à trous
 		if($("#droppable_exo_"+id_exo+"_1").html() != undefined)
 		{
-			var reponses = [ exercice_array[numero_exo-1]["reponse1"].replace("<p>", "<span>").replace("</p>", "</span>") , exercice_array[numero_exo-1]["reponse2"].replace("<p>", "<span>").replace("</p>", "</span>"), exercice_array[numero_exo-1]["reponse3"].replace("<p>", "<span>").replace("</p>", "</span>"), exercice_array[numero_exo-1]["reponse4"].replace("<p>", "<span>").replace("</p>", "</span>")]
+			var reponses = [];
+			if (typeof exercice_array[numero_exo-1]["reponse1"] != null)
+				reponses[0] = exercice_array[numero_exo-1]["reponse1"].replace("<p>", "<span>").replace("</p>", "</span>");
+			if (typeof exercice_array[numero_exo-1]["reponse2"] != null)
+				reponses[1] = exercice_array[numero_exo-1]["reponse2"].replace("<p>", "<span>").replace("</p>", "</span>");
+			if (typeof exercice_array[numero_exo-1]["reponse3"] != null)
+				reponses[2] = exercice_array[numero_exo-1]["reponse3"].replace("<p>", "<span>").replace("</p>", "</span>");
+			if (exercice_array[numero_exo-1]["reponse4"] != null)
+				reponses[3] = exercice_array[numero_exo-1]["reponse4"].replace("<p>", "<span>").replace("</p>", "</span>");
+				
 			DATA += '&type_exo=3&enonce=' + encodeURIComponent(exercice_array[numero_exo-1]["texte"]) + '&reponse_juste=' + encodeURIComponent(reponses);
 		}
 				
@@ -276,6 +286,9 @@
 					div_next.css('color',"#ffffff");
 					div_next.html('<div style="font-weight:bold;display:inline-block;width:calc(100% - 125px);text-align:center;"><img style="vertical-align:bottom;" src="/img/exercice_fail_icon.png" /><p style="padding-left:20px;font-size:20px;display:inline-block;"> Mauvaise réponse ...<br/><span style="font-size:14px;">La bonne réponse était : '+array_data[1]+'</span></p></div><div style="width:125px;display:inline-block;vertical-align:text-bottom;"><button class="btn-fail-exo btnSuivant" type="button">Continuer</button></div>');
 					$('body').attr('onkeypress','if (event.keyCode == 13) {btnSuivant('+numero_exo+');}')
+                    //pour les textes à trous, il faut réinterpréter la réponse avec mathjax
+                    if(exercice_array[numero_exo-1]["type"] == 3)
+                        $(document).ajaxComplete(function(){MathJax.Hub.Queue(["Typeset",MathJax.Hub,div_next[0]]);});
 				}
 				
 				compteurReponse++;
