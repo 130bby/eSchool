@@ -39,11 +39,7 @@
 	<div class="col-sm-4 col-xs-12 col-sm-offset-1 profile-themes-main">
 		<p style="color:#5b74a9;font-size:20px;">Ton dernier badge :</p>
 		{% if last_badge %}
-			{% if last_badge.id == 1 %}
-				<img style="margin:auto; display: block;" src="/uploads/badges/1.jpg" data-html="true" data-toggle="tooltip" data-placement="top" title="{{last_badge.badge.name}}" />
-			{% else %}
-				<img style="margin:auto; display: block;" src="/uploads/badges/{{last_badge.badge.id}}.jpg" data-html="true" data-toggle="tooltip" data-placement="top" title="{{last_badge.badge.name}}" />
-			{% endif %}
+			<span style="margin:auto;display:block;" class="badge{{last_badge.badge.id}}-{{last_badge.niveau}}"></span>
 		{% endif %}
 	</div>
 </div>

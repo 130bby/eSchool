@@ -861,3 +861,22 @@ text-decoration:none;
 background-color:#f6a000;
 }
 
+.blue-button {
+    background-color: #5d76aa;
+    border-radius: 20px;
+    color: #fffefc;
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    height: 30px;
+    margin: auto;
+    margin-top: 40px;
+    padding-top: 5px;
+    text-align: center;
+    width: 80%;
+}
+
+.blue-button:hover, .blue-button:visited, .blue-button:link{
+color:#fffefc;
+text-decoration: none;
+}
