@@ -23,7 +23,8 @@
         "sonata-project/doctrine-orm-admin-bundle": "~2.3",
         "liuggio/excelbundle": "~2.0",
         "knplabs/knp-time-bundle": "^1.3",
-        "beberlei/DoctrineExtensions": "^1.0"
+        "beberlei/DoctrineExtensions": "^1.0",
+        "hwi/oauth-bundle": "^0.3.9"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

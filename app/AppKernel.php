@@ -34,6 +34,7 @@ class AppKernel extends Kernel
             new Main\CoursBundle\MainCoursBundle(),
             new Main\BadgeBundle\MainBadgeBundle(),
 			new Knp\Bundle\TimeBundle\KnpTimeBundle(),
+			new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
