@@ -32,13 +32,44 @@
 	
     <body>
 		<div id="fb-root"></div>
-		<script>(function(d, s, id) {
-		  var js, fjs = d.getElementsByTagName(s)[0];
-		  if (d.getElementById(id)) return;
-		  js = d.createElement(s); js.id = id;
-		  js.src = "//connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v2.5&appId=118099004867843";
-		  fjs.parentNode.insertBefore(js, fjs);
-		}(document, 'script', 'facebook-jssdk'));</script>
+<script>
+        window.fbAsyncInit = function() {
+            // init the FB JS SDK
+            FB.init({
+                appId      : '525036637660440',                        // App ID from the app dashboard
+                status     : true,                                 // Check Facebook Login status
+                xfbml      : true                                  // Look for social plugins on the page
+            });
+        };
+
+        // Load the SDK asynchronously
+        (function(d, s, id){
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/fr_FR/all.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+        function fb_login() {
+            FB.getLoginStatus(function(response) {
+                if (response.status === 'connected') {
+                    // connected
+                    alert('Already connected, redirect to login page to create token.');
+                    document.location = "{{ url("hwi_oauth_service_redirect", {service: "facebook"}) }}";
+                } else {
+                    // not_authorized
+                    FB.login(function(response) {
+                        if (response.authResponse) {
+                            document.location = "{{ url("hwi_oauth_service_redirect", {service: "facebook"}) }}";
+                        } else {
+                            alert('Cancelled.');
+                        }
+                    }, {scope: 'email'});
+                }
+            });
+        }
+    </script>
 		<div id="wrapper">
 			<!-- Navigation -->
 			<nav class=" theme1 navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -152,7 +183,8 @@
 					<div class="bg_login modal-content modal_login_user">
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-							<h3>Connexion</h3>	
+							<h3>Connexion</h3>
+							<a class="fb-login-button" href="#" onclick="fb_login();"><img src="/img/facebook-login-button.png" /></a>
 						</div>
 						<div class="modal-body modal-login-body">
 							{{ render(controller('MainUserBundle:Security:login')) }} 
@@ -168,8 +200,9 @@
 							<h3>Inscription</h3>
 						</div>
 						<div class="modal-body modal-signup-body">
-							<a href="{{ path('main_student_register')}}">Je suis un élève</a>
-							<a class="bg-orange" href="{{ path('main_prof_register')}}">Je suis un professeur</a>
+							<a href="{{ path('main_student_register')}}">classique ( email )</a>
+							<a style="background-color:transparent;margin-top:10px;" href="#" onclick="fb_login();"><img style="width:150px;" src="/img/facebook-register-button.png" /></a>
+							<!--<a class="bg-orange" href="{{ path('main_prof_register')}}">Je suis un professeur</a>-->
 						</div>
 					</div>
 				</div>

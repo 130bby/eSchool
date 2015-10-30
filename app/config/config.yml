@@ -130,7 +130,7 @@ services:
             - { name: twig.extension }
 
 hwi_oauth:
-    firewall_name: secured_area
+    firewall_name: main
     connect: ~
     resource_owners:
         facebook:
@@ -139,10 +139,9 @@ hwi_oauth:
             client_secret:       263584f84c45bc5bd80fa07936c2e29c
             options:
                 display: popup #dialog is optimized for popup window
-                auth_type: rerequest # Re-asking for Declined Permissions
     fosub:
         # try 30 times to check if a username is available (foo, foo1, foo2 etc)
-        username_iterations: 25
+        username_iterations: 30
 
         # mapping between resource owners (see below) and properties
         properties:

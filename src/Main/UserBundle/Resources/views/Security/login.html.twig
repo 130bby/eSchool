@@ -14,11 +14,9 @@
 		<input type="password" id="password" name="_password" class="form-control" placeholder="{{ 'security.login.password'|trans }}" required="required" /> 
 
 		<input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" class="btn btn-primary" />
-		
-		<div style="text-align:center;margin-top:10px;" class="fb-login-button" data-max-rows="1" data-size="large" data-show-faces="false" data-auto-logout-link="false"></div>
-		
+
 		<a href="{{ path('fos_user_resetting_request') }}">Mot de passe oublié ?</a><br />
-		
+
 		<a id="link_sign_up_user_login" href="#">S'inscrire</a>
 	</form>
 

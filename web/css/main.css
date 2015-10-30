@@ -784,3 +784,25 @@ padding-right:5px;
 }
 
 #history_list li { display:none;}
+
+.fb-login-button{
+float:right;
+margin-top:-40px;
+margin-right:40px;
+}
+
+.fb-login-button img{
+width:150px;
+}
+
+@media screen and (max-width: 360px) {
+.fb-login-button{
+float:right;
+margin-top:-35px;
+display:inline-block;
+margin-right:0px;
+}
+.fb-login-button img{
+width:100px;
+}
+}

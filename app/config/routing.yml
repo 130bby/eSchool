@@ -1,6 +1,6 @@
 hwi_oauth_redirect:
     resource: "@HWIOAuthBundle/Resources/config/routing/redirect.xml"
-    prefix:   /connect
+    prefix:   /login
 
 hwi_oauth_login:
     resource: "@HWIOAuthBundle/Resources/config/routing/login.xml"
@@ -8,7 +8,7 @@ hwi_oauth_login:
 
 hwi_oauth_connect:
     resource: "@HWIOAuthBundle/Resources/config/routing/connect.xml"
-    prefix:   /secure_area/connect
+    prefix:   /login
 
 main_badge:
     resource: "@MainBadgeBundle/Resources/config/routing.yml"
