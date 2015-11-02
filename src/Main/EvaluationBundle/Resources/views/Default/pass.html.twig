@@ -243,11 +243,11 @@
 		if($("#droppable_exo_"+id_exo+"_1").html() != undefined)
 		{
 			var reponses = [];
-			if (typeof exercice_array[numero_exo-1]["reponse1"] != null)
+			if (exercice_array[numero_exo-1]["reponse1"] != null)
 				reponses[0] = exercice_array[numero_exo-1]["reponse1"].replace("<p>", "<span>").replace("</p>", "</span>");
-			if (typeof exercice_array[numero_exo-1]["reponse2"] != null)
+			if (exercice_array[numero_exo-1]["reponse2"] != null)
 				reponses[1] = exercice_array[numero_exo-1]["reponse2"].replace("<p>", "<span>").replace("</p>", "</span>");
-			if (typeof exercice_array[numero_exo-1]["reponse3"] != null)
+			if (exercice_array[numero_exo-1]["reponse3"] != null)
 				reponses[2] = exercice_array[numero_exo-1]["reponse3"].replace("<p>", "<span>").replace("</p>", "</span>");
 			if (exercice_array[numero_exo-1]["reponse4"] != null)
 				reponses[3] = exercice_array[numero_exo-1]["reponse4"].replace("<p>", "<span>").replace("</p>", "</span>");
