@@ -596,7 +596,7 @@ width: 320px;
 	background-color: #dd922d;
 	color: #ffffff;
 	text-align:center;
-	margin-left:55px;
+	margin-left:155px;
 	display:inline-block;
 	width:150px;
 	height:30px;
@@ -609,10 +609,17 @@ width: 320px;
 	width:100px;
 	height:25px;
 	padding-top:1px;
-	margin-left:40px;
+	margin-left:115px;
 	top:55px;
 }
 }
+
+@media screen and (max-width: 360px) {
+.btn-epreuve{
+	margin-left:90px;
+}
+}
+
 
 .btn-epreuve:hover{
 	background-color: #506590;

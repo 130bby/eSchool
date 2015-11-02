@@ -31,16 +31,16 @@
     </head>
 	
     <body>
-		<!-- Google Tag Manager -->
-		<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TBR2B3"
-		height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-		<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-		new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-		j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-		'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-		})(window,document,'script','dataLayer','GTM-TBR2B3');</script>
-		<!-- End Google Tag Manager -->	
-	
+        <!-- Google Tag Manager -->
+        <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TBR2B3"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-TBR2B3');</script>
+        <!-- End Google Tag Manager -->    
+
 		<div id="fb-root"></div>
 		<script>
 				window.fbAsyncInit = function() {
@@ -92,7 +92,11 @@
 							<span class="icon-bar"></span>
 							<span class="icon-bar"></span>
 						</button>
-						<a class="navbar-brand" href="{{ path('main_home_homepage')}}">PAPILO</a>
+						{% if app.user %}
+							<a class="navbar-brand" href="{{ path('main_user_profil')}}">PAPILO</a>
+						{% else %}
+							<a class="navbar-brand" href="{{ path('main_home_homepage')}}">PAPILO</a>
+						{% endif %}
 					</div>
 					<!-- Collect the nav links, forms, and other content for toggling -->
 					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">

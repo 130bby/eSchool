@@ -64,7 +64,7 @@
 							{% endif %}
 							<p style="color:#add292;text-align:center;">Niveau : {%if savoir.strength is defined %}{{savoir.strength}}{%else%}0{%endif%}</p><br />
 							<p style="text-align:center;">Aller à :</p><br />
-							<a href="{{ path('main_cours_show', { 'savoir_id': savoir.id }) }}" class="btn-epreuve">Cours</a>
+							<!--<a href="{{ path('main_cours_show', { 'savoir_id': savoir.id }) }}" class="btn-epreuve">Cours</a>-->
 							<a href="{{ path('main_epreuve_pass_student', { 'savoir_id': savoir.id }) }}" class="btn-epreuve">Epreuve</a>
 							</div>
 						</div>
