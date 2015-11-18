@@ -29,7 +29,7 @@ class PrerequisType extends AbstractType
 			if (!$this->mapped_element)
 			{
 			$builder
-				->add('theme', 'entity', array( 'class' => 'MainThemeBundle:Theme','property' => 'name'))
+				->add('theme', 'entity', array( 'required' => false, 'class' => 'MainThemeBundle:Theme','property' => 'name'))
 				->add('savoir', 'entity', array( 'class' => 'MainSavoirBundle:Savoir','property' => 'name'));
 				$this->mapped_element = true;
 			}
@@ -44,7 +44,7 @@ class PrerequisType extends AbstractType
 		else
 		{
 			$builder
-				->add('theme', 'entity', array( 'class' => 'MainThemeBundle:Theme','property' => 'name'))
+				->add('theme', 'entity', array( 'required' => false,  'class' => 'MainThemeBundle:Theme','property' => 'name'))
 				->add('savoir', 'entity', array( 'class' => 'MainSavoirBundle:Savoir','property' => 'name'));
 		}		
     }
