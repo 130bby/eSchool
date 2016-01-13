@@ -65,7 +65,10 @@
 							{% if exercice.reponse3 is not null %}<input type="checkbox" id="reponse_{{exercice.id}}_3" name="reponse_{{exercice.id}}_3" class="styled"><label for="reponse_{{exercice.id}}_3"  class="spanMarge">{{exercice.reponse3 | raw }}</label></span>{% endif %}
 							{% if exercice.reponse4 is not null %}<input type="checkbox" id="reponse_{{exercice.id}}_4" name="reponse_{{exercice.id}}_4" class="styled"><label for="reponse_{{exercice.id}}_4"  class="spanMarge">{{exercice.reponse4 | raw }}</label></span>{% endif %}
 						</div>
-						<div class="text-center btn-valid-exo-bg"><button type="submit" id="submit_exo_{{exercice.id}}_{{loop.index}}" class="btn-valid-exo">Valider</button></div>
+						<div class="text-center btn-valid-exo-bg">
+							<span style="float:left;" ><a class="report_exo_{{exercice.id}}" href="#" data-toggle="modal" data-target="#reportModal" data-whatever="{{exercice.id}}"><img src="/img/report_exo.png"></a></span>
+							<button type="submit" id="submit_exo_{{exercice.id}}_{{loop.index}}" class="btn-valid-exo">Valider</button>
+						</div>
 				{% elseif exercice.type == 2 %}
 					<p class="text-center">
 							<textarea class="textarea-reponse-simple" id="reponse_{{exercice.id}}_1" name="reponse_{{exercice.id}}_1" placeholder="Tape ta réponse ici ..."></textarea>
@@ -73,7 +76,10 @@
 							<input type="hidden" id="reponse_{{exercice.id}}_juste" name="reponse_{{exercice.id}}_juste" value="{{exercice.reponse1}}" />
 						{% endif %}
 					</p>
-						<div class="text-center btn-valid-exo-bg"><button type="submit" id="submit_exo_{{exercice.id}}_{{loop.index}}" class="btn-valid-exo">Valider</button></div>
+						<div class="text-center btn-valid-exo-bg">
+							<span  style="float:left;"><a class="report_exo_{{exercice.id}}" href="#" data-toggle="modal" data-target="#reportModal" data-whatever="{{exercice.id}}"><img src="/img/report_exo.png"></a></span>
+							<button type="submit" id="submit_exo_{{exercice.id}}_{{loop.index}}" class="btn-valid-exo">Valider</button>
+						</div>
 				{% elseif exercice.type == 3 %}
 					<p class="text-center">
 						<ul id="drag_it_{{exercice.id}}" class="list-inline">
@@ -84,6 +90,7 @@
 						</ul>
 					</p>
 						<div class="btn-valid-exo-bg" style="margin-top:0px;">
+						<span  style="float:left;"><a class="report_exo_{{exercice.id}}" href="#" data-toggle="modal" data-target="#reportModal" data-whatever="{{exercice.id}}"><img src="/img/report_exo.png"></a></span>
 						<p class="text-center"><button type="button" id="restart_exo_{{exercice.id}}_{{loop.index}}" class="btn-valid-exo" style="background-color:#f39f03;" >Recommencer</button></p>
 						<p class="text-center"><button type="submit" id="submit_exo_{{exercice.id}}_{{loop.index}}" class="btn-valid-exo">Valider</button></p>
 						</div>
@@ -96,7 +103,27 @@
 			<input type="hidden" name="score" id="score" value="0">
 			<input type="hidden" name="temps" id="temps" value="0">
 		</form>
-		<div class="modal"></div>
+		<div class="modal fade" style="padding-top:50px;" id="reportModal" tabindex="-1" role="dialog">
+		  <div class="modal-dialog">
+			<div class="modal-content">
+			  <div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Un bug dans la matrice ? Merci de signaler un exercice erroné !</h4>
+			  </div>
+			  <form id="report_exo" method="post" enctype="multipart/form-data">
+				<div class="modal-body">
+					<textarea class="textarea-reponse-simple" style="width:85%" id="report_exercice_comment" name="report_exercice_comment" placeholder="Votre commentaire ici ..."></textarea>
+					<input type="hidden" name="report_exercice_id" id="report_exercice_id" value="0">
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="submit" class="btn btn-primary">Report</button>
+				</div>
+			  </form>
+			</div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+
 	</div>
 </div>
 {% endblock %}
@@ -267,7 +294,7 @@
 					var div_next = $( "div[id^='exercice_"+numero_exo+"_']" ).find(".btn-valid-exo-bg");
 					div_next.css('background-color',"#a1cc9a");
 					div_next.css('color',"#ffffff");
-					div_next.html('<div style="font-weight:bold;display:inline-block;width:calc(100% - 125px);text-align:center;"><img style="vertical-align:middle;" src="/img/exercice_success_icon.png" /><p style="font-size:20px;padding-left:20px;display:inline-block;">Bonne réponse !</p></div><div style="width:125px;display:inline-block;vertical-align:middle;"><button class="btn-success-exo btnSuivant" type="button">Continuer</button></div>');
+					div_next.html('<div style="font-weight:bold;display:inline-block;width:calc(100% - 125px);text-align:center;"><span style="float:left;" ><a class="report_exo_'+id_exo+'" href="#" data-toggle="modal" data-target="#reportModal" data-whatever="'+id_exo+'"><img src="/img/report_exo.png"></a></span><img style="vertical-align:middle;" src="/img/exercice_success_icon.png" /><p style="font-size:20px;padding-left:20px;display:inline-block;">Bonne réponse !</p></div><div style="width:125px;display:inline-block;vertical-align:middle;"><button class="btn-success-exo btnSuivant" type="button">Continuer</button></div>');
 					$('body').attr('onkeypress','if (event.keyCode == 13) {btnSuivant('+numero_exo+');}')
 					reponses_justes++;
 					$('#score').val(reponses_justes);
@@ -278,7 +305,7 @@
 					var div_next = $( "div[id^='exercice_"+numero_exo+"_']" ).find(".btn-valid-exo-bg");
 					div_next.css('background-color',"#ca1334");
 					div_next.css('color',"#ffffff");
-					div_next.html('<div style="font-weight:bold;display:inline-block;width:calc(100% - 125px);text-align:center;"><img style="vertical-align:bottom;" src="/img/exercice_fail_icon.png" /><p style="padding-left:20px;font-size:20px;display:inline-block;"> Mauvaise réponse ...<br/><span style="font-size:14px;">La bonne réponse était : '+array_data[1]+'</span></p></div><div style="width:125px;display:inline-block;vertical-align:text-bottom;"><button class="btn-fail-exo btnSuivant" type="button">Continuer</button></div>');
+					div_next.html('<div style="font-weight:bold;display:inline-block;width:calc(100% - 125px);text-align:center;"><span style="float:left;" ><a class="report_exo_'+id_exo+'" href="#" data-toggle="modal" data-target="#reportModal" data-whatever="'+id_exo+'"><img src="/img/report_exo.png"></a></span><img style="vertical-align:bottom;" src="/img/exercice_fail_icon.png" /><p style="padding-left:20px;font-size:20px;display:inline-block;"> Mauvaise réponse ...<br/><span style="font-size:14px;">La bonne réponse était : '+array_data[1]+'</span></p></div><div style="width:125px;display:inline-block;vertical-align:text-bottom;"><button class="btn-fail-exo btnSuivant" type="button">Continuer</button></div>');
 					$('body').attr('onkeypress','if (event.keyCode == 13) {btnSuivant('+numero_exo+');}')
                     //pour les textes à trous, il faut réinterpréter la réponse avec mathjax
                     if(exercice_array[numero_exo-1]["type"] == 3)
@@ -312,10 +339,34 @@
 		$('[id^="exercice_' + numero_exo + '_"]').hide();
 		$('[id^="exercice_' + (parseInt(numero_exo)+1) + '_"]').show();
 		$('body').removeAttr('onkeypress');
-		
 	}
 	
+	$('#reportModal').on('show.bs.modal', function (event) {
+	  var button = $(event.relatedTarget) // Button that triggered the modal
+	  var exercice_id = button.data('whatever') // Extract info from data-* attributes
+	  var modal = $(this)
+	  modal.find('#report_exercice_id').val(exercice_id)
+	})
 	
+	$( "#report_exo" ).submit(function( event ) {
+		var exercice_id = $( "#report_exercice_id" ).val();
+		var comment = $( "#report_exercice_comment" ).val();
+		var DATA = 'id=' + exercice_id + '&comment=' + encodeURIComponent(comment);
+		$.ajax({
+			type: "POST",
+			url: "{{ path('main_epreuve_report_exo')}}",
+			data: DATA,
+			cache: false,
+			success: function(data){
+				thank_you = $('#reportModal').find('.modal-content');
+				thank_you.html('Merci de votre coopération !');
+				thank_you.css('background-color',"#a1cc9a");
+				thank_you.css('color',"#ffffff");
+				return false;
+			}
+		});   		
+		event.preventDefault();
+	});	
 	</script>
 	
 	<script type="text/javascript">  

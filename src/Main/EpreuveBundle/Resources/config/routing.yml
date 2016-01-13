@@ -9,3 +9,6 @@ main_epreuve_pass_ajax:
     defaults: { _controller: MainEpreuveBundle:Default:passAjax }
     requirements:
         _method: POST
+main_epreuve_report_exo:
+    path:     /epreuve/report_exo
+    defaults: { _controller: MainEpreuveBundle:Default:report }

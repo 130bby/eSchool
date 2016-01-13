@@ -4,6 +4,7 @@ namespace Main\EpreuveBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Main\UserBundle\Entity\SavoirUser as SavoirUser;
+use Main\ExerciceBundle\Entity\ExerciceReport as ExerciceReport;
 use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends Controller
@@ -99,4 +100,21 @@ class DefaultController extends Controller
 		}
         return $this->render('MainEpreuveBundle:Default:passed.html.twig', array('success' => $success, 'savoir' => $savoir, 'badges' => $badges));
     }
+	
+    public function reportAction()
+    {
+ 		if($this->container->get('request')->isXmlHttpRequest())
+		{
+			$em = $this->getDoctrine()->getManager();
+			$request = $this->getRequest()->request;
+			$exercice = $em->getRepository('MainExerciceBundle:Exercice')->find($request->get('id'));
+			$exercice_report = new ExerciceReport();
+			$exercice_report->setExercice($exercice);
+			$exercice_report->setComment($request->get('comment'));
+			$em->persist($exercice_report);
+			$em->flush();
+			return new Response('ok');
+		}
+    }
+	
 }
