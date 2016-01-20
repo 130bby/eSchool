@@ -351,6 +351,12 @@
 	  var button = $(event.relatedTarget) // Button that triggered the modal
 	  var exercice_id = button.data('whatever') // Extract info from data-* attributes
 	  var modal = $(this)
+	  if ($('#reportModal').find('.modal-footer').html() == 'Merci de votre coopération !')
+	  {
+		  modal.find('textarea').val('');
+		  modal.find('.modal-footer').removeAttr('style');
+		  modal.find('.modal-footer').html('<button type="button" class="btn btn-default" data-dismiss="modal">Close</button><button type="submit" class="btn btn-primary">Report</button>');
+	  }
 	  modal.find('#report_exercice_id').val(exercice_id)
 	})
 	
@@ -364,7 +370,7 @@
 			data: DATA,
 			cache: false,
 			success: function(data){
-				thank_you = $('#reportModal').find('.modal-content');
+				thank_you = $('#reportModal').find('.modal-footer');
 				thank_you.html('Merci de votre coopération !');
 				thank_you.css('background-color',"#a1cc9a");
 				thank_you.css('color',"#ffffff");
