@@ -1,0 +1,3 @@
+main_classe_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: MainClasseBundle:Default:index }

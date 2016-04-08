@@ -41,9 +41,15 @@ class ProfileController extends Controller
 		$themes = $em->getRepository('MainUserBundle:ThemeUser')->findByUser($user);
 		$last_badge = $em->getRepository('MainUserBundle:BadgeUser')->findOneBy(array('user'=> $user),array('date' => 'DESC'));
 		$last_epreuves = $em->getRepository('MainUserBundle:SavoirUser')->findBy(array('user'=> $user),array('date' => 'DESC'),4);
+		$classes = array();
+		$classes_user = $em->getRepository('MainUserBundle:ClasseUser')->findBy(array('user'=> $user),array('date' => 'DESC'));
+		foreach ($classes_user as $classe_user)
+		{
+			$classes[] = $em->getRepository('MainClasseBundle:Classe')->find($classe_user->getClasse());
+		}
 
         return $this->render('MainUserBundle:Profile:show.html.twig', array(
-            'user' => $user,'themes' => $themes,'last_badge' => $last_badge,'last_epreuves' => $last_epreuves
+            'user' => $user,'themes' => $themes,'last_badge' => $last_badge,'last_epreuves' => $last_epreuves,'classes' => $classes
         ));
     }
 

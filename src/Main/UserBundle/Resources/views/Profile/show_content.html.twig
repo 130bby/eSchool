@@ -2,6 +2,26 @@
 <div class="container-profile">
 	<h2 style="text-align:left;color:#f39f03;margin-bottom:20px;"> TON PROFIL </h2>
 
+	{% set flashMsgs = app.session.flashBag.all %}
+	{% if  flashMsgs %}
+	  <div class="container-fluid">
+		{% for type, messages in flashMsgs if ((type == 'success') or (type == 'error')) %}
+		  {% for message in messages %}
+			{% set alert_class = '' %}
+			{% if type == 'success' %}
+			  {% set alert_class = 'alert-success' %}
+			{% elseif type == 'error' %}
+			  {% set alert_class = 'alert-danger' %}
+			{% endif %}
+		  <div class="alert {{ alert_class }}">
+			<button  class="close" data-dismiss="alert">&times;</button>
+			{{ message }}
+		  </div>
+		  {% endfor %}
+		{% endfor %}
+	  </div>
+	{% endif %}	
+	
 	<!--<div class="col-xs-12 fos_user_user_show blocCentre div_profile">-->
 	<div class="col-xs-12 col-sm-7 fos_user_user_show div_profile">
 		<div class="profile-picture">
@@ -19,6 +39,10 @@
 			<a href="{{ path('main_user_profil_edit')}}" ><button type="button" class="btn btn-modify-profile"> Modifier ton profil</button></a>
 		</div>
 	</div>
+	{% if is_granted('ROLE_PROF') %}
+	<a class="profile-themes-main" style="margin-top:20px;margin-left:20px;" href="{{ path('classe')}}">Gérer les classes</a>
+	<a class="profile-themes-main" style="margin-top:20px;margin-left:20px;" href="{{ path('classe_new')}}">Ajouter une classe</a>
+	{% else %}
 	<div class="col-sm-4 col-xs-12 col-sm-offset-1 profile-themes-main">
 		<p style="color:#5b74a9;font-size:20px;">Tes thèmes :</p>
 		{% for theme in themes%}
@@ -42,5 +66,40 @@
 			<span style="margin:auto;display:block;" class="badge{{last_badge.badge.id}}-{{last_badge.niveau}}"></span>
 		{% endif %}
 	</div>
+	<div class="col-xs-12 col-sm-7">
+	</div>
+	<div class="col-sm-4 col-xs-12 col-sm-offset-1 profile-themes-main">
+		<p style="color:#5b74a9;font-size:20px;">Tes classes :</p>
+		{% for classe in classes %}
+			<span style="margin:auto;display:block;" class=""><a href="{{ path('classe_show', { 'id': classe.id })}}">{{classe.name}}</a></span>
+		{% endfor %}
+		{% if classes|length < 8 %}
+			<button type="button" class="btn btn-info" data-toggle="modal" data-target="#classeModal">Adhérer à une classe</button>
+		{% endif %}
+		
+	</div>
+	{% endif %}
 </div>
+
+	<!-- Classe Modal -->
+	<div class="modal fade" style="padding-top:100px;" id="classeModal" tabindex="-1" role="dialog" aria-labelledby="ClasseModalLabel">
+	  <div class="modal-dialog" role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<h4 class="modal-title" id="myModalLabel">Adhérer à une classe :</h4>
+		  </div>
+		  <form action="{{path('classe_apply')}}" method="GET">
+		  <div class="modal-body">
+			 <input style="max-width:200px;" type="text" name='code' id="code" class="form-control" placeholder="Code classe...">
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			<input type="submit" class="btn btn-primary" value="Adhérer" />
+		  </div>
+		  </form>
+		</div>
+	  </div>
+	</div>
+
 <div class="footer-mer-1"></div>
