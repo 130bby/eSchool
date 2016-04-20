@@ -46,7 +46,7 @@ class Classe
 	/**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=50)
+     * @ORM\Column(name="name", type="string", length=50, nullable=true)
      */
     private $name;
 
@@ -100,7 +100,10 @@ class Classe
         return $this->id;
     }
 
-
+	public function __toString()
+	{
+		return $this->name;
+	}
 
     /**
      * Set pays
@@ -312,14 +315,30 @@ class Classe
 	/** @ORM\PrePersist */
     public function generateCode()
     {
-		$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-		$charactersLength = strlen($characters);
-		$randomString = '';
-		for ($i = 0; $i < 15; $i++) {
-			$randomString .= $characters[rand(0, $charactersLength - 1)];
-		}
-        $this->code = $randomString;
         $this->code = com_create_guid();
         return $this;
     }	
+
+    /**
+     * Set owner
+     *
+     * @param \Main\UserBundle\Entity\User $owner
+     * @return Classe
+     */
+    public function setOwner(\Main\UserBundle\Entity\User $owner = null)
+    {
+        $this->owner = $owner;
+
+        return $this;
+    }
+
+    /**
+     * Get owner
+     *
+     * @return \Main\UserBundle\Entity\User 
+     */
+    public function getOwner()
+    {
+        return $this->owner;
+    }
 }

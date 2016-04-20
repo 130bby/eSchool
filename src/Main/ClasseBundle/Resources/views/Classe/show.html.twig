@@ -41,6 +41,10 @@
                 <th>Status</th>
                 <td>{{ entity.status }}</td>
             </tr>
+            <tr>
+                <th>Matiere</th>
+                <td>{{ entity.matiere.name }}</td>
+            </tr>
 			{% if is_granted('ROLE_PROF') %}
 			<tr>
                 <th>Eleves</th>
@@ -55,13 +59,18 @@
 	{% if is_granted('ROLE_PROF') %}
     <ul class="record_actions">
 		<li>
+			<a href="{{ path('examen', { 'id': entity.id }) }}">
+				Voir les examens
+			</a>
+		</li>
+		<li>
 			<a href="{{ path('classe') }}">
-				Back to the list
+				Retour à la liste
 			</a>
 		</li>
 		<li>
 			<a href="{{ path('classe_edit', { 'id': entity.id }) }}">
-				Edit
+				Editer
 			</a>
 		</li>
 		<li>{{ form(delete_form) }}</li>

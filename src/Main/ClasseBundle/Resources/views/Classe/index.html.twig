@@ -1,7 +1,7 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>Classe list</h1>
+    <h1>Liste des Classes</h1>
 
     <table class="records_list">
         <thead>
@@ -16,6 +16,7 @@
                 <th>Code</th>
                 <th>Status</th>
                 <th>Nb Eleves</th>
+                <th>Matiere</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -32,13 +33,14 @@
                 <td>{{ entity.code }}</td>
                 <td>{{ entity.status }}</td>
                 <td>{{ nb_eleves[loop.index0] }}</td>
+                <td>{{ entity.matiere.name }}</td>
                 <td>
                 <ul>
                     <li>
-                        <a href="{{ path('classe_show', { 'id': entity.id }) }}">show</a>
+                        <a href="{{ path('classe_show', { 'id': entity.id }) }}">Voir</a>
                     </li>
                     <li>
-                        <a href="{{ path('classe_edit', { 'id': entity.id }) }}">edit</a>
+                        <a href="{{ path('classe_edit', { 'id': entity.id }) }}">Modifier</a>
                     </li>
                 </ul>
                 </td>
@@ -50,7 +52,7 @@
         <ul>
         <li>
             <a href="{{ path('classe_new') }}">
-                Create a new entry
+                Créer une nouvelle Classe
             </a>
         </li>
     </ul>

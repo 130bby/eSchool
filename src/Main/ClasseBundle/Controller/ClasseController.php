@@ -117,12 +117,13 @@ class ClasseController extends Controller
      */
     public function createAction(Request $request)
     {
+		$user= $this->get('security.context')->getToken()->getUser();
+		$this->denyAccessUnlessGranted('ROLE_PROF', $user, 'Attention à Seth, il va encore se mettre en colère !');
         $entity = new Classe();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-			$user= $this->get('security.context')->getToken()->getUser();
 			$entity->setOwner($user);
 			$em = $this->getDoctrine()->getManager();
             $em->persist($entity);
@@ -151,7 +152,7 @@ class ClasseController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        $form->add('submit', 'submit', array('label' => 'Créer'));
 
         return $form;
     }
@@ -243,7 +244,7 @@ class ClasseController extends Controller
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+        $form->add('submit', 'submit', array('label' => 'Mettre à jour'));
 
         return $form;
     }
@@ -318,7 +319,7 @@ class ClasseController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('classe_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
+            ->add('submit', 'submit', array('label' => 'Supprimer'))
             ->getForm()
         ;
     }

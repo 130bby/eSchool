@@ -5,6 +5,10 @@ main_classe_crud:
     type:     annotation
     resource: "@MainClasseBundle/Controller/ClasseController.php"
     prefix:   /
+main_examen_crud:
+    type:     annotation
+    resource: "@MainClasseBundle/Controller/ExamenController.php"
+    prefix:   /
 
 hwi_oauth_redirect:
     resource: "@HWIOAuthBundle/Resources/config/routing/redirect.xml"
