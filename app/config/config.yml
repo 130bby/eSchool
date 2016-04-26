@@ -8,6 +8,7 @@ imports:
     - { resource: @MainMatiereBundle/Resources/config/admin.yml }
     - { resource: @MainEvaluationBundle/Resources/config/admin.yml }
     - { resource: @MainCoursBundle/Resources/config/admin.yml }
+    - { resource: @MainBlogBundle/Resources/config/admin.yml }
 
 framework:
     #esi:             ~

@@ -138,6 +138,15 @@
 									<a href="#" data-toggle="dropdown" class="menu-user"><img src="/img/picto_menu.png" />  {{app.user.username}} &nu;</a>
 										<ul id="menu_user_eleve" class="dropdown-menu">
 										<li>
+											<span class="glyphicon glyphicon-info-sign icone_menu_eleve"></span><a href="{{ path('main_user_profil')}}" style="display:inline" class="icone_menu_eleve">Mon profil</a>
+										</li>
+										<li>
+											<span class="glyphicon glyphicon-info-sign icone_menu_eleve"></span><a href="{{ path('suivi_examen')}}" style="display:inline" class="icone_menu_eleve">Suivi</a>
+										</li>
+										<li>
+											<span class="glyphicon glyphicon-signal icone_menu_eleve"></span><a href="{{ path('main_savoir_improve')}}" style="display:inline" class="icone_menu_eleve">Savoirs à améliorer</a>
+										</li>
+										<li>
 											<span class="glyphicon glyphicon-plus-sign icone_menu_eleve"></span><a href="{{ path('main_user_add_theme')}}" style="display:inline" class="icone_menu_eleve">Gérer mes thèmes</a>
 										</li>
 										<li>
@@ -145,12 +154,6 @@
 										</li>
 										<li>
 											<span class="glyphicon glyphicon-stats icone_menu_eleve"></span><a href="{{ path('main_user_my_stats')}}" style="display:inline" class="icone_menu_eleve">Mes statistiques</a>
-										</li>
-										<li>
-											<span class="glyphicon glyphicon-signal icone_menu_eleve"></span><a href="{{ path('main_savoir_improve')}}" style="display:inline" class="icone_menu_eleve">Savoirs à améliorer</a>
-										</li>
-										<li>
-											<span class="glyphicon glyphicon-info-sign icone_menu_eleve"></span><a href="{{ path('main_user_profil')}}" style="display:inline" class="icone_menu_eleve">Mon profil</a>
 										</li>
 										<li>
 											<span class="glyphicon glyphicon-star-empty icone_menu_eleve"></span><a href="{{ path('main_badge_homepage')}}" style="display:inline" class="icone_menu_eleve">Mes badges</a>

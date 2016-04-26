@@ -48,4 +48,5 @@ security:
         - { path: ^/my_history, role: ROLE_ELEVE }
         - { path: ^/add_theme, role: ROLE_ELEVE }
         - { path: ^/admin/, role: ROLE_ADMIN }
+        - { path: ^/examen/suivi, role: ROLE_ELEVE }
         - { path: ^/examen, role: ROLE_PROF }

@@ -12,4 +12,17 @@ use Doctrine\ORM\EntityRepository;
  */
 class ExamenRepository extends EntityRepository
 {
+	public function getExamens($user,$em)
+	{
+        $classes = $em->getRepository('MainUserBundle:ClasseUser')->findBy(array('user' => $user));
+		$examens = array();
+		foreach ($classes as $classe)
+		{
+			$examens_current_classe = $em->getRepository('MainClasseBundle:Examen')->findBy(array('classe' => $classe->getClasse()));
+			$examens = array_merge($examens_current_classe,$examens);
+		}
+		return $examens;
+	}
+	
+	
 }

@@ -36,6 +36,7 @@ class AppKernel extends Kernel
 			new Knp\Bundle\TimeBundle\KnpTimeBundle(),
 			new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
             new Main\ClasseBundle\MainClasseBundle(),
+            new Main\BlogBundle\MainBlogBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

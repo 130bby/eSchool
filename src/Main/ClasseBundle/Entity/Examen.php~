@@ -56,6 +56,13 @@ class Examen
     private $savoirs;
 
     /**
+     * @var array
+     *
+     * @ORM\Column(name="exercices", type="simple_array", nullable=true)
+     */
+    private $exercices;
+	
+    /**
      * Get id
      *
      * @return integer 
@@ -155,5 +162,28 @@ class Examen
     public function getSavoirs()
     {
         return $this->savoirs;
+    }
+
+    /**
+     * Set classe
+     *
+     * @param \Main\ClasseBundle\Entity\Classe $classe
+     * @return Examen
+     */
+    public function setClasse(\Main\ClasseBundle\Entity\Classe $classe = null)
+    {
+        $this->classe = $classe;
+
+        return $this;
+    }
+
+    /**
+     * Get classe
+     *
+     * @return \Main\ClasseBundle\Entity\Classe 
+     */
+    public function getClasse()
+    {
+        return $this->classe;
     }
 }

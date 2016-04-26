@@ -1,0 +1,10 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+	{% for post in posts %}
+		<h1>{{post.titre}}</h1>
+		{{post.description|raw}}
+		<br />
+	{% endfor %}
+{% endblock %}
+

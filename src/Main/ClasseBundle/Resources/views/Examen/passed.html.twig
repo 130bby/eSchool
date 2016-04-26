@@ -1,0 +1,94 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+<div class="container-fluid">
+	<div class="header-exo row"></div>
+	{% if badges is not empty %}
+		<div id="myCarousel" class="carousel slide" data-ride="carousel">
+	  <!-- Indicators -->
+	  <ol class="carousel-indicators">
+		<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+	{% for badge in badges %}
+		<li data-target="#myCarousel" data-slide-to="{loop.index}"></li>
+	{% endfor %}
+	  </ol>
+
+	  <!-- Wrapper for slides -->
+	  <div class="carousel-inner" role="listbox">
+		<div class="item active">
+			<div class="content-exo row">
+				<div class="bloc-exo">
+	{% if success %}
+						<br />
+						<p class="type-exo-indicator row">
+Bravo ! Tu viens de terminer l'examen avec succès ! les savoirs suivants ont été débloqués automatiquement :
+		{% for savoir in savoirs %}
+			<br />- {{savoir.name}} 
+		{% endfor %}						
+						</p>
+						<img src="/img/epreuve_success_icon.png">
+						{% if app.user %}
+							<div class="text-center btn-valid-exo-bg"><a href="{{ path('suivi_examen')}}"><button type="submit" class="btn-valid-exo">Retour au Suivi</button></a></div>
+						{% endif %}
+					{% else %}
+						<br />
+						<p class="type-exo-indicator row">
+						Quel dommage, ton score est insuffisant
+						</p>
+						<img src="/img/epreuve_fail_icon.png">
+						{% if app.user %}
+							<div class="text-center btn-valid-exo-bg"><a href="{{ path('suivi_examen')}}"><button type="submit" class="btn-valid-exo">Retour au Suivi</button></a></div>
+						{% endif %}
+					{% endif %}
+
+				</div>
+			</div>
+		</div>
+	  </div>
+
+	  <!-- Left and right controls -->
+	  <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+		<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+		<span class="sr-only">Previous</span>
+	  </a>
+	  <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+		<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+		<span class="sr-only">Next</span>
+	  </a>
+	</div>
+	
+	{% else %}
+	<div class="content-exo row">
+		<div class="bloc-exo">
+			{% if success %}
+				<br />
+				<p class="type-exo-indicator row">
+				Bravo ! Tu viens de terminer l'examen avec succès ! les savoirs suivants ont été débloqués automatiquement :
+		{% for savoir in savoirs %}
+			<br />- {{savoir.name}} 
+		{% endfor %}
+				</p>
+				<img src="/img/epreuve_success_icon.png">
+				{% if app.user %}
+					<div class="text-center btn-valid-exo-bg"><a href="{{ path('suivi_examen')}}"><button type="submit" class="btn-valid-exo">Retour au Suivi</button></a></div>
+				{% endif %}
+
+				
+			{% else %}
+				<br />
+				<p class="type-exo-indicator row">
+				Quel dommage, ton score est insuffisant
+				</p>
+				<img src="/img/epreuve_fail_icon.png">
+				{% if app.user %}
+					<div class="text-center btn-valid-exo-bg"><a href="{{ path('suivi_examen')}}"><button type="submit" class="btn-valid-exo">Retour au Suivi</button></a></div>
+				{% endif %}
+				
+			{% endif %}
+
+		</div>
+	</div>
+	{% endif %}
+</div>
+
+{% endblock %}

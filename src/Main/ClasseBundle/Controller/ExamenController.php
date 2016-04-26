@@ -9,6 +9,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Main\ClasseBundle\Entity\Examen;
 use Main\ClasseBundle\Form\ExamenType;
+use Main\UserBundle\Entity\ExamenUser;
+use Main\UserBundle\Entity\SavoirUser as SavoirUser;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -36,6 +38,111 @@ class ExamenController extends Controller
             'entities' => $entities,
         );
     }
+	
+    /**
+     * Lists all Examen entities for a user.
+     *
+     * @Route("/suivi", name="suivi_examen")
+     * @Method("GET")
+     * @Template("MainClasseBundle:Examen:index.html.twig")
+     */
+    public function suiviAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $examens = $em->getRepository('MainClasseBundle:Examen')->getExamens($this->container->get('security.context')->getToken()->getUser(),$em);
+        return array(
+            'entities' => $examens,
+        );
+    }
+	
+    /**
+     * Pass examen for an eleve.
+     *
+     * @Route("/suivi/pass/{id}", name="examen_pass")
+     * @Method("GET")
+     * @Template()
+     */
+    public function passAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $examen = $em->getRepository('MainClasseBundle:Examen')->find($id);
+		$exercices = $em->createQuery('SELECT e FROM MainExerciceBundle:Exercice e WHERE e.id IN ('.implode(',',$examen->getExercices()).')')->getArrayResult();
+
+        return array(
+            'examen' => $examen,
+            'exercices' => $exercices,
+        );
+    }
+	
+    /**
+     * Passed examen for an eleve.
+     *
+     * @Route("/suivi/passed/{examen_id}", name="examen_passed")
+     * @Method("POST")
+     * @Template()
+     */
+    public function passedAction($examen_id)
+    {
+		$request = $this->getRequest()->request;
+        $em = $this->getDoctrine()->getManager();
+        $examen = $em->getRepository('MainClasseBundle:Examen')->find($examen_id);
+		
+		//gestion du temps
+		$temps_limite = new \DateTime('00:15:00');
+		$temps_intervalle = $temps_limite->diff(new \Datetime('00:'.$request->get('temps')));
+		$temps = new \DateTime('00:00:00');
+		$temps->sub($temps_intervalle);
+		
+		$score = (int)$request->get('score')*100/(count($examen->getSavoirs())*6);
+		$savoirs = array();
+
+		if ($this->container->get('security.context')->isGranted('ROLE_ELEVE'))
+		{
+			$examen_user = new ExamenUser();
+			$examen_user->setUser($this->container->get('security.context')->getToken()->getUser());
+			$examen_user->setExamen($examen);
+			$examen_user->setScore($score);
+			if ($score > 70)
+				$examen_user->setSuccess(1);
+			else
+				$examen_user->setSuccess(0);
+			$examen_user->setTemps($temps);
+			$examen_user->setDate(new \Datetime());
+			$em->persist($examen_user);
+		}
+		if ($score > 70)
+		{
+			foreach ($examen->getSavoirs() as $savoir_id)
+			{
+				$savoir = $em->getRepository('MainSavoirBundle:Savoir')->find($savoir_id);
+				$savoirs[] = $savoir;
+
+				if ($this->container->get('security.context')->isGranted('ROLE_ELEVE'))
+				{
+					$savoir_user = new SavoirUser();
+					$savoir_user->setUser($this->container->get('security.context')->getToken()->getUser());
+					$savoir_user->setSavoir($savoir);
+					$savoir_user->setScore($savoir->getScoreMini());
+					$savoir_user->setTemps($temps);
+					$savoir_user->setSuccess(true);
+					$savoir_user->setDate(new \Datetime());
+					$em->persist($savoir_user);
+				}
+			}
+		}
+
+		$em->flush();
+		if ($score > 70)
+			$success = true;
+		else
+			$success = false;
+		if ($this->container->get('security.context')->isGranted('ROLE_ELEVE'))
+			$badges = array();
+        
+		return $this->render('MainClasseBundle:Examen:passed.html.twig', array('success' => $success, 'examen' => $examen,'savoirs' => $savoirs, 'badges' => $badges));
+    }
+	
+	
     /**
      * Creates a new Examen entity.
      *
@@ -45,6 +152,7 @@ class ExamenController extends Controller
      */
     public function createAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
         $entity = new Examen();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
@@ -53,8 +161,17 @@ class ExamenController extends Controller
 		foreach ($request_form['savoirs'] as $savoir)
 			$savoirs[] = $savoir['savoir'];
         $entity->setSavoirs($savoirs);
+		$exercices = array();
+		foreach ($savoirs as $savoir_id)
+		{
+			$savoir = $em->getRepository('MainSavoirBundle:Savoir')->find($savoir_id);
+			$exercices = array_merge($exercices, $em->getRepository('MainExerciceBundle:Exercice')->getExercicesEpreuve($savoir,false));
+		}
+		$exercices_ids = array();
+		foreach ($exercices as $exercice)
+			$exercices_ids[] = $exercice['id'];
+        $entity->setExercices($exercices_ids);
 		// if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
 
