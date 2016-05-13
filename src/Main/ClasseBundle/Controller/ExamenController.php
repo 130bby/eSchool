@@ -66,7 +66,8 @@ class ExamenController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $examen = $em->getRepository('MainClasseBundle:Examen')->find($id);
-		$exercices = $em->createQuery('SELECT e FROM MainExerciceBundle:Exercice e WHERE e.id IN ('.implode(',',$examen->getExercices()).')')->getArrayResult();
+		$exercices_raw = $em->createQuery('SELECT e FROM MainExerciceBundle:Exercice e WHERE e.id IN ('.implode(',',$examen->getExercices()).')')->getArrayResult();
+		$exercices = $em->getRepository('MainExerciceBundle:Exercice')->getExercicesExamen($exercices_raw);
 
         return array(
             'examen' => $examen,

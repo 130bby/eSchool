@@ -71,6 +71,13 @@ class ExerciceRepository extends EntityRepository
 		return $exercices;
 	}
 	
+	public function getExercicesExamen($exercices)
+	{
+		shuffle ($exercices);
+		$this->handleRandomExercices($exercices);
+		return $exercices;
+	}
+	
 	public function getReponseExercice($exercice,$type_exo,$reponses,$reponse_juste,$enonce)
 	{
 		switch ($exercice->getType())
