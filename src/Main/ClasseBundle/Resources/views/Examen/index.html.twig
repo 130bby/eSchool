@@ -28,7 +28,9 @@
                     </li>
 					{% elseif is_granted('ROLE_ELEVE') %}
                     <li>
-                        <a href="{{ path('examen_pass', { 'id': entity.id }) }}">Passer</a>
+						{% if date(entity.debut) < date() and date() < date(entity.fin)%}
+						<a href="{{ path('examen_pass', { 'id': entity.id }) }}">Passer</a>
+						{% endif%}
                     </li>
 					{% endif %}
                 </ul>

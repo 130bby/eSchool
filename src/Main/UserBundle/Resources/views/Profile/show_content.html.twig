@@ -71,6 +71,7 @@
 	</div>
 	<div class="col-xs-12 col-sm-7">
 	</div>
+	{% if is_granted('ROLE_ELEVE') %}
 	<div class="col-sm-4 col-xs-12 col-sm-offset-1 profile-themes-main">
 		<p style="color:#5b74a9;font-size:20px;">Tes classes :</p>
 		{% for classe in classes %}
@@ -81,6 +82,7 @@
 		{% endif %}
 		
 	</div>
+	{% endif %}
 	{% endif %}
 </div>
 

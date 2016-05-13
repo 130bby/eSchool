@@ -2,7 +2,7 @@
 
 {% block body -%}
 	{% for post in posts %}
-		<h1>{{post.titre}}</h1>
+		<h1><a href="{{ path('main_blog_show', { 'id': post.id })}}">{{post.titre}}</a></h1>
 		{{post.description|raw}}
 		<br />
 	{% endfor %}

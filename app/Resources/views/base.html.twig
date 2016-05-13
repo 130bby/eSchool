@@ -144,6 +144,9 @@
 											<span class="glyphicon glyphicon-info-sign icone_menu_eleve"></span><a href="{{ path('suivi_examen')}}" style="display:inline" class="icone_menu_eleve">Suivi</a>
 										</li>
 										<li>
+											<span class="glyphicon glyphicon-info-sign icone_menu_eleve"></span><a href="{{ path('main_blog_homepage')}}" style="display:inline" class="icone_menu_eleve">Quêtes de PAPILO</a>
+										</li>
+										<li>
 											<span class="glyphicon glyphicon-signal icone_menu_eleve"></span><a href="{{ path('main_savoir_improve')}}" style="display:inline" class="icone_menu_eleve">Savoirs à améliorer</a>
 										</li>
 										<li>
@@ -171,6 +174,18 @@
 										<li {% if app.request.get('_route') == 'exercice_my_list' %} class="active"{% endif %}>
 											<span class="glyphicon glyphicon-tasks icone_menu_eleve"></span><a href="{{ path('exercice_my_list')}}" style="display:inline">Mes exercices</a>
 										</li>
+										<li {% if app.request.get('_route') == 'main_user_profil' %} class="active"{% endif %}>
+											<span class="glyphicon glyphicon-info-sign icone_menu_eleve"></span><a href="{{ path('main_user_profil')}}" style="display:inline">Mon profil</a>
+										</li>
+										<li>
+											<span class="glyphicon glyphicon-off icone_menu_eleve"></span><a href="{{ path('fos_user_security_logout')}}" style="display:inline" class="icone_menu_eleve" >Déconnexion</a>
+										</li>
+									</ul>
+								</li>
+							{% elseif is_granted('ROLE_PROF_TBC') %}
+								<li>
+									<a href="#" data-toggle="dropdown" class="glyphicon glyphicon-user "></a>
+									<ul id="menu_user_prof" class="dropdown-menu">
 										<li {% if app.request.get('_route') == 'main_user_profil' %} class="active"{% endif %}>
 											<span class="glyphicon glyphicon-info-sign icone_menu_eleve"></span><a href="{{ path('main_user_profil')}}" style="display:inline">Mon profil</a>
 										</li>
@@ -230,7 +245,7 @@
 			{% block body %}{% endblock %}
 			</div>
 
-			<div class="footer-home"><span style="float:left;padding-left:10px;">Date de dernière mise à jour : 12/03/2016</span><span class="h5">&copy; Epilog SARL 2015</span>
+			<div class="footer-home"><span style="float:left;padding-left:10px;">Date de dernière mise à jour : 13/05/2016</span><span class="h5">&copy; Epilog SARL 2016</span>
 			</div>
 		</div>
 

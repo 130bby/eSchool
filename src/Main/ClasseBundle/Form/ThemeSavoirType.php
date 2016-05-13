@@ -28,7 +28,7 @@ class ThemeSavoirType extends AbstractType
 		$classes = $em->getRepository('MainClasseBundle:Classe')->findBy(array('owner' => $sc->get('security.context')->getToken()->getUser()));
 		foreach ($classes as $classe)
 			$matieres[] = $classe->getMatiere()->getId();
-		$matieres = array_unique($matieres);	
+		$matieres = array_unique($matieres);
 		
 		$builder
             ->add('theme','entity', array('class' => 'MainThemeBundle:Theme','property' => 'name','required' => false,
