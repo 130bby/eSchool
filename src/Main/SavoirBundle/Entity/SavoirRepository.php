@@ -223,6 +223,7 @@ class SavoirRepository extends EntityRepository
 		foreach ($themes as $key => $theme)
 		{
 			$themes_TBP[$key]['name'] = $theme->getTheme()->getName();
+			$themes_TBP[$key]['id'] = $theme->getTheme()->getId();
 			$arbre = $this->getArbre($theme->getTheme()->getId(), $user);
 			if (isset($arbre['evaluations']))
 				unset($arbre['evaluations']);

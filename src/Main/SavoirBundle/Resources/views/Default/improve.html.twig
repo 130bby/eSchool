@@ -2,41 +2,59 @@
 
 {% block body -%}
 
+Filtres :
+<form id="improve_filter" action="{{ path('main_savoir_improve') }}" method="post">
+	<select id="theme_filter" name="theme_filter">
+		{% for matiere in app.session.get('matieres')%}
+			{% for theme in matiere.themes %}
+				<option value="{{theme.id}}" {% if app.request.get('theme_filter') is defined and app.request.get('theme_filter') == theme.id%}selected{%endif%} >{{theme.name}}</option>
+			{% endfor %}
+		{% endfor %}
+	</select>
+	<input type="checkbox" id="perfectionnement" name="perfectionnement" value="perfectionnement" {% if app.request.get('perfectionnement') == "perfectionnement"%}checked{%endif%}/><label for="perfectionnement">Perfectionnement</label>
+	<input type="checkbox" id="a_decouvrir" name="a_decouvrir" value="a_decouvrir" {% if app.request.get('a_decouvrir') == "a_decouvrir"%}checked{%endif%}/><label for="a_decouvrir">A Découvrir</label>
+	<input type="submit" value="Filtrer" />
+</form>
+
 <ul class="list-style" style="text-align:center;list-style: none;background-color: #fffaf2;">
 	{% for theme in themes %}
 		<li style="margin-top:20px;">
 			<h2 style="text-align:center;color:#f39f03;margin-bottom:20px;">{{theme.name}}</h2>
 			{% if theme.savoirs is defined %}
 				{% for savoir in theme.savoirs %}
-				<a id="link_modal_{{savoir.id}}_{{savoir.name}}"class="link_arbre_panel" href="#">
-					<span class="spanBlocImg" data-html="true" data-toggle="tooltip" data-placement="top" title="{%if savoir.prerequis_name is defined %}  Prérequis :  {%for nom_prerequis in savoir.prerequis_name%} <br/>-{{nom_prerequis}} {%endfor%} <br/><br/>{%endif%} Niveau : {{loop.parent.loop.index}} ">
-						{%if savoir.strength is defined %}<span class="barForce{{savoir.strength}}" ></span>{%endif%}
-						<span class="spanImg {%if savoir.strength is defined %} spanImg_2 {% endif %}" {% if savoir.path is not null%} style="background-image:url(/uploads/savoir/{{savoir.id}}.{{savoir.path}});"{% endif %} ></span>
-						<span class="spanTxt" {%if savoir.strength is defined %} style="top:5px;left:25px;" {%endif%}>{{savoir.name}}</span> 
-					</span>
-				</a>
-				<div id="modal_savoir_arbre_{{savoir.id}}" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-					<div class="modal-dialog modal-sm modal-arbre-savoir">
-						<div class="modal-content modal-arbre-savoir-content">
-							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-								<h6>{{savoir.theme.name}} > {{savoir.name}}</h6>
-							</div>
-							<div class="modal-body">
-							<h3 style="text-align:center;">{{savoir.name|upper}}</h3>
-							{% if savoir.path is not null%}
-								<img class="center-block" src="/uploads/savoir/{{savoir.id}}.{{savoir.path}}" />
-							{% else %}
-								<img class="center-block" src="/img/icones/sphynx.png" />
-							{% endif %}
-							<p style="color:#add292;text-align:center;">Niveau : {%if savoir.strength is defined %}{{savoir.strength}}{%else%}0{%endif%}</p><br />
-							<p style="text-align:center;">Aller à :</p><br />
-							<a href="{{ path('main_cours_show', { 'savoir_id': savoir.id }) }}" class="btn-epreuve">Cours</a>
-							<a href="{{ path('main_epreuve_pass_student', { 'savoir_id': savoir.id }) }}" class="btn-epreuve">Epreuve</a>
+					{% if app.request.get('perfectionnement') != "perfectionnement" or app.request.get('a_decouvrir') == "a_decouvrir" or savoir.strength is defined %}
+					{% if app.request.get('a_decouvrir') != "a_decouvrir" or app.request.get('perfectionnement') == "perfectionnement" or savoir.strength is not defined %}
+					<a id="link_modal_{{savoir.id}}_{{savoir.name}}"class="link_arbre_panel" href="#">
+						<span class="spanBlocImg" data-html="true" data-toggle="tooltip" data-placement="top" title="{%if savoir.prerequis_name is defined %}  Prérequis :  {%for nom_prerequis in savoir.prerequis_name%} <br/>-{{nom_prerequis}} {%endfor%} <br/><br/>{%endif%} Niveau : {{loop.parent.loop.index}} ">
+							{%if savoir.strength is defined %}<span class="barForce{{savoir.strength}}" ></span>{%endif%}
+							<span class="spanImg {%if savoir.strength is defined %} spanImg_2 {% endif %}" {% if savoir.path is not null%} style="background-image:url(/uploads/savoir/{{savoir.id}}.{{savoir.path}});"{% endif %} ></span>
+							<span class="spanTxt" {%if savoir.strength is defined %} style="top:5px;left:25px;" {%endif%}>{{savoir.name}}</span> 
+						</span>
+					</a>
+					<div id="modal_savoir_arbre_{{savoir.id}}" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+						<div class="modal-dialog modal-sm modal-arbre-savoir">
+							<div class="modal-content modal-arbre-savoir-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+									<h6>{{savoir.theme.name}} > {{savoir.name}}</h6>
+								</div>
+								<div class="modal-body">
+								<h3 style="text-align:center;">{{savoir.name|upper}}</h3>
+								{% if savoir.path is not null%}
+									<img class="center-block" src="/uploads/savoir/{{savoir.id}}.{{savoir.path}}" />
+								{% else %}
+									<img class="center-block" src="/img/icones/sphynx.png" />
+								{% endif %}
+								<p style="color:#add292;text-align:center;">Niveau : {%if savoir.strength is defined %}{{savoir.strength}}{%else%}0{%endif%}</p><br />
+								<p style="text-align:center;">Aller à :</p><br />
+								<a href="{{ path('main_cours_show', { 'savoir_id': savoir.id }) }}" class="btn-epreuve">Cours</a>
+								<a href="{{ path('main_epreuve_pass_student', { 'savoir_id': savoir.id }) }}" class="btn-epreuve">Epreuve</a>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
+					{% endif %}
+					{% endif %}
 				{% endfor %}
 			{% endif %}
 		</li> 

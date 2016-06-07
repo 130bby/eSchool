@@ -67,6 +67,12 @@ class User extends BaseUser
      */
     private $country;
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="xp", type="integer")
+     */
+    private $xp;
 	
 
     /**
@@ -215,5 +221,28 @@ class User extends BaseUser
     public function getFacebookId()
     {
         return $this->facebookId;
+    }
+
+    /**
+     * Set xp
+     *
+     * @param integer $xp
+     * @return User
+     */
+    public function setXp($xp)
+    {
+        $this->xp = $xp;
+
+        return $this;
+    }
+
+    /**
+     * Get xp
+     *
+     * @return integer 
+     */
+    public function getXp()
+    {
+        return $this->xp;
     }
 }

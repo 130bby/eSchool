@@ -89,9 +89,10 @@ font-family: Verdana;
 .footer-home {
 	width:100%;
 	background-color: #f6a000;
-	height: 50px;
+	height: auto;
 	text-align:right;
 	padding-top: 15px;
+	padding-bottom: 15px;
 	padding-right: 70px;
 	position:absolute;
 	bottom:0;

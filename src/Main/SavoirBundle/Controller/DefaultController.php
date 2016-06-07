@@ -3,14 +3,24 @@
 namespace Main\SavoirBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends Controller
 {
-    public function improveAction()
+    public function improveAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-		$themes_raw = $em->getRepository('MainUserBundle:ThemeUser')->findby(array('user' => $this->container->get('security.context')->getToken()->getUser()));
+		$theme_filter = $this->get('request')->request->get('theme_filter');
+		// var_dump($request);
+		$perfectionnement = $this->get('request')->request->get('perfectionnement');
+		$a_decouvrir = $this->get('request')->request->get('a_decouvrir');
+		if ($theme_filter != null)
+		{
+			$themes_raw = $em->getRepository('MainUserBundle:ThemeUser')->findby(array('user' => $this->container->get('security.context')->getToken()->getUser(),'theme' => $theme_filter));
+		}
+		else
+			$themes_raw = $em->getRepository('MainUserBundle:ThemeUser')->findby(array('user' => $this->container->get('security.context')->getToken()->getUser()));
 		$themes = $em->getRepository('MainSavoirBundle:Savoir')->getSavoirsAAmeliorer($this->container->get('security.context')->getToken()->getUser(), $themes_raw);
 		return $this->render('MainSavoirBundle:Default:improve.html.twig', array('themes' => $themes));
     }

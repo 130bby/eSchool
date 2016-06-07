@@ -41,6 +41,9 @@ class DefaultController extends Controller
 		}
 
 		$em->getRepository('MainExerciceBundle:ExerciceStats')->updateStats($exercice, $success);
+		$user = $this->container->get('security.context')->getToken()->getUser();
+		$user->setXp($user->getXp()+1);
+		$em->flush();
 		if ($success === true)
 			return new Response('ok');
 		else
@@ -65,10 +68,17 @@ class DefaultController extends Controller
 			$savoir_user->setUser($this->container->get('security.context')->getToken()->getUser());
 			$savoir_user->setSavoir($savoir);
 			$savoir_user->setScore(((int)$request->get('score')/20)*100);
+			$user = $this->container->get('security.context')->getToken()->getUser();
 			if (((int)$request->get('score')/20)*100 >= $savoir->getScoreMini())
+			{
 				$savoir_user->setSuccess(true);
+				$user->setXp($user->getXp()+10);
+			}
 			else
+			{
 				$savoir_user->setSuccess(false);
+				$user->setXp($user->getXp()+5);
+			}
 			$savoir_user->setTemps($temps);
 			$savoir_user->setDate(new \Datetime());
 			$em->persist($savoir_user);

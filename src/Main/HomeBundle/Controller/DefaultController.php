@@ -51,5 +51,19 @@ class DefaultController extends Controller
 
         return $this->render('MainHomeBundle:Default:index.html.twig', array('matieres' => $matieres,'error' => $error));
     }
+
+    public function generalConditionsAction()
+    {
+        return $this->render('MainHomeBundle:Default:generalConditions.html.twig', array());
+    }
 	
+    public function FAQAction()
+    {
+        return $this->render('MainHomeBundle:Default:FAQ.html.twig', array());
+    }
+	
+    public function quiSommesNousAction()
+    {
+        return $this->render('MainHomeBundle:Default:quiSommesNous.html.twig', array());
+    }
 }

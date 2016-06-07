@@ -1,3 +1,12 @@
 main_home_homepage:
     path:     /
     defaults: { _controller: MainHomeBundle:Default:index }
+main_general_conditions:
+    path:     /conditionsGenerales
+    defaults: { _controller: MainHomeBundle:Default:generalConditions }
+main_qui_sommes_nous:
+    path:     /quiSommesNous
+    defaults: { _controller: MainHomeBundle:Default:quiSommesNous }
+main_FAQ:
+    path:     /FAQ
+    defaults: { _controller: MainHomeBundle:Default:FAQ }
