@@ -22,7 +22,7 @@ class ClasseType extends AbstractType
             ->add('start')
             ->add('end')
             ->add('status','checkbox',array('label' => 'Actif', 'required' => false))
-            ->add('matiere')
+            ->add('theme')
         ;
     }
     

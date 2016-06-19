@@ -28,8 +28,10 @@
                     </li>
 					{% elseif is_granted('ROLE_ELEVE') %}
                     <li>
-						{% if date(entity.debut) < date() and date() < date(entity.fin)%}
+						{% if date(entity.debut) < date() and date() < date(entity.fin) and entity not in examens_passed %}
 						<a href="{{ path('examen_pass', { 'id': entity.id }) }}">Passer</a>
+						{% else%}
+						non disponible
 						{% endif%}
                     </li>
 					{% endif %}

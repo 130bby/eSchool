@@ -85,10 +85,10 @@ class Classe
 	protected $owner;
 	
 	/**
-	 * @ORM\ManyToOne(targetEntity="Main\MatiereBundle\Entity\Matiere")
-	 * @ORM\JoinColumn(name="matiere_id", referencedColumnName="id", onDelete="CASCADE")
+	 * @ORM\ManyToOne(targetEntity="Main\ThemeBundle\Entity\Theme")
+	 * @ORM\JoinColumn(name="theme_id", referencedColumnName="id", onDelete="CASCADE")
 	*/
-	protected $matiere;
+	protected $theme;
 
     /**
      * Get id
@@ -289,33 +289,10 @@ class Classe
         return $this->status;
     }
 
-    /**
-     * Set matiere
-     *
-     * @param \Main\MatiereBundle\Entity\Matiere $matiere
-     * @return Classe
-     */
-    public function setMatiere(\Main\MatiereBundle\Entity\Matiere $matiere = null)
-    {
-        $this->matiere = $matiere;
-
-        return $this;
-    }
-
-    /**
-     * Get matiere
-     *
-     * @return \Main\MatiereBundle\Entity\Matiere 
-     */
-    public function getMatiere()
-    {
-        return $this->matiere;
-    }
-	
 	/** @ORM\PrePersist */
     public function generateCode()
     {
-        $this->code = com_create_guid();
+        $this->code = $this->getGUID();
         return $this;
     }	
 
@@ -341,4 +318,22 @@ class Classe
     {
         return $this->owner;
     }
+	
+	private function getGUID(){
+		if (function_exists('com_create_guid')){
+			return com_create_guid();
+		}else{
+			mt_srand((double)microtime()*10000);//optional for php 4.2.0 and up.
+			$charid = strtoupper(md5(uniqid(rand(), true)));
+			$hyphen = chr(45);// "-"
+			$uuid = chr(123)// "{"
+				.substr($charid, 0, 8).$hyphen
+				.substr($charid, 8, 4).$hyphen
+				.substr($charid,12, 4).$hyphen
+				.substr($charid,16, 4).$hyphen
+				.substr($charid,20,12)
+				.chr(125);// "}"
+			return $uuid;
+		}
+	}	
 }

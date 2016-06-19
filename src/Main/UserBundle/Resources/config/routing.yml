@@ -16,6 +16,18 @@ main_user_my_history:
 main_user_my_stats:
     path:     /my_stats
     defaults: { _controller: MainUserBundle:Default:myStats }
+main_user_my_stats_prof:
+    path:     /stats
+    defaults: { _controller: MainUserBundle:Default:myStatsProf }
+main_user_my_stats_prof_ajax:
+    path:     /ajax/stats
+    defaults: { _controller: MainUserBundle:Default:myStatsProfAjax }
+main_user_my_stats_prof_ajax_savoirs:
+    path:     /ajax/stats_savoirs
+    defaults: { _controller: MainUserBundle:Default:myStatsProfAjaxSavoirs }
+main_user_my_stats_prof_ajax_display_table:
+    path:     /ajax/stats_display
+    defaults: { _controller: MainUserBundle:Default:myStatsProfAjaxDisplayTable }
 main_user_add_theme:
     path:     /add_theme/{theme_id}
     defaults: { _controller: MainUserBundle:Default:addTheme, theme_id: null  }

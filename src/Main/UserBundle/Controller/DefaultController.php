@@ -4,6 +4,8 @@ namespace Main\UserBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Main\UserBundle\Entity\ThemeUser as ThemeUser;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends Controller
 {
@@ -114,13 +116,130 @@ class DefaultController extends Controller
 		$legend_savoirs = array_values($legend_savoirs);
 		$notes_savoir = array_values($notes_savoir);
 
+		// NOTES
+		$classes = $em->getRepository('MainUserBundle:ClasseUser')->findBy(array("user" => $this->container->get('security.context')->getToken()->getUser()));
+		$themes = $em->getRepository('MainUserBundle:ThemeUser')->findBy(array("user" => $this->container->get('security.context')->getToken()->getUser()));
+		$savoirs = $em->getRepository('MainUserBundle:SavoirUser')->findBy(array("user" => $this->container->get('security.context')->getToken()->getUser()),array('date' => 'DESC'));
+		
+		
         return $this->render('MainUserBundle:Default:my_stats.html.twig', 
 			array('legend' => $legend,'data_epreuve_passees' => $data_epreuve_passees,'data_savoirs_aquis' => $data_savoirs_aquis,
 			'data_notes_by_themes' => json_encode($data_notes_by_themes), 'legend_notes_by_themes' => json_encode($legend_notes_by_themes)
 			, 'legend_savoirs' => json_encode($legend_savoirs), 'notes_savoir' => json_encode($notes_savoir), 'notes_medianes' => json_encode($notes_medianes)
+			, 'classes' => $classes, 'themes' => $themes, 'savoirs' => $savoirs
 			));
     }
 
+    public function myStatsProfAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+		$classes = $em->getRepository('MainClasseBundle:Classe')->findBy(array("owner" => $this->container->get('security.context')->getToken()->getUser()));
+		foreach ($classes as $classe)
+		{
+			$classes_array[] = $classe->getId();
+		}
+		$examens = $em->getRepository('MainClasseBundle:Examen')->findBy(array("classe" => $classes_array));
+		$themes = $em->getRepository('MainUserBundle:ThemeUser')->findBy(array("user" => $this->container->get('security.context')->getToken()->getUser()));
+		$savoirs = $em->getRepository('MainUserBundle:SavoirUser')->findBy(array("user" => $this->container->get('security.context')->getToken()->getUser()),array('date' => 'DESC'));
+		
+		return $this->render('MainUserBundle:Default:my_stats_prof.html.twig', 
+			array('classes' => $classes, 'examens' => $examens, 'themes' => $themes, 'savoirs' => $savoirs));
+		
+		
+		
+	}
+	
+    public function myStatsProfAjaxAction(Request $request)
+    {
+		if($this->container->get('request')->isXmlHttpRequest())
+		{
+			$em = $this->getDoctrine()->getManager();
+			$examens_array = array();
+			$examens = $em->getRepository('MainClasseBundle:Examen')->findBy(array("classe" => $this->container->get('request')->request->get('classe')));
+			foreach ($examens as $examen)
+				$examens_array[$examen->getId()] = $examen->getName();
+			$json = json_encode($examens_array);
+			$response = new Response($json, 200);
+			$response->headers->set('Content-Type', 'application/json');
+			return $response;
+		}
+	}
+	
+    public function myStatsProfAjaxSavoirsAction(Request $request)
+    {
+		if($this->container->get('request')->isXmlHttpRequest())
+		{
+			$em = $this->getDoctrine()->getManager();
+			$savoirs_array = array();
+			$classe = $em->getRepository('MainClasseBundle:Classe')->find($this->container->get('request')->request->get('classe'));
+			$savoirs = $em->getRepository('MainSavoirBundle:Savoir')->findBy(array("theme" => $classe->getTheme()));
+			foreach ($savoirs as $savoir)
+				$savoirs_array[$savoir->getId()] = $savoir->getName();
+			$json = json_encode($savoirs_array);
+			$response = new Response($json, 200);
+			$response->headers->set('Content-Type', 'application/json');
+			return $response;
+		}
+	}
+	
+    public function myStatsProfAjaxDisplayTableAction(Request $request)
+    {
+		if($this->container->get('request')->isXmlHttpRequest())
+		{
+			$em = $this->getDoctrine()->getManager();
+			if ($this->container->get('request')->request->get('panel') == 1)
+			{
+				$eleves_array = array();
+				$eleves = $em->getRepository('MainUserBundle:ExamenUser')->findBy(array("examen" => $this->container->get('request')->request->get('examen')),array("score" => "DESC"));
+				$template = $this->renderView('MainUserBundle:Default:my_stats_prof_panel1.html.twig', array('eleves'=>$eleves));
+				$json = json_encode($template);
+				$response = new Response($json, 200);
+				$response->headers->set('Content-Type', 'application/json');
+				return $response;
+			}
+			elseif($this->container->get('request')->request->get('panel') == 2)
+			{
+				$eleves_array = array();
+				$eleves = $em->getRepository('MainUserBundle:ExamenUser')->findBy(array("examen" => $this->container->get('request')->request->get('examen')),array("score" => "DESC"));
+				$notes = array();
+				foreach ($eleves as $eleve)
+					$notes[] = $eleve->getScore()/5;
+				$data['moyenne'] = array_sum($notes)/count($notes);
+				$data['mediane'] = $notes[round(count($notes)/2)];
+				$data['haute'] = max($notes);
+				$data['basse'] = min($notes);
+				$template = $this->renderView('MainUserBundle:Default:my_stats_prof_panel2.html.twig', array('data'=>$data));
+				$json = json_encode($template);
+				$response = new Response($json, 200);
+				$response->headers->set('Content-Type', 'application/json');
+				return $response;
+			}
+			elseif($this->container->get('request')->request->get('panel') == 3)
+			{
+				$eleves_array = array();
+				$savoirs = array();
+				$eleves = $em->getRepository('MainUserBundle:ClasseUser')->findBy(array("classe" => $this->container->get('request')->request->get('classe')));
+				$savoir_names = $em->createQuery("SELECT s.id, s.name FROM MainSavoirBundle:Savoir s WHERE s.id in (".$this->container->get('request')->request->get('savoirs').")")->getArrayResult();
+				foreach ($eleves as $eleve)
+					$eleves_array[$eleve->getUser()->getId()] = $eleve->getUser()->getFirstName().' '.$eleve->getUser()->getLastName();
+				foreach ($savoir_names as $savoir_name)
+					$savoirs[$savoir_name['id']] = $savoir_name['name'];
+				$notes = array();
+				foreach ($eleves as $eleve)
+				{
+					$savoirs_user = $em->createQuery("SELECT IDENTITY(s.savoir) as savoir, s.score as score FROM MainUserBundle:SavoirUser s WHERE s.savoir in (".$this->container->get('request')->request->get('savoirs').")")->getArrayResult();
+					foreach ($savoirs_user as $savoir_user)
+						$notes[$eleve->getUser()->getId()][$savoir_user['savoir']] = $savoir_user['score']/5;
+				}
+				$template = $this->renderView('MainUserBundle:Default:my_stats_prof_panel3.html.twig', array('eleves'=>$eleves_array,'savoirs'=>$savoirs,'notes'=>$notes));
+				$json = json_encode($template);
+				$response = new Response($json, 200);
+				$response->headers->set('Content-Type', 'application/json');
+				return $response;
+			}
+		}
+	}
+	
     public function addThemeAction($theme_id)
     {
 		$em = $this->getDoctrine()->getManager();

@@ -1,0 +1,14 @@
+				  <table class="table" id="notes_table">
+					<tr>
+						<th style='text-align:center;'>Elève</th>
+						<th style='text-align:center;'>Note</th>
+						<th style='text-align:center;'>Classement</th>
+					</tr>
+					{% for eleve in eleves %}
+						<tr>
+							<td>{{eleve.user.firstName}} {{eleve.user.lastName}}</td>
+							<td>{{eleve.score/5}}</td>
+							<td>{{loop.index}}</td>
+						</tr>
+					{% endfor %}
+				  </table>

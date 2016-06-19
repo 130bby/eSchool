@@ -50,8 +50,10 @@ class ExamenController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $examens = $em->getRepository('MainClasseBundle:Examen')->getExamens($this->container->get('security.context')->getToken()->getUser(),$em);
+        $examens_passed = $em->getRepository('MainUserBundle:ExamenUser')->findBy(array("user" => $this->container->get('security.context')->getToken()->getUser()));
         return array(
             'entities' => $examens,
+            'examens_passed' => $examens_passed,
         );
     }
 	
@@ -375,18 +377,22 @@ class ExamenController extends Controller
     /**
      * Refresh Calendar.
      *
-     * @Route("/ajax/getSavoirsFromTheme", name="get_savoirs_from_theme")
+     * @Route("/ajax/getSavoirsFromClasse", name="get_savoirs_from_classe")
      * @Method("POST")
      */
-    public function refreshCalendar(Request $request)
+    public function refreshSavoirs(Request $request)
     {
 		if($this->container->get('request')->isXmlHttpRequest())
 		{
 			$em = $this->getDoctrine()->getManager();
 			$savoirs_array = array();
-			$savoirs = $em->getRepository('MainSavoirBundle:Savoir')->findBy(array("theme" => $this->container->get('request')->request->get('theme')));
-			foreach ($savoirs as $savoir)
-				$savoirs_array[$savoir->getId()] = $savoir->getName();
+			$classe = $em->getRepository('MainClasseBundle:Classe')->find($this->container->get('request')->request->get('classe'));
+			if ($classe != null)
+			{
+				$savoirs = $em->getRepository('MainSavoirBundle:Savoir')->findBy(array("theme" => $classe->getTheme()));
+				foreach ($savoirs as $savoir)
+					$savoirs_array[$savoir->getId()] = $savoir->getName();
+			}
 			$json = json_encode($savoirs_array);
 			$response = new Response($json, 200);
 			$response->headers->set('Content-Type', 'application/json');

@@ -85,10 +85,10 @@ class Classe
 	protected $owner;
 	
 	/**
-	 * @ORM\ManyToOne(targetEntity="Main\MatiereBundle\Entity\Matiere")
-	 * @ORM\JoinColumn(name="matiere_id", referencedColumnName="id", onDelete="CASCADE")
+	 * @ORM\ManyToOne(targetEntity="Main\ThemeBundle\Entity\Theme")
+	 * @ORM\JoinColumn(name="theme_id", referencedColumnName="id", onDelete="CASCADE")
 	*/
-	protected $matiere;
+	protected $theme;
 
     /**
      * Get id
@@ -289,29 +289,6 @@ class Classe
         return $this->status;
     }
 
-    /**
-     * Set matiere
-     *
-     * @param \Main\MatiereBundle\Entity\Matiere $matiere
-     * @return Classe
-     */
-    public function setMatiere(\Main\MatiereBundle\Entity\Matiere $matiere = null)
-    {
-        $this->matiere = $matiere;
-
-        return $this;
-    }
-
-    /**
-     * Get matiere
-     *
-     * @return \Main\MatiereBundle\Entity\Matiere 
-     */
-    public function getMatiere()
-    {
-        return $this->matiere;
-    }
-	
 	/** @ORM\PrePersist */
     public function generateCode()
     {
@@ -359,4 +336,27 @@ class Classe
 			return $uuid;
 		}
 	}	
+
+    /**
+     * Set theme
+     *
+     * @param \Main\ThemeBundle\Entity\Theme $theme
+     * @return Classe
+     */
+    public function setTheme(\Main\ThemeBundle\Entity\Theme $theme = null)
+    {
+        $this->theme = $theme;
+
+        return $this;
+    }
+
+    /**
+     * Get theme
+     *
+     * @return \Main\ThemeBundle\Entity\Theme 
+     */
+    public function getTheme()
+    {
+        return $this->theme;
+    }
 }

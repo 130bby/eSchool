@@ -50,9 +50,22 @@ jQuery(document).ready(function() {
     $addSavoirLink.on('click', function(e) {
         // prevent the link from creating a "#" on the URL
         e.preventDefault();
-
         // add a new tag form (see next code block)
         addTagForm($collectionHolder, $newLinkLi);
+		var elem = $(this);
+		$.ajax({
+		type: "POST",
+		url: "{{ path('get_savoirs_from_classe')}}",
+		data: "classe="+$('#main_classebundle_examen_classe').val(),
+		cache: false,
+		success: function(data){
+			var $el = elem.parent().prev().find('select');
+			$el.empty(); // remove old options
+			$.each(data, function(key,value) {
+				$el.append(new Option(value,key));
+			});
+		}});
+
     });
 	
 	
@@ -92,23 +105,6 @@ function addTagFormDeleteLink($tagFormLi) {
         $tagFormLi.remove();
     });
 }
-
-$(document).on('change', '[id ^=main_classebundle_examen_savoirs_][id $=_theme]', function(){
-	var elem = $(this);
-	$.ajax({
-	type: "POST",
-	url: "{{ path('get_savoirs_from_theme')}}",
-	data: "theme="+$(this).val(),
-	cache: false,
-	success: function(data){
-		var $el = elem.parent().next().find('select');
-		$el.empty(); // remove old options
-		$.each(data, function(key,value) {
-			$el.append(new Option(value,key));
-		});
-	}});
-});
-
 
 </script>
 

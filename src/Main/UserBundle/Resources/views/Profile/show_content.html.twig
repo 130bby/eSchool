@@ -67,9 +67,10 @@
 		<p style="color:#5b74a9;font-size:20px;">Ton dernier badge :</p>
 		{% if last_badge %}
 			<span style="margin:auto;display:block;" class="badge{{last_badge.badge.id}}-{{last_badge.niveau}}"></span>
+		{% else %}Aucun
 		{% endif %}
 		<p style="color:#5b74a9;font-size:20px;">Ton XP globale :</p>
-			<span style="margin:auto;display:block;">{{app.user.xp}} Points</span>
+			<span style="margin:auto;display:block;">{%if app.user.xp is null%}0{%else%}{{app.user.xp}}{%endif%} Points</span>
 	</div>
 	<div class="col-xs-12 col-sm-7">
 	</div>

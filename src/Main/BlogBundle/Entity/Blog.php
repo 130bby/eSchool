@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Blog
  *
- * @ORM\Table()
+ * @ORM\Table(name="blog")
  * @ORM\Entity(repositoryClass="Main\BlogBundle\Entity\BlogRepository")
  */
 class Blog

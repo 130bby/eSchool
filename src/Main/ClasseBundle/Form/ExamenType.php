@@ -26,13 +26,13 @@ class ExamenType extends AbstractType
             ->add('name')
             ->add('debut')
             ->add('fin')
-            ->add('classe','entity', array('class' => 'MainClasseBundle:Classe','property' => 'name',
+            ->add('classe','entity', array('class' => 'MainClasseBundle:Classe','property' => 'name',"required" => false,
 						'query_builder' => function(ClasseRepository $er ) use ( $sc ) {
 								return $er->createQueryBuilder('c')
 										  ->where('c.owner = ?1')
 						->setParameter(1, $sc->get('security.context')->getToken()->getUser());}
 			))
-            ->add('savoirs', 'collection', array('type' => new ThemeSavoirType($sc),'allow_add'    => true,'allow_delete' => true));
+            ->add('savoirs', 'collection', array('type' => new ThemeSavoirType(),'allow_add' => true,'allow_delete' => true));
     }
     
     /**

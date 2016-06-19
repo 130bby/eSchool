@@ -70,7 +70,7 @@ class User extends BaseUser
     /**
      * @var integer
      *
-     * @ORM\Column(name="xp", type="integer")
+     * @ORM\Column(name="xp", type="integer", nullable=true)
      */
     private $xp;
 	

@@ -1,0 +1,26 @@
+				  <table class="table" id="notes_table">
+					<tr>
+						<th style='text-align:center;'>Elèves</th>
+						{% for savoir in savoirs %}
+						<th style='text-align:center;'>{{savoir}}</th>
+						{% endfor %}
+						<th style='text-align:center;'>Moyenne</th>
+					</tr>
+					{% for key, eleve in eleves %}
+					<tr>
+						<td>{{eleve}}</td>
+						{% set note_totale = 0 %}
+						{% set count_notes = 0 %}
+						{% for key2, savoir in savoirs %}
+							{% if notes[key][key2] is defined %}
+								{% set note_totale = note_totale + notes[key][key2] %}
+								{% set count_notes = count_notes + 1 %}
+								<td>{{notes[key][key2]}}</td>
+							{% else %}
+								<td>N/A</td>
+							{% endif %}
+						{% endfor %}
+						<td>{{  note_totale / count_notes }}</td>
+					</tr>
+					{% endfor %}
+				  </table>

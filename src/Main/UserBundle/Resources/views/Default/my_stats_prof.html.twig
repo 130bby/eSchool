@@ -1,0 +1,180 @@
+{% extends '::base.html.twig' %}
+{% block stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
+{% endblock %}
+
+{% block body -%}
+
+<div class="container">
+	<h3 style="color:#f39f03;margin-bottom:20px;font-weight:bold;">STATISTIQUES</h3>
+	<div class="row">
+		<div class="col-md-12" style="text-align:center;padding-top:20px;margin:auto;background-color:#fffaf2;border-radius:20px;">
+		  <!-- Nav tabs -->
+		  <ul class="nav nav-tabs" role="tablist">
+			<li role="presentation" class="active"><a id="tab1" href="#examens" aria-controls="progression" role="tab" data-toggle="tab">Examens</a></li>
+			<li role="presentation"><a id="tab2" href="#resume" aria-controls="efficacite" role="tab" data-toggle="tab">Résumé</a></li>
+			<li role="presentation"><a id="tab3" href="#notes" aria-controls="notes" role="tab" data-toggle="tab">Vue d'ensemble</a></li>
+		  </ul>
+
+		  <!-- Tab panes -->
+		  <div class="tab-content">
+			<div role="tabpanel" class="tab-pane active" id="examens">
+				<br />
+				<select id="panel1_classe" class="selectpicker" title="Choisir une classe">
+					{% for classe in classes %}
+						<option value="{{classe.id}}">{{classe.name}}</option>
+					{% endfor %}
+				</select>
+				<select id="panel1_exam" class="selectpicker" title="Choisir un examen">
+				</select>
+				<div class="table-responsive" id="panel1_table"></div>
+			</div>
+			<div role="tabpanel" class="tab-pane" id="resume">
+				<br />
+				<select id="panel2_classe" class="selectpicker" title="Choisir une classe">
+					{% for classe in classes %}
+						<option value="{{classe.id}}">{{classe.name}}</option>
+					{% endfor %}
+				</select>
+				<select id="panel2_exam" class="selectpicker" title="Choisir un examen">
+					{% for examen in examens %}
+						<option value="{{examen.id}}">{{examen.name}}</option>
+					{% endfor %}
+				</select>
+				<div class="table-responsive" id="panel2_table"></div>
+			</div>
+			<div role="tabpanel" class="tab-pane" id="notes">
+				<br />
+				<select id="panel3_classe" class="selectpicker" title="Choisir une classe">
+					{% for classe in classes %}
+						<option value="{{classe.id}}">{{classe.name}}</option>
+					{% endfor %}
+				</select>
+				<select id="panel3_savoirs" class="selectpicker" multiple title="Choisir un/des savoir(s)">
+				</select>
+				<button id="panel3_table_display" type="button" class="btn btn-success">Afficher</button>
+				<div class="table-responsive" id="panel3_table"></div>
+				<br />
+				<div class="table-responsive" id="panel3_table"></div>
+			</div>
+		  </div>
+		</div>
+	</div>
+</div>
+<div class="footer-mer-1"></div>
+
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
+	<script type="text/javascript">
+	$("#panel1_classe").change(function(){
+		var classe_id = $(this).val();
+		$.ajax({
+		type: "POST",
+		url: "{{ path('main_user_my_stats_prof_ajax')}}",
+		data: "classe="+$(this).val(),
+		cache: false,
+		success: function(data){
+			var $el = $('#panel1_exam');
+			$el.empty(); // remove old options
+			$.each(data, function(key,value) {
+				$el.append(new Option(value,key));
+			});
+			$el.selectpicker('refresh');
+			$('#panel1_table').html('');
+		}});
+	});
+	$("#panel1_exam").change(function(){
+		var examen_id = $(this).val();
+		$.ajax({
+		type: "POST",
+		url: "{{ path('main_user_my_stats_prof_ajax_display_table')}}",
+		data: "panel=1&examen="+$(this).val(),
+		cache: false,
+		success: function(data){
+			$('#panel1_table').html(data);
+		}});
+	});
+	
+	$("#panel2_classe").change(function(){
+		var classe_id = $(this).val();
+		$.ajax({
+		type: "POST",
+		url: "{{ path('main_user_my_stats_prof_ajax')}}",
+		data: "classe="+$(this).val(),
+		cache: false,
+		success: function(data){
+			var $el = $('#panel2_exam');
+			$el.empty(); // remove old options
+			$.each(data, function(key,value) {
+				$el.append(new Option(value,key));
+			});
+			$el.selectpicker('refresh');
+			$('#panel2_table').html('');
+		}});
+	});
+	$("#panel2_exam").change(function(){
+		var examen_id = $(this).val();
+		$.ajax({
+		type: "POST",
+		url: "{{ path('main_user_my_stats_prof_ajax_display_table')}}",
+		data: "panel=2&examen="+$(this).val(),
+		cache: false,
+		success: function(data){
+			$('#panel2_table').html(data);
+		}});
+	});
+	$("#panel3_classe").change(function(){
+		var classe_id = $(this).val();
+		$.ajax({
+		type: "POST",
+		url: "{{ path('main_user_my_stats_prof_ajax_savoirs')}}",
+		data: "classe="+$(this).val(),
+		cache: false,
+		success: function(data){
+			var $el = $('#panel3_savoirs');
+			$el.empty(); // remove old options
+			$.each(data, function(key,value) {
+				$el.append(new Option(value,key));
+			});
+			$el.selectpicker('refresh');
+			$('#panel3_table').html('');
+		}});
+	});
+	$("#panel3_table_display").click(function(){
+		var savoirs = $('#panel3_savoirs').selectpicker('val');
+		$.ajax({
+		type: "POST",
+		url: "{{ path('main_user_my_stats_prof_ajax_display_table')}}",
+		data: "panel=3&classe="+$('#panel3_classe').selectpicker('val')+"&savoirs="+savoirs,
+		cache: false,
+		success: function(data){
+			$('#panel3_table').html(data);
+		}});
+	});
+	
+	$("#theme_filter").change(function(){
+		var theme_id = $(this).val();
+		$('#notes_table > tbody > tr').each(function() {
+			if (theme_id == 'all')
+				$(this).show();
+			else 
+			{
+				if ( $(this).children(":first").is( "td" ) && $(this).children(":first").text() != theme_id) 
+					$(this).hide();
+				if ( $(this).children(":first").is( "td" ) && $(this).children(":first").text() == theme_id) 
+					$(this).show();
+			}
+		});
+	});
+	
+	</script>
+
+	
+	
+{% endblock %}
+
+

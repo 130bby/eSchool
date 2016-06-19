@@ -24,8 +24,38 @@
 				<div id="js-legend-chart2" class="chart-legend"></div>
 			</div>
 			<div role="tabpanel" class="tab-pane" id="notes">
-				<canvas id="Chart3" width="400" height="400"></canvas>
-				<div id="js-legend-chart3" class="chart-legend"></div>
+				<br />
+				<div class="form-group">
+				  <label for="theme_filter">Filtrer par thème:</label>
+				  <select class="form-control" id="theme_filter" name="theme_filter">
+						<option value="all">Tous</option>
+					{% for theme in themes %}
+						<option value="{{theme.theme.id}}">{{theme.theme.name}}</option>
+					{% endfor %}
+				  </select>
+				</div>
+				<br />
+				<div class="table-responsive">
+				  <table class="table" id="notes_table">
+					<tr>
+						<th style='text-align:center;'>Savoir</th>
+						<th style='text-align:center;'>Dernière note</th>
+						<th style='text-align:center;'>Dernier test</th>
+					</tr>
+					{% set savoirs_passed = []%}
+					{% for savoir in savoirs %}
+					{% if savoir.savoir.id not in savoirs_passed %}
+						<tr>
+							<td style="display:none;">{{savoir.savoir.theme.id}}</td>
+							<td>{{savoir.savoir.name}}</td>
+							<td>{{savoir.score/5}}</td>
+							<td>{{savoir.date| date("M Y")}}</td>
+						</tr>
+					{% set savoirs_passed = savoirs_passed|merge([savoir.savoir.id])%}
+					{% endif %}
+					{% endfor %}
+				  </table>
+				</div>
 			</div>
 		  </div>
 		</div>
@@ -43,6 +73,22 @@
 
 {% block javascripts %}
 	{{ parent() }}
+	<script type="text/javascript">
+	$("#theme_filter").change(function(){
+		var theme_id = $(this).val();
+		$('#notes_table > tbody > tr').each(function() {
+			if (theme_id == 'all')
+				$(this).show();
+			else 
+			{
+				if ( $(this).children(":first").is( "td" ) && $(this).children(":first").text() != theme_id) 
+					$(this).hide();
+				if ( $(this).children(":first").is( "td" ) && $(this).children(":first").text() == theme_id) 
+					$(this).show();
+			}
+		});
+	});
+	</script>
 	<script src="/js/Chart.min.js"></script>
 	<script type="text/javascript">
 	var colors = [[],[],[],[],[],[],[]];
@@ -77,36 +123,6 @@
 	
 	
 	$(function() {
-		var ctx3 = $("#Chart3").get(0).getContext("2d");
-		var labels_savoirs = $.parseJSON('{{ legend_savoirs | raw |escape("js") }}');
-		var notes_savoir = $.parseJSON('{{ notes_savoir | raw }}');
-		var notes_medianes = $.parseJSON('{{ notes_medianes | raw }}');
-		var data3 = {
-			labels: labels_savoirs,
-			datasets: [
-				{
-					label: "Meilleure note",
-					type: "bar",
-					fillColor: colors[0]["fillColor"],
-					strokeColor: colors[0]["strokeColor"],
-					highlightFill: colors[0]["highlightFill"],
-					highlightStroke: colors[0]["highlightStroke"],
-					data: notes_savoir
-				},
-				{
-					label: "Note mediane",
-					type: "line",
-					fillColor: colors[1]["fillColor"],
-					strokeColor: colors[1]["strokeColor"],
-					highlightFill: colors[1]["highlightFill"],
-					highlightStroke: colors[1]["highlightStroke"],
-					data: notes_medianes
-				}
-			]
-		};
-		
-		var BarLineChart;
-		
 		var ctx2 = $("#Chart2").get(0).getContext("2d");
 		var labels = $.parseJSON('{{ legend | raw }}');
 		var data_epreuve_passees = $.parseJSON('{{ data_epreuve_passees | raw }}');
@@ -142,7 +158,7 @@
 						+'<% } %>'
 					  +'</ul>'
 		}
-		var LineChart2;
+		var BarChart;
 		
 		var ctx1 = $("#Chart1").get(0).getContext("2d");
 		var legend_notes_by_themes = $.parseJSON('{{ legend_notes_by_themes | raw }}');
@@ -158,7 +174,6 @@
 			datasets[i].highlightStroke = colors[i]["highlightStroke"];
 			datasets[i].data = data_notes_by_themes[i];
 		}
-		console.log(datasets);
 		var data1 = {
 			labels: labels,
 			datasets: datasets
@@ -170,23 +185,20 @@
 		//tabs
 		$('#tab1').on('shown.bs.tab', function (e) {
 			if (typeof BarLineChart !== 'undefined') BarLineChart.destroy();
-			if (typeof LineChart2 !== 'undefined') LineChart2.destroy();
+			if (typeof BarChart !== 'undefined') BarChart.destroy();
 			LineChart = new Chart(ctx1).Line(data1);
 		});
 
 		$('#tab2').on('shown.bs.tab', function (e) {
 			if (typeof BarLineChart !== 'undefined') BarLineChart.destroy();
 			if (typeof LineChart !== 'undefined') LineChart.destroy();
-			LineChart2 = new Chart(ctx2).Line(data2);
+			BarChart = new Chart(ctx2).Bar(data2);
 			if($('#js-legend-chart2').html() == '')
-				$('#js-legend-chart2').append(LineChart2.generateLegend());
+				$('#js-legend-chart2').append(BarChart.generateLegend());
 		});		
 		$('#tab3').on('shown.bs.tab', function (e) {
 			if (typeof LineChart !== 'undefined') LineChart.destroy();
-			if (typeof LineChart2 !== 'undefined') LineChart2.destroy();
-			BarLineChart = new Chart(ctx3).Overlay(data3);
-			if($('#js-legend-chart3').html() == '')
-				$('#js-legend-chart3').append(BarLineChart.generateLegend());
+			if (typeof BarChart !== 'undefined') BarChart.destroy();
 		});		
 	});
 
