@@ -1,0 +1,55 @@
+{% extends '::base.html.twig' %}
+{% block stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" href="/css/style.css">
+{% endblock %}
+
+{% block body -%}
+    <h1>Calendrier</h1>
+	<table class="table">
+		<tr><th>Savoir</th><th>Début</th><th>Fin</th></tr>
+		{% for cal_elem in entity.calendrier%}
+			<tr><td>{{cal_elem.savoir.name}}</td><td>{{cal_elem.start|date('d-m-Y')}}</td><td>{{cal_elem.end|date('d-m-Y')}}</td>
+			</tr>
+		{% endfor %}
+	</table>
+
+	{% if is_granted('ROLE_PROF') %}
+    <ul class="record_actions">
+		<li>
+			<a href="{{ path('classe') }}">
+				Retour à la liste des classes
+			</a>
+		</li>
+		<li>
+			<a href="{{ path('calendrier_edit', { 'classe_id': entity.id }) }}">
+				Editer
+			</a>
+		</li>
+		<li>{{ form(delete_form) }}</li>
+	</ul>
+	{% endif %}
+	<div class="selector" style="text-align:center;"></div>
+	
+{% endblock %}
+
+{% block javascripts -%}
+	{{ parent() }}	
+	<script type="text/javascript" src="/js/jquery.fn.gantt.min.js"></script>
+	<script type="text/javascript">	
+		var gantt_data = {{gantt_data|raw}};
+		console.log(gantt_data);
+		$(".selector").gantt({
+			source: gantt_data,
+			scale: "days",
+			minScale: "days",
+			maxScale: "months",
+			onItemClick: function(data) {
+				alert("Item clicked - show some details");
+			},
+			onRender: function() {
+				console.log("chart rendered");
+			}
+		});
+	</script>
+{% endblock %}

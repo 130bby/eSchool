@@ -33,7 +33,7 @@
                 <td>{{ entity.code }}</td>
                 <td>{{ entity.status }}</td>
                 <td>{{ nb_eleves[loop.index0] }}</td>
-                <td>{{ entity.theme.name }}</td>
+                <td>{% if entity.theme is not null %}{{ entity.theme.name }}{% endif %}</td>
                 <td>
                 <ul>
                     <li>

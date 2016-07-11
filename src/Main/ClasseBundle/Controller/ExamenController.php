@@ -354,7 +354,7 @@ class ExamenController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('examen'));
+        return $this->redirect($this->generateUrl('main_user_profil'));
     }
 
     /**

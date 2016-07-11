@@ -3,6 +3,7 @@
 namespace Main\ClasseBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Classe
@@ -90,6 +91,35 @@ class Classe
 	*/
 	protected $theme;
 
+	/**
+	 * @ORM\OneToMany(targetEntity="Main\ClasseBundle\Entity\Calendrier", mappedBy="classe")
+	*/
+	protected $calendrier;
+	
+    public function __construct()
+    {
+        $this->calendrier = new ArrayCollection();
+    }
+	
+    public function getCalendrier()
+    {
+        return $this->calendrier;
+    }
+	
+    public function getElements()
+    {
+        return $this->calendrier;
+    }
+	
+    public function addCalendrierElement(Calendrier $ce)
+    {
+        $this->calendrier->add($ce);
+    }
+
+    public function removeCalendrierElement(Calendrier $ce)
+    {
+        $this->calendrier->removeElement($ce);
+    }
     /**
      * Get id
      *

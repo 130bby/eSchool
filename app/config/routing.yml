@@ -13,6 +13,10 @@ main_examen_crud:
     type:     annotation
     resource: "@MainClasseBundle/Controller/ExamenController.php"
     prefix:   /
+main_calendrier:
+    type:     annotation
+    resource: "@MainClasseBundle/Controller/CalendrierController.php"
+    prefix:   /
 
 hwi_oauth_redirect:
     resource: "@HWIOAuthBundle/Resources/config/routing/redirect.xml"
