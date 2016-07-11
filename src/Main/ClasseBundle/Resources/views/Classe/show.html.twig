@@ -56,26 +56,13 @@
         </tbody>
     </table>
 
-	{% if is_granted('ROLE_PROF') %}
     <ul class="record_actions">
+		{% if is_granted('ROLE_PROF') %}
 		<li>
 			<a href="{{ path('examen', { 'id': entity.id }) }}">
 				Voir les examens
 			</a>
 		</li>
-		{% if entity.calendrier is not empty %}
-		<li>
-			<a href="{{ path('calendrier_show', { 'classe_id': entity.id }) }}">
-				Voir le calendrier
-			</a>
-		</li>
-		{% else %}
-		<li>
-			<a href="{{ path('calendrier_new', { 'classe_id': entity.id }) }}">
-				Ajouter un calendrier
-			</a>
-		</li>
-		{% endif %}
 		<li>
 			<a href="{{ path('classe') }}">
 				Retour à la liste
@@ -87,6 +74,19 @@
 			</a>
 		</li>
 		<li>{{ form(delete_form) }}</li>
+		{% endif %}
+		{% if entity.calendrier is not empty %}
+		<li>
+			<a href="{{ path('calendrier_show', { 'classe_id': entity.id }) }}">
+				Voir le calendrier
+			</a>
+		</li>
+		{% elseif is_granted('ROLE_PROF')  %}
+		<li>
+			<a href="{{ path('calendrier_new', { 'classe_id': entity.id }) }}">
+				Ajouter un calendrier
+			</a>
+		</li>
+		{% endif %}
 	</ul>
-	{% endif %}
 {% endblock %}
