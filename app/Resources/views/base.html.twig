@@ -135,7 +135,7 @@
 						{% if app.user %}
 							{% if is_granted('ROLE_ELEVE') %}
 								<li class="menu-user">
-									<a href="#" data-toggle="dropdown" class="menu-user"><img src="/img/picto_menu.png" />  {{app.user.username}} &nu;</a>
+									<a href="#" data-toggle="dropdown" class="menu-user"><img src="/img/picto_menu.png" />  {{app.user.username}} &#8595;</a>
 										<ul id="menu_user_eleve" class="dropdown-menu">
 										<li>
 											<span class="glyphicon glyphicon-info-sign icone_menu_eleve"></span><a href="{{ path('main_user_profil')}}" style="display:inline" class="icone_menu_eleve">Mon profil</a>
@@ -249,7 +249,7 @@
 			</div>
 
 			<div class="footer-home" style="height:auto;">
-				<span style="display:inline-block;float:left;padding-left:10px;">Dernière mise à jour le 19/06/2016</span>
+				<span style="display:inline-block;float:left;padding-left:10px;">Dernière mise à jour le 27/07/2016</span>
 				<span style="display:inline-block;margin:auto;padding-right:10px;"><a href="{{ path('main_qui_sommes_nous')}}">Qui sommes nous</a></span>
 				<span style="display:inline-block;margin:auto;padding-right:10px;"><a href="{{ path('main_FAQ')}}">F.A.Q</a></span>
 				<span style="display:inline-block;margin:auto;padding-right:10px;"><a href="{{ path('main_general_conditions')}}">Conditions Générales</a></span>

@@ -244,7 +244,7 @@ class ClasseController extends Controller
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Mettre à jour'));
+        $form->add('submit', 'submit', array('label' => 'Valider votre classe','attr' => array('class' => 'submit_classe')));
 
         return $form;
     }
@@ -319,7 +319,7 @@ class ClasseController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('classe_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Supprimer'))
+            ->add('submit', 'submit', array('label' => 'Supprimer votre classe','attr' => array('class' => 'submit_del_classe')))
             ->getForm()
         ;
     }

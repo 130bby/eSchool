@@ -283,6 +283,12 @@ font-weight:bold;
   border-radius:10px;
 }
 
+.form-classe select{
+  width:290px;
+  height:35px;
+  border-radius:10px;
+}
+
 .modal-login-body a
 {
   color:#5d76aa;
@@ -888,3 +894,173 @@ background-color:#f6a000;
 color:#fffefc;
 text-decoration: none;
 }
+
+.voir-aussi {
+	background-color:#5c74a6;
+    border-radius: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #f6a000;
+	padding:15px;
+}
+
+.voir-aussi a{
+	background-color:#ffffff;
+    border-radius: 20px;
+    color: #5c74a6;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.form-classe input, select{
+    text-align:left;
+    background-color:#e3e5e6;
+    border-radius: 5px;
+	color:#607aaa;
+    font-weight: bold;
+	margin-bottom:30px;
+}
+
+
+.form-classe select{
+    text-align:left;
+    background-color:#e3e5e6;
+    border-radius: 5px;
+	color:#607aaa;
+    font-weight: bold;
+	
+       border: 0 !important;             /*Removes border*/
+      -webkit-appearance: none;            /*Removes default chrome and safari style*/
+      -moz-appearance: none;             /* Removes Default Firefox style*/
+      background: url('/img/down-arrow.png') no-repeat #e3e5e6;          /*Adds background-image*/
+      background-position: 95% 50%;           /*Position of the background-image*/
+      text-indent: 0.01px;          /* Removes default arrow from firefox*/
+      text-overflow: "";               /*Removes default arrow from firefox*/	
+}
+
+.form-classe input[type=checkbox] {
+	visibility: hidden;
+}
+
+.form-classe label{
+    color: #f6a000;
+    font-size: 16px;
+}
+
+.submit_classe{
+    color: #fff;
+	background-color: #5c74a6;
+	border-radius: 20px;
+    font-weight: bold;
+	width:50%;
+	min-width:300px;
+    font-size: 16px;
+}
+
+.submit_del_classe{
+    color: #fff;
+	background-color: #B22222;
+	border-radius: 20px;
+    font-weight: bold;
+	width:50%;
+	min-width:300px;
+    font-size: 16px;
+}
+
+.calendar-icon{
+      background: url('/img/calendar.png') no-repeat #e3e5e6;          /*Adds background-image*/
+	  height:46px;
+	  width:45px;
+	  top:2px;
+	  left:420px;
+	  left:71%;
+}
+
+@media screen and (max-width: 992px) {
+.calendar-icon{
+	  left:360px;
+}
+}
+
+@media screen and (max-width: 767px) {
+.calendar-icon{
+	  left:69%;
+}
+}
+
+@media screen and (max-width: 600px) {
+.calendar-icon{
+	  left:75%;
+}
+}
+
+@media screen and (max-width: 500px) {
+.calendar-icon{
+	  left:78%;
+}
+}
+
+@media screen and (max-width: 400px) {
+.calendar-icon{
+	  left:87%;
+}
+}
+
+@media screen and (max-width: 360px) {
+.calendar-icon{
+	  visibility:hidden;
+}
+}
+
+.squaredFour {
+	width: 20px;	
+	margin: 0px auto;
+	position: relative;
+}
+
+.squaredFour label {
+	cursor: pointer;
+	position: absolute;
+	width: 20px;
+	height: 20px;
+	top: 0;
+	border-radius: 4px;
+	border: 3px solid #5c74a6;
+	background: #fcfff4;
+
+}
+
+.squaredFour label:after {
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+	filter: alpha(opacity=0);
+	opacity: 0;
+	content: '';
+	position: absolute;
+	width: 9px;
+	height: 5px;
+	background: transparent;
+	top: 4px;
+	left: 4px;
+	border: 3px solid #5c74a6;
+	border-top: none;
+	border-right: none;
+
+	-webkit-transform: rotate(-45deg);
+	-moz-transform: rotate(-45deg);
+	-o-transform: rotate(-45deg);
+	-ms-transform: rotate(-45deg);
+	transform: rotate(-45deg);
+}
+
+.squaredFour label:hover::after {
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+	filter: alpha(opacity=30);
+	opacity: 0.5;
+}
+
+.squaredFour input[type=checkbox]:checked + label:after {
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+	filter: alpha(opacity=100);
+	opacity: 1;
+}
+

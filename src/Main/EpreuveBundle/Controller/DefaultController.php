@@ -42,7 +42,8 @@ class DefaultController extends Controller
 
 		$em->getRepository('MainExerciceBundle:ExerciceStats')->updateStats($exercice, $success);
 		$user = $this->container->get('security.context')->getToken()->getUser();
-		$user->setXp($user->getXp()+1);
+		if (is_object($user))
+			$user->setXp($user->getXp()+1);
 		$em->flush();
 		if ($success === true)
 			return new Response('ok');

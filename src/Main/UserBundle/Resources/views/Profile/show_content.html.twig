@@ -51,6 +51,7 @@
 		{% for theme in themes%}
 			<a class="profile-themes" href="{{ path('main_savoir_arbre_theme', { 'theme_id': theme.theme.id })}}">{{ theme.theme.name }}</a><br />
 		{% endfor %}
+			<a class="profile-themes" style="background-color:#337ab7;color:#ffffff;" href="{{ path('main_user_add_theme')}}">Gérer mes thèmes</a><br />
 	</div>
 	<div class="col-xs-12 col-sm-7 fos_user_user_show div_profile_last_exercices">
 		<p style="color:#5b74a9;font-size:20px;text-align:center;">Tes dernières épreuves :</p>

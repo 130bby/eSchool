@@ -1,0 +1,36 @@
+{% block form_row %}
+{% spaceless %}
+    <div class="form_row row">
+		<div >{{ form_label(form) }}</div>
+        {{ form_errors(form) }}
+        <div class="has-feedback">{{ form_widget(form) }}</div>
+        
+    </div>
+{% endspaceless %}
+{% endblock form_row %}
+
+{% block checkbox_widget %}
+{% spaceless %}
+<div class="form_row row" style="color:#f6a000;font-weight:bold;font-size:16px;">Classe active:</div>
+<div class="squaredFour form_row row">
+	 <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
+	<label for="main_classebundle_classe_status"></label>
+</div>
+
+{% endspaceless %}
+{% endblock checkbox_widget %}
+
+{%- block date_widget -%}
+    {%- if widget == 'single_text' -%}
+		<i class="calendar-icon form-control-feedback"></i>
+        {{ block('form_widget_simple') }}
+    {%- else -%}
+        <div {{ block('widget_container_attributes') }}>
+            {{- date_pattern|replace({
+                '{{ year }}':  form_widget(form.year),
+                '{{ month }}': form_widget(form.month),
+                '{{ day }}':   form_widget(form.day),
+            })|raw -}}
+        </div>
+    {%- endif -%}
+{%- endblock date_widget -%}

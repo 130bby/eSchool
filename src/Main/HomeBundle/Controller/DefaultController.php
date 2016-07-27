@@ -59,11 +59,21 @@ class DefaultController extends Controller
 	
     public function FAQAction()
     {
-        return $this->render('MainHomeBundle:Default:FAQ.html.twig', array());
+		return $this->render('MainHomeBundle:Default:FAQ.html.twig', array());
     }
 	
     public function quiSommesNousAction()
     {
         return $this->render('MainHomeBundle:Default:quiSommesNous.html.twig', array());
+    }
+
+    private function TestEmail()
+    {
+		$message = \Swift_Message::newInstance()
+			->setSubject("Test Email")
+			->setFrom('contact@papilo.fr')
+			->setTo('mettere@hotmail.fr')
+			->setBody("test PAPILO");
+		$this->get('mailer')->send($message);
     }
 }
