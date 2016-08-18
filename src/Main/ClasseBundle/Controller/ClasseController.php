@@ -152,7 +152,7 @@ class ClasseController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Créer'));
+        $form->add('submit', 'submit', array('label' => 'Créer votre classe','attr' => array('class' => 'submit_classe')));
 
         return $form;
     }

@@ -1,55 +1,59 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>Liste des Examens</h1>
 
-    <table class="records_list">
-        <thead>
-            <tr>
-				{% if is_granted('ROLE_PROF') %}<th>Id</th>{% endif %}
-                <th>Name</th>
-                <th>Debut</th>
-                <th>Fin</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for entity in entities %}
-            <tr>
-                {% if is_granted('ROLE_PROF') %}<td><a href="{{ path('examen_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>{% endif %}
-                <td>{{ entity.name }}</td>
-                <td>{% if entity.debut %}{{ entity.debut|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{% if entity.fin %}{{ entity.fin|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>
-                <ul>
-					{% if is_granted('ROLE_PROF') %}
-                    <li>
-                        <a href="{{ path('examen_show', { 'id': entity.id }) }}">Voir</a>
-                    </li>
-					{% elseif is_granted('ROLE_ELEVE') %}
-                    <li>
-						{% if date(entity.debut) < date() and date() < date(entity.fin) and entity not in examens_passed %}
-						<a href="{{ path('examen_pass', { 'id': entity.id }) }}">Passer</a>
-						{% else%}
-						non disponible
-						{% endif%}
-                    </li>
-					{% endif %}
-                </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-sm-5 col-sm-offset-1">
+			<h2 style="text-align:left;color:#f39f03;margin-bottom:20px;font-weight:bold;">LISTE DES EXAMENS</h2>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 col-sm-7 form-classe" style="margin-bottom:20px;">
+				<table class="records_list table_index_classe table table-striped">
+					<thead>
+						<tr>
+							{% if is_granted('ROLE_PROF') %}<th>Id</th>{% endif %}
+							<th>Nom</th>
+							<th>Début</th>
+							<th>Fin</th>
+							<th>Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+					{% for entity in entities %}
+						<tr>
+							{% if is_granted('ROLE_PROF') %}<td><a href="{{ path('examen_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>{% endif %}
+							<td>{{ entity.name }}</td>
+							<td>{% if entity.debut %}{{ entity.debut|date('Y-m-d') }}{% endif %}</td>
+							<td>{% if entity.fin %}{{ entity.fin|date('Y-m-d') }}{% endif %}</td>
+							<td>
+								{% if is_granted('ROLE_PROF') %}
+									<a href="{{ path('examen_show', { 'id': entity.id }) }}"><img src="/img/fleche_verte.png" title="Voir"/></a>
+								{% elseif is_granted('ROLE_ELEVE') %}
+									{% if date(entity.debut) < date() and date() < date(entity.fin) and entity not in examens_passed %}
+									<a href="{{ path('examen_pass', { 'id': entity.id }) }}">Passer</a>
+									{% else%}
+									non disponible
+									{% endif%}
+								{% endif %}
+							</td>
+						</tr>
+					{% endfor %}
+					</tbody>
+				</table>
+				{% if is_granted('ROLE_PROF') %}<a href="{{ path('examen_new') }}" style="font-weight:bold;color:#5c74a6;padding-bottom:20px;" >> Créer un nouvel Examen</a>{% endif %}
+			</div>
+			<div class="col-xs-10 col-sm-4 col-xs-offset-1 voir-aussi">
+					<p>Voir aussi :</p>
+					<a class="profile-themes" href="{{ path('classe')}}">Gérer les classes</a><br />
+					<a class="profile-themes" href="{{ path('classe_new')}}">Créer une classe</a><br />
+					<a class="profile-themes" href="{{ path('examen_new')}}">Créer un examen</a>
+				</div>
+			</div>
+		</div>
+	</div>
+		
+<div class="footer-mer-1"></div>
 
-	{% if is_granted('ROLE_PROF') %}
-    <ul>
-        <li>
-            <a href="{{ path('examen_new') }}">
-                Créer un nouvel Examen
-            </a>
-        </li>
-    </ul>
-    {% endif %}
-	
-    {% endblock %}
+{% endblock %}

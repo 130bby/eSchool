@@ -1,15 +1,47 @@
 {% extends '::base.html.twig' %}
 
-{% block body -%}
-    <h1>Création d'une Classe</h1>
-
-    {{ form(form) }}
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('classe') }}">
-            Retour à la liste
-        </a>
-    </li>
-</ul>
+{% block stylesheets %}
+{{parent()}}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.1/css/bootstrap-datepicker.css"/>
 {% endblock %}
+{% block body -%}
+    <div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-sm-5 col-sm-offset-1">
+			<h2 style="text-align:left;color:#f39f03;margin-bottom:20px;font-weight:bold;">CREATION D'UNE CLASSE</h2>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 col-sm-7 form-classe" style="margin-bottom:20px;">
+				{% form_theme form 'form/fields.html.twig' %}
+				{{ form_start(form) }}
+				{{ form_row(form.pays) }}
+				{{ form_row(form.region) }}
+				{{ form_end(form) }}
+				<a href="{{ path('classe') }}" style="font-weight:bold;color:#5c74a6;padding-bottom:20px;" >> Retour à la liste</a>
+			</div>
+			<div class="col-xs-10 col-sm-4 col-xs-offset-1 voir-aussi">
+					<p>Voir aussi :</p>
+					<a class="profile-themes" href="{{ path('classe')}}">Gérer les classes</a><br />
+					<a class="profile-themes" href="{{ path('classe_new')}}">Créer une classe</a><br />
+					<a class="profile-themes" href="{{ path('examen_new')}}">Créer un examen</a>
+				</div>
+			</div>
+		</div>
+	</div>
+		
+<div class="footer-mer-1"></div>
+{% endblock %}
+{% block javascripts %}
+{{parent()}}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.1/js/bootstrap-datepicker.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.js-datepicker').datepicker({
+            format: 'yyyy-mm-dd'
+        });
+    });
+</script>
+{% endblock %}
+

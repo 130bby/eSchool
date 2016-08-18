@@ -23,9 +23,9 @@ class ExamenType extends AbstractType
     {
         $sc = $this->sc;
 		$builder
-            ->add('name')
-            ->add('debut')
-            ->add('fin')
+            ->add('name','text',array('label' => "Nom de l'examen:", 'required' => false))
+            ->add('debut','date',array( 'widget' => 'single_text', 'html5' => false, 'attr' => ['class' => 'js-datepicker'], 'label' => 'Date de début:'))
+            ->add('fin','date',array( 'widget' => 'single_text', 'html5' => false, 'attr' => ['class' => 'js-datepicker'], 'label' => 'Date de fin:'))
             ->add('classe','entity', array('class' => 'MainClasseBundle:Classe','property' => 'name',"required" => false,
 						'query_builder' => function(ClasseRepository $er ) use ( $sc ) {
 								return $er->createQueryBuilder('c')

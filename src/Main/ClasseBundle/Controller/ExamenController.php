@@ -201,7 +201,7 @@ class ExamenController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        $form->add('submit', 'submit', array('label' => 'Créer votre examen','attr' => array('class' => 'submit_classe border_examen')));
 
         return $form;
     }

@@ -1,33 +1,61 @@
 {% extends '::base.html.twig' %}
 
-{% block body -%}
-    <h1>Créer un nouvel Examen</h1>
+{% block stylesheets %}
+{{parent()}}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.1/css/bootstrap-datepicker.css"/>
+{% endblock %}
 
-    {{ form_start(form) }}
-    {{ form_row(form.name) }}
-    {{ form_row(form.debut) }}
-    {{ form_row(form.fin) }}
-    {{ form_row(form.classe) }}
-    {{ form_label(form.savoirs) }}
-	<ul class="savoirs" data-prototype="{{ form_widget(form.savoirs.vars.prototype)|e }}"></ul>
-	{% do form.savoirs.setRendered %}
-    {{ form_end(form) }}
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('main_user_profil') }}">
-            Retour au profil
-        </a>
-    </li>
-</ul>
+{% block body -%}
+    <div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-sm-5 col-sm-offset-1">
+			<h2 style="text-align:left;color:#f39f03;margin-bottom:20px;font-weight:bold;">CREATION D'UN EXAMEN</h2>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 col-sm-7 form-classe" style="margin-bottom:20px;background-color:#fffaf2;padding:20px;border-radius:20px;">
+				{% form_theme form 'form/fields.html.twig' %}
+				{{ form_start(form) }}
+				{{ form_row(form.name) }}
+				{{ form_row(form.debut) }}
+				{{ form_row(form.fin) }}
+				{{ form_row(form.classe) }}
+				{{ form_label(form.savoirs) }}
+				<ul class="savoirs savoirs-ul" data-prototype="{{ form_widget(form.savoirs.vars.prototype)|e }}"></ul>
+				{% do form.savoirs.setRendered %}
+				{{ form_end(form) }}
+				<a href="{{ path('main_user_profil') }}" style="font-weight:bold;color:#5c74a6;padding-bottom:20px;" >> Retour au profil</a>
+			</div>
+			<div class="col-xs-10 col-sm-4 col-xs-offset-1 voir-aussi">
+					<p>Voir aussi :</p>
+					<a class="profile-themes" href="{{ path('classe')}}">Gérer les classes</a><br />
+					<a class="profile-themes" href="{{ path('classe_new')}}">Créer une classe</a><br />
+					<a class="profile-themes" href="{{ path('examen_new')}}">Créer un examen</a>
+				</div>
+			</div>
+		</div>
+	</div>
+		
+<div class="footer-mer-1"></div>
+
 {% endblock %}
 
 {% block javascripts -%}
 {{parent()}}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.1/js/bootstrap-datepicker.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.js-datepicker').datepicker({
+            format: 'yyyy-mm-dd'
+        });
+    });
+</script>
 <script type="text/javascript">
 var $collectionHolder;
 
 // setup an "add a tag" link
-var $addSavoirLink = $('<a href="#" class="add_savoir_link">Ajouter un Savoir</a>');
+var $addSavoirLink = $('<a href="#" class="add_savoir_link">> Ajouter un Savoir</a>');
 var $newLinkLi = $('<li></li>').append($addSavoirLink);
 
 jQuery(document).ready(function() {
@@ -94,7 +122,7 @@ function addTagForm($collectionHolder, $newLinkLi) {
 }
 
 function addTagFormDeleteLink($tagFormLi) {
-    var $removeFormA = $('<a href="#">supprimer ce savoir</a>');
+    var $removeFormA = $('<a href="#">> Supprimer ce savoir</a>');
     $tagFormLi.append($removeFormA);
 
     $removeFormA.on('click', function(e) {

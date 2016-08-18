@@ -1064,3 +1064,34 @@ text-decoration: none;
 	opacity: 1;
 }
 
+.table_index_classe th{
+background-color:#5c74a6;
+color:#ffffff;
+border-left:2px solid #fff;
+padding:5px;
+text-align:center;
+}
+
+.table_index_classe > tbody > tr > td{
+border-top:none;
+border-left:2px solid #fff;
+padding:5px;
+text-align:center;
+}
+
+.table_index_classe>tbody>tr:nth-child(odd)>td{
+   background-color: #e3e5e6;
+}
+
+.savoirs-ul{
+list-style-type:none;
+}
+
+.savoirs-ul label, .savoirs-ul a{
+color: #5c74a6;
+font-weight: bold;
+}
+
+.border_examen{
+margin-top:50px;
+}

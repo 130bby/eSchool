@@ -3,6 +3,9 @@
 	<div class="row">
 		<h3 style="text-align:left;font-weight:bold;padding-left:55px;padding-top:50px;color:#506590;font-family: Verdana;"> S'inscrire </h3>
 		<form action="{{ path(app.request.attributes.get('_route')) }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
+			{% if app.request.attributes.get('_route') == 'main_prof_register'%}
+				{% do form.birthday.setRendered %}
+			{% endif %}
 			{{ form_widget(form) }}
 			<div style="margin-top:32px;">
 			{% if app.request.get('_route') == "main_prof_register"%}<br /><br /><br /><br />{% endif %}
