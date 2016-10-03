@@ -40,14 +40,28 @@ class AfterLoginRedirection implements AuthenticationSuccessHandlerInterface
         // otherwise, if is a commercial user we redirect to the crm area
         elseif (in_array('ROLE_USER', $rolesTab, true))
 		{
-			$last_epreuve = $this->em->getRepository('MainUserBundle:SavoirUser')->findOneBy(array('user' => $token->getUser()->getId()),array('date' => 'DESC'));
-			if ($last_epreuve)
-			{
-				$savoir = $this->em->getRepository('MainSavoirBundle:Savoir')->find($last_epreuve->getSavoir()->getId());
-				$redirection = new RedirectResponse($this->router->generate('main_savoir_arbre_theme', array('theme_id' => $savoir->getTheme()->getId())));
-			}
+			// TOUT CA RIEN QUE POUR LE BLOG BORDEL
+			$referer = $request->headers->get('referer');
+			$baseUrl = $request->getBaseUrl();
+			if ($baseUrl == '')
+				$lastPath = "/";
 			else
-				$redirection = new RedirectResponse($this->router->generate('fos_user_profile_show'));
+				$lastPath = substr($referer, strpos($referer, $baseUrl) + strlen($baseUrl));
+			$referer_route = $this->router->getMatcher()->match($lastPath);
+			if ($referer_route['_route'] == 'main_blog_show')
+				$redirection = new RedirectResponse($this->router->generate($referer_route['_route'],array("id" => $referer_route['id'])));
+			else
+			{
+				
+				$last_epreuve = $this->em->getRepository('MainUserBundle:SavoirUser')->findOneBy(array('user' => $token->getUser()->getId()),array('date' => 'DESC'));
+				if ($last_epreuve)
+				{
+					$savoir = $this->em->getRepository('MainSavoirBundle:Savoir')->find($last_epreuve->getSavoir()->getId());
+					$redirection = new RedirectResponse($this->router->generate('main_savoir_arbre_theme', array('theme_id' => $savoir->getTheme()->getId())));
+				}
+				else
+					$redirection = new RedirectResponse($this->router->generate('fos_user_profile_show'));
+			}
 		}
         // otherwise we redirect user to the member area
         else

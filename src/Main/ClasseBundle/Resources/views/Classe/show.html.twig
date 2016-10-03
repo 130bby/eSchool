@@ -1,92 +1,89 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>Classe</h1>
-
-    <table class="record_properties">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
-            </tr>
-            <tr>
-                <th>Pays</th>
-                <td>{{ entity.pays }}</td>
-            </tr>
-            <tr>
-                <th>Region</th>
-                <td>{{ entity.region }}</td>
-            </tr>
-            <tr>
-                <th>Etablissement</th>
-                <td>{{ entity.etablissement }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ entity.name }}</td>
-            </tr>
-            <tr>
-                <th>Start</th>
-                <td>{{ entity.start|date('Y-m-d H:i:s') }}</td>
-            </tr>
-            <tr>
-                <th>End</th>
-                <td>{{ entity.end|date('Y-m-d H:i:s') }}</td>
-            </tr>
-            <tr>
-                <th>Code</th>
-                <td>{{ entity.code }}</td>
-            </tr>
-            <tr>
-                <th>Status</th>
-                <td>{{ entity.status }}</td>
-            </tr>
-            <tr>
-                <th>Theme</th>
-                <td>{{ entity.theme.name }}</td>
-            </tr>
+    <div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-sm-5 col-sm-offset-1">
+			<h2 style="text-align:left;color:#f39f03;margin-bottom:20px;font-weight:bold;">{{ entity.name|upper }}</h2>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 col-sm-7 form-classe" style="margin-bottom:20px;">
+				<table class="record_properties">
+					<tbody>
+						<tr>
+							<th style="color:#5b74a9;font-size:20px;">Id:</th>
+							<td style="padding-left:20px;"><b>{{ entity.id }}</b></td>
+						</tr>
+						<tr>
+							<th style="color:#5b74a9;font-size:20px;">Pays:</th>
+							<td style="padding-left:20px;"><b>{{ entity.pays }}</b></td>
+						</tr>
+						<tr>
+							<th style="color:#5b74a9;font-size:20px;">Région:</th>
+							<td style="padding-left:20px;"><b>{{ entity.region }}</b></td>
+						</tr>
+						<tr>
+							<th style="color:#5b74a9;font-size:20px;">Etablissement:</th>
+							<td style="padding-left:20px;"><b>{{ entity.etablissement }}</b></td>
+						</tr>
+						<tr>
+							<th style="color:#5b74a9;font-size:20px;">Nom:</th>
+							<td style="padding-left:20px;"><b>{{ entity.name }}</b></td>
+						</tr>
+						<tr>
+							<th style="color:#5b74a9;font-size:20px;">Début:</th>
+							<td style="padding-left:20px;"><b>{{ entity.start|date('d/m/Y') }}</b></td>
+						</tr>
+						<tr>
+							<th style="color:#5b74a9;font-size:20px;">Fin:</th>
+							<td style="padding-left:20px;"><b>{{ entity.end|date('d/m/Y') }}</b></td>
+						</tr>
+						<tr>
+							<th style="color:#5b74a9;font-size:20px;">Code:</th>
+							<td style="padding-left:20px;"><b>{{ entity.code }}</b></td>
+						</tr>
+						<tr>
+							<th style="color:#5b74a9;font-size:20px;">Statut:</th>
+							<td style="padding-left:20px;"><b>{% if entity.status %}Active{% else %}Fermée{% endif %}</b></td>
+						</tr>
+						<tr>
+							<th style="color:#5b74a9;font-size:20px;">Thème:</th>
+							<td style="padding-left:20px;"><b>{{ entity.theme.name }}</b></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 			{% if is_granted('ROLE_PROF') %}
-			<tr>
-                <th>Eleves</th>
-					{% for eleve in eleves %}
-					<td>- {{ eleve.user.username }} <a href={{ path('classe_remove_user', { 'user': eleve.user.id, 'classe': entity.id })}}> Retirer l'élève</a></td>
-					{% endfor %}
-            </tr>
+			<div class="col-xs-10 col-sm-4 col-xs-offset-1 gestion-eleve">
+				<p style="font-size:20px;color:#f39f03;font-weight:bold;">Gérer les élèves:</p>
+				<table class="records_list table_index_classe table table-striped">
+				<tr><th>Id</th><th>Nom</th><th>Actions</th></tr>
+				{% for eleve in eleves %}
+					<tr>
+							<td>{{ eleve.user.id }}</td>
+							<td>{{ eleve.user.username }}</td>
+							<td><a href={{ path('classe_remove_user', { 'user': eleve.user.id, 'classe': entity.id })}}><img src="/img/supprimer.png"></a></td>
+					</tr>
+				{% endfor %}
+				</table>
+			</div>
 			{% endif %}
-        </tbody>
-    </table>
-
-    <ul class="record_actions">
-		{% if is_granted('ROLE_PROF') %}
-		<li>
-			<a href="{{ path('examen', { 'id': entity.id }) }}">
-				Voir les examens
-			</a>
-		</li>
-		<li>
-			<a href="{{ path('classe') }}">
-				Retour à la liste
-			</a>
-		</li>
-		<li>
-			<a href="{{ path('classe_edit', { 'id': entity.id }) }}">
-				Editer
-			</a>
-		</li>
-		<li>{{ form(delete_form) }}</li>
-		{% endif %}
-		{% if entity.calendrier is not empty %}
-		<li>
-			<a href="{{ path('calendrier_show', { 'classe_id': entity.id }) }}">
-				Voir le calendrier
-			</a>
-		</li>
-		{% elseif is_granted('ROLE_PROF')  %}
-		<li>
-			<a href="{{ path('calendrier_new', { 'classe_id': entity.id }) }}">
-				Ajouter un calendrier
-			</a>
-		</li>
-		{% endif %}
-	</ul>
+		</div>
+		<div class="row" style="border-top:1px solid #5b74a9;">
+			<div class="col-xs-12 col-sm-12" style="text-align: center;">
+				<a href="{{ path('examen', { 'id': entity.id }) }}" style="color:#000;border-right:1px solid #000;margin:20px;display:inline-block;padding-right:30px;"><img src="/img/examens.png">&nbsp;Voir les examens</a>
+				<a href="{{ path('classe_edit', { 'id': entity.id }) }}"  style="color:#000;border-right:1px solid #000;margin:20px;display:inline-block;padding-right:30px;"><img src="/img/crayon_modifier.png">&nbsp;Editer la classe</a>
+				{% if entity.calendrier is not empty %}
+					<a href="{{ path('calendrier_show', { 'classe_id': entity.id }) }}" style="color:#000;"><img src="/img/calendrier.png">&nbsp;Voir le calendrier</a><br />
+				{% elseif is_granted('ROLE_PROF')  %}
+					<a href="{{ path('calendrier_new', { 'classe_id': entity.id }) }}" style="color:#000;"><img src="/img/calendrier.png">&nbsp;Ajouter un calendrier</a><br />
+				{% endif %}
+				<a href="{{ path('classe') }}" style="color:#000;margin:auto;"><img src="/img/retour.png">&nbsp;Retour à la liste</a>
+			</div>
+		</div>
+		
+	</div>
+		
+<div class="footer-mer-1"></div>
 {% endblock %}

@@ -17,6 +17,7 @@ class BlogAdmin extends Admin
         $formMapper
             ->add('titre')
 			->add('description', null, array('required' => false, 'attr' => array('class' => 'ckeditor')))
+            ->add('examen', 'entity', array( 'class' => 'MainClasseBundle:Examen','property' => 'name'));
 			;
 				
     }

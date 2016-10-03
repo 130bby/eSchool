@@ -1,8 +1,42 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-		<h1>{{post.titre}}</h1>
-		{{post.description|raw}}
-		<br />
+<div class="container">
+	<!--<div class="col-xs-12 fos_user_user_show blocCentre div_profile">-->
+	<h2 style="text-align:left;color:#f39f03;margin-bottom:40px;font-weight:bold;"> QUETE DE PAPILO </h2>
+	<div class="col-xs-12 col-sm-7">
+		<h3 style="color:#5c74a6;font-weight:bold;"><b>{{post.titre}}</b></h3>
+		<p style="color:#5c74a6;font-style:italic;">Publié le {{post.date|date('d/m/Y')}}</p>
+		<p>{{post.description|raw}}</p>
+	</div>
+	<div class="col-sm-4 col-xs-12 col-sm-offset-1">
+		<div class="voir-aussi" style="margin-bottom:30px;">
+			<p>Quêtes récentes :</p>
+			{% for quete in quetes %}
+				{% if quete.id != post.id and loop.index < 5 %}
+					<a style="color:#fff;background:none;" href="{{ path('main_blog_show', { 'id': quete.id })}}">- {{quete.titre}}</a><br />
+				{% endif %}
+			{% endfor %}
+		</div>
+		<div class="profile-themes-main">
+			<h3 style="font-weight:bold;">Les savoirs liés :</h3>
+			{% for savoir in savoirs %}
+				<p style="font-weight:bold;">{% if savoir.path is not null%}<img width="60px" hieght="60px" src="/uploads/savoir/{{savoir.id}}.{{savoir.path}}" />
+					{% else %}<img width="60px" hieght="60px" src="/img/icones/sphynx.png" />{% endif %}
+					........ {{savoir.name}}
+				</p>
+			{% endfor %}
+		</div>
+		<div style="border-top:1px solid #5c74a6;border-bottom:1px solid #5c74a6;padding-top:20px;padding-bottom:20px;">
+		{% if is_granted('ROLE_ELEVE') %}
+			<a class="passer-quete" href="{{ path('examen_pass', { 'id': post.examen.id }) }}"></a>
+
+		{% else %}<a class="passer-quete" href="#" id="link_login_user_quete"></a>
+		{% endif %}
+		</div>
+	</div>
+</div>
+
+<div class="footer-mer-1"></div>
 {% endblock %}
 

@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Blog
  *
- * @ORM\Table()
+ * @ORM\Table(name="blog")
  * @ORM\Entity(repositoryClass="Main\BlogBundle\Entity\BlogRepository")
  */
 class Blog
@@ -24,9 +24,9 @@ class Blog
     /**
      * @var string
      *
-     * @ORM\Column(name="title", type="string", length=255)
+     * @ORM\Column(name="titre", type="string", length=255)
      */
-    private $title;
+    private $titre;
 
     /**
      * @var string
@@ -35,6 +35,12 @@ class Blog
      */
     private $description;
 
+	/**
+	 * @ORM\ManyToOne(targetEntity="Main\ClasseBundle\Entity\Examen")
+	 * @ORM\JoinColumn(name="examen_id", referencedColumnName="id", onDelete="CASCADE")
+	*/
+	protected $examen;
+	
     /**
      * @var string
      *
@@ -53,26 +59,26 @@ class Blog
     }
 
     /**
-     * Set title
+     * Set titre
      *
-     * @param string $title
+     * @param string $titre
      * @return Blog
      */
-    public function setTitle($title)
+    public function setTitre($titre)
     {
-        $this->title = $title;
+        $this->titre = $titre;
 
         return $this;
     }
 
     /**
-     * Get title
+     * Get titre
      *
      * @return string 
      */
-    public function getTitle()
+    public function getTitre()
     {
-        return $this->title;
+        return $this->titre;
     }
 
     /**
@@ -96,5 +102,28 @@ class Blog
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * Set date
+     *
+     * @param \DateTime $date
+     * @return Blog
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    /**
+     * Get date
+     *
+     * @return \DateTime 
+     */
+    public function getDate()
+    {
+        return $this->date;
     }
 }

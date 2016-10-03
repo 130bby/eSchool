@@ -35,6 +35,12 @@ class Blog
      */
     private $description;
 
+	/**
+	 * @ORM\ManyToOne(targetEntity="Main\ClasseBundle\Entity\Examen")
+	 * @ORM\JoinColumn(name="examen_id", referencedColumnName="id", onDelete="CASCADE")
+	*/
+	protected $examen;
+	
     /**
      * @var string
      *
@@ -119,5 +125,28 @@ class Blog
     public function getDate()
     {
         return $this->date;
+    }
+
+    /**
+     * Set examen
+     *
+     * @param \Main\ClasseBundle\Entity\Examen $examen
+     * @return Blog
+     */
+    public function setExamen(\Main\ClasseBundle\Entity\Examen $examen = null)
+    {
+        $this->examen = $examen;
+
+        return $this;
+    }
+
+    /**
+     * Get examen
+     *
+     * @return \Main\ClasseBundle\Entity\Examen 
+     */
+    public function getExamen()
+    {
+        return $this->examen;
     }
 }
