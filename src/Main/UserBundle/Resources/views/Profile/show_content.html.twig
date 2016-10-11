@@ -79,10 +79,10 @@
 	<div class="col-sm-4 col-xs-12 col-sm-offset-1 profile-themes-main">
 		<p style="color:#5b74a9;font-size:20px;">Tes classes :</p>
 		{% for classe in classes %}
-			<span style="margin:auto;display:block;" class=""><a href="{{ path('classe_show', { 'id': classe.id })}}">{{classe.name}}</a></span>
+			<span style="margin:auto;display:block;" class="profile-themes"><a href="{{ path('classe_show', { 'id': classe.id })}}">{{classe.name}}</a></span><br />
 		{% endfor %}
 		{% if classes|length < 8 %}
-			<button type="button" class="btn btn-info" data-toggle="modal" data-target="#classeModal">Adhérer à une classe</button>
+			<button type="button" class="btn btn-info profile-themes" style="background-color:#337ab7;color:#ffffff;" data-toggle="modal" data-target="#classeModal">Adhérer à une <br />nouvelle classe</button>
 		{% endif %}
 		
 	</div>
@@ -93,18 +93,17 @@
 	<!-- Classe Modal -->
 	<div class="modal fade" style="padding-top:100px;" id="classeModal" tabindex="-1" role="dialog" aria-labelledby="ClasseModalLabel">
 	  <div class="modal-dialog" role="document">
-		<div class="modal-content">
+		<div class="bg_classe_apply modal-content modal_apply_class">
 		  <div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			<h4 class="modal-title" id="myModalLabel">Adhérer à une classe :</h4>
+			<h3 class="modal-title" id="myModalLabel" style="padding-left:30px;"><br />S'inscrire à une classe</h3>
 		  </div>
 		  <form action="{{path('classe_apply')}}" method="GET">
-		  <div class="modal-body">
-			 <input style="max-width:200px;" type="text" name='code' id="code" class="form-control" placeholder="Code classe...">
+		  <div class="modal-body form-classe" style="text-align:center">
+			 <input class="code_classe" style="background-color:#e3e9f1;text-align:center;margin-bottom:0;width:80%;" type="text" name='code' id="code" class="form-control" placeholder="Entrer ici le code classe...">
 		  </div>
-		  <div class="modal-footer">
-			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			<input type="submit" class="btn btn-primary" value="Adhérer" />
+		  <div class="modal-footer" style="padding-bottom:100px">
+			<input type="submit" class="btn btn-primary profile-themes" style="background-color:#337ab7;color:#ffffff;border-radius:20px;" value="Adhérer à la classe" />
 		  </div>
 		  </form>
 		</div>

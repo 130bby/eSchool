@@ -1107,3 +1107,42 @@ margin-top:50px;
 .passer-quete:hover {
    background-image: url('/img/passer_quete_hover.png');
 }
+
+.modal_apply_class h3{
+	color:#5b74a9;
+	font-weight:bold;
+}
+
+@media screen and (min-width: 500px) {
+.modal_apply_class {
+width:500px;
+border-radius: 20px;
+}
+.bg_classe_apply{
+	background-image:url(/img/bg_classe_apply.png);
+}
+}
+
+@media screen and (max-width: 500px) {
+.modal_apply_class {
+width:350px;
+height:335px;
+border-radius: 20px;
+}
+.bg_classe_apply{
+	background-image:url(/img/bg_classe_apply_mobile.png);
+}
+.bg_classe_apply input[type="text"]{
+	height:35px;
+}
+}
+
+.code_classe{
+background-color:#e3e9f1;
+color:#5b74a9;
+border:none;
+}
+
+.code_classe[placeholder]{
+color:#5b74a9; !important;
+}

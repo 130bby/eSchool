@@ -1,10 +1,55 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
+<div class="container">
+	<!--<div class="col-xs-12 fos_user_user_show blocCentre div_profile">-->
+	<h2 style="text-align:left;color:#f39f03;margin-bottom:40px;font-weight:bold;"> QUETES DE PAPILO </h2>
+	<div class="col-xs-12 col-sm-7" id="quetes_by_page">
+	<ul style="list-style:none outside none;padding:0;" id="history_list">
 	{% for post in posts %}
-		<h1><a href="{{ path('main_blog_show', { 'id': post.id })}}">{{post.titre}}</a></h1>
-		{{post.description|raw}}
-		<br />
+		<li>
+			<h3 style="color:#5c74a6;font-weight:bold;"><a href="{{ path('main_blog_show', { 'id': post.id })}}">{{post.titre}} -</a>
+			<span style="color:#5c74a6;font-style:italic;font-weight:normal;font-size:14px;">Publié le {{post.date|date('d/m/Y')}}</span></h3>
+			<div style="border-bottom:1px solid #f39f03;">{% if post.description|raw|length < 200 %}{{post.description|raw}}
+				{% else %}{{post.description|raw|slice(0, 200)}}... <br /><br /><a href="{{ path('main_blog_show', { 'id': post.id })}}"><span style="color:#5c74a6;">Lire la suite</span></a>
+				{% endif %}<br /><br /></div>
+		</li>	
 	{% endfor %}
+	</ul>
+	{% if posts|length > 5 %}
+	<div id="loadMoreHistory" style="text-align:center;" >Voir plus ...</div>
+	{% endif %}
+	</div>
+	<div class="col-sm-4 col-xs-12 col-sm-offset-1">
+		<div class="voir-aussi" style="margin-bottom:30px;">
+		{% if is_granted('ROLE_ELEVE') %}
+			<p>Voir Aussi :</p>
+				<a class="profile-themes" href="{{ path('main_user_profil')}}">Mon profil</a><br />
+				<a class="profile-themes" href="{{ path('main_user_my_history')}}">Mon historique</a><br />
+				<a class="profile-themes" href="{{ path('main_badge_homepage')}}">Mes badges</a><br />
+		{% else %}
+			<p>NB : Pour passer des quêtes, il faut être connecté !</p>
+				<a class="profile-themes" href="#" id="link_login_user_quete">Se connecter</a>
+		{% endif %}
+		</div>
+	</div>
+</div>
+<div class="footer-mer-1"></div>
+{% endblock %}
+{% block javascripts -%}
+{{parent()}}
+<script language="javascript">
+$(document).ready(function () {
+    size_li = $("#history_list li").size();
+    x=5;
+    $('#history_list li:lt('+x+')').show();
+    $('#loadMoreHistory').click(function () {
+        x= (x+5 <= size_li) ? x+5 : size_li;
+        $('#history_list li:lt('+x+')').show();
+		if (x==size_li)
+			$('#loadMoreHistory').hide();
+    });
+});
+</script>
 {% endblock %}
 

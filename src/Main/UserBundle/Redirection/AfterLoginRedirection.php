@@ -50,6 +50,8 @@ class AfterLoginRedirection implements AuthenticationSuccessHandlerInterface
 			$referer_route = $this->router->getMatcher()->match($lastPath);
 			if ($referer_route['_route'] == 'main_blog_show')
 				$redirection = new RedirectResponse($this->router->generate($referer_route['_route'],array("id" => $referer_route['id'])));
+			elseif ($referer_route['_route'] == 'main_blog_homepage')
+				$redirection = new RedirectResponse($this->router->generate($referer_route['_route']));
 			else
 			{
 				

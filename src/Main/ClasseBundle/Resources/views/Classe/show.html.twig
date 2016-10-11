@@ -11,10 +11,12 @@
 			<div class="col-xs-12 col-sm-7 form-classe" style="margin-bottom:20px;">
 				<table class="record_properties">
 					<tbody>
+						{% if is_granted('ROLE_PROF')  %}
 						<tr>
 							<th style="color:#5b74a9;font-size:20px;">Id:</th>
 							<td style="padding-left:20px;"><b>{{ entity.id }}</b></td>
 						</tr>
+						{% endif %}
 						<tr>
 							<th style="color:#5b74a9;font-size:20px;">Pays:</th>
 							<td style="padding-left:20px;"><b>{{ entity.pays }}</b></td>
@@ -72,14 +74,22 @@
 		</div>
 		<div class="row" style="border-top:1px solid #5b74a9;">
 			<div class="col-xs-12 col-sm-12" style="text-align: center;">
-				<a href="{{ path('examen', { 'id': entity.id }) }}" style="color:#000;border-right:1px solid #000;margin:20px;display:inline-block;padding-right:30px;"><img src="/img/examens.png">&nbsp;Voir les examens</a>
-				<a href="{{ path('classe_edit', { 'id': entity.id }) }}"  style="color:#000;border-right:1px solid #000;margin:20px;display:inline-block;padding-right:30px;"><img src="/img/crayon_modifier.png">&nbsp;Editer la classe</a>
+				{% if is_granted('ROLE_PROF')  %}
+					<a href="{{ path('examen', { 'id': entity.id }) }}" style="color:#000;border-right:1px solid #000;margin:20px;display:inline-block;padding-right:30px;"><img src="/img/examens.png">&nbsp;Voir les examens</a>
+					<a href="{{ path('classe_edit', { 'id': entity.id }) }}"  style="color:#000;border-right:1px solid #000;margin:20px;display:inline-block;padding-right:30px;"><img src="/img/crayon_modifier.png">&nbsp;Editer la classe</a>
+				{% elseif is_granted('ROLE_ELEVE')  %}
+					<a href="{{ path('suivi_examen') }}" style="color:#000;border-right:1px solid #000;margin:20px;display:inline-block;padding-right:30px;"><img src="/img/examens.png">&nbsp;Suivi des examens</a>
+				{% endif %}
 				{% if entity.calendrier is not empty %}
 					<a href="{{ path('calendrier_show', { 'classe_id': entity.id }) }}" style="color:#000;"><img src="/img/calendrier.png">&nbsp;Voir le calendrier</a><br />
 				{% elseif is_granted('ROLE_PROF')  %}
 					<a href="{{ path('calendrier_new', { 'classe_id': entity.id }) }}" style="color:#000;"><img src="/img/calendrier.png">&nbsp;Ajouter un calendrier</a><br />
 				{% endif %}
-				<a href="{{ path('classe') }}" style="color:#000;margin:auto;"><img src="/img/retour.png">&nbsp;Retour à la liste</a>
+				{% if is_granted('ROLE_PROF')  %}
+					<a href="{{ path('classe') }}" style="color:#000;margin:auto;"><img src="/img/retour.png">&nbsp;Retour à la liste</a>
+				{% elseif is_granted('ROLE_ELEVE')  %}
+					<a href="{{ path('main_user_profil') }}" style="color:#000;margin:auto;"><img src="/img/retour.png">&nbsp;Retour au profil</a>
+				{% endif %}
 			</div>
 		</div>
 		

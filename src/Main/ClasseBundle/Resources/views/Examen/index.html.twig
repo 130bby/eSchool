@@ -46,9 +46,15 @@
 			</div>
 			<div class="col-xs-10 col-sm-4 col-xs-offset-1 voir-aussi">
 					<p>Voir aussi :</p>
+					{% if is_granted('ROLE_PROF') %}
 					<a class="profile-themes" href="{{ path('classe')}}">Gérer les classes</a><br />
 					<a class="profile-themes" href="{{ path('classe_new')}}">Créer une classe</a><br />
 					<a class="profile-themes" href="{{ path('examen_new')}}">Créer un examen</a>
+					{% elseif is_granted('ROLE_ELEVE') %}
+					<a class="profile-themes" href="{{ path('main_user_profil')}}">Mon profil</a><br />
+					<a class="profile-themes" href="{{ path('main_user_my_history')}}">Mon historique</a><br />
+					<a class="profile-themes" href="{{ path('main_badge_homepage')}}">Mes badges</a><br />
+					{% endif %}
 				</div>
 			</div>
 		</div>
