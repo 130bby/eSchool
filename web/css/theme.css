@@ -1108,6 +1108,18 @@ margin-top:50px;
    background-image: url('/img/passer_quete_hover.png');
 }
 
+.passer-epreuve {
+ margin-bottom: 10px;
+ width: 310px;
+ height:79px;
+ display:block;
+ background:transparent url('/img/passer_epreuve.png') center top no-repeat;
+}
+
+.passer-epreuve:hover {
+   background-image: url('/img/passer_epreuve_hover.png');
+}
+
 .modal_apply_class h3{
 	color:#5b74a9;
 	font-weight:bold;

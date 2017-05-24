@@ -1,23 +1,45 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-{% if cours.0 is defined %}<h1 style="text-align:center;">{{ cours.0.savoir.name }}</h1> {% endif %}
 
-<div style="margin:10px;">
-{% for cours_obj in cours %}
-	<a class="btn btn-primary"  data-toggle="collapse" href="#div_cours_{{ cours_obj.id }}" aria-expanded="false" aria-controls="collapseExample">
-		{{ cours_obj.titre }}
-	</a>
-{% endfor %}
-
-{% for cours_obj in cours %}
-	<div class="collapse" style="margin-top:10px;" id="div_cours_{{ cours_obj.id }}">
-		<div class="well">
+<div class="container">
+	<!--<div class="col-xs-12 fos_user_user_show blocCentre div_profile">-->
+	<h2 style="text-align:left;color:#f39f03;margin-bottom:40px;font-weight:bold;">Cours/Leçon</h2>
+	<div class="col-xs-12 col-sm-7">
+		<h3 style="color:#5c74a6;font-weight:bold;"><b>{% if cours.0 is defined %}{{ cours.0.savoir.name }}{% endif %}</b></h3>
+		{% for cours_obj in cours %}
+			<h3 style="color:#5c74a6;font-weight:bold;"><b>{{ cours_obj.titre }}</b></h3>
 			<p>{{ cours_obj.texte|raw }}</p>
+		{% endfor %}
+	</div>
+	<div class="col-sm-4 col-xs-12 col-sm-offset-1">
+		<div class="voir-aussi" style="margin-bottom:30px;">
+			<p>Savoirs prérequis :</p>
+			{% for prerekiki in prerequis %}
+					<a style="color:#fff;background:none;" href="{{ path('main_cours_show', { 'savoir_id': prerekiki.id })}}">- {{prerekiki.name}}</a><br />
+			{% endfor %}
+		</div>
+		<div class="profile-themes-main">
+			<h3 style="font-weight:bold;">Les savoirs liés :</h3>
+			{% for savoir in enfants %}
+				<p style="font-weight:bold;">
+				<a style="color:#5c74a6;background:none;" href="{{ path('main_cours_show', { 'savoir_id': savoir.id })}}">
+				{% if savoir.path is not null%}<img width="60px" hieght="60px" src="/uploads/savoir/{{savoir.id}}.{{savoir.path}}" />
+					{% else %}<img width="60px" hieght="60px" src="/img/icones/sphynx.png" />{% endif %}
+					........ {{savoir.name}}</a>
+				</p>
+			{% endfor %}
+		</div>
+		<div style="border-top:1px solid #5c74a6;border-bottom:1px solid #5c74a6;padding-top:20px;padding-bottom:20px;">
+		{% if is_granted('ROLE_ELEVE') and cours.0 is defined %}
+			<a class="passer-epreuve" href="{{ path('main_epreuve_pass_student', { 'savoir_id': cours.0.savoir.id }) }}"></a>
+		{% else %}<a class="passer-epreuve" href="#" id="link_login_user_quete"></a>
+		{% endif %}
 		</div>
 	</div>
-{% endfor %}
 </div>
+
+<div class="footer-mer-1"></div>
 {% endblock %}
 
 {% block javascripts %}
