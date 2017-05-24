@@ -34,9 +34,14 @@ class RegistrationFormType extends AbstractType
 			;
 		//	var_dump($options);
 		if($this->request->attributes->get('_route') == "main_student_register" || ($this->securityContext->isGranted('ROLE_ELEVE')) ) {
-		$builder
-            ->add('classe', 'choice', array('label' => 'Classe :', 'choices'   => array(
-					'6' => '6ème','5' => '5ème','4' => '4ème','3' => '3ème')));
+			if ($_SERVER['SERVER_NAME'] == "papilo.ch" || $_SERVER['SERVER_NAME'] == "www.papilo.ch")
+				$builder
+					->add('classe', 'choice', array('label' => 'Classe :', 'choices'   => array(
+							'9' => '9ème','10' => '10ème','11' => '11ème')));
+			else
+				$builder
+					->add('classe', 'choice', array('label' => 'Classe :', 'choices'   => array(
+							'6' => '6ème','5' => '5ème','4' => '4ème','3' => '3ème')));
 		}
 			
 	}

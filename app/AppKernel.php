@@ -50,6 +50,9 @@ class AppKernel extends Kernel
 
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
-        $loader->load(__DIR__.'/config/config_'.$this->getEnvironment().'.yml');
+		// if ($_SERVER['SERVER_NAME'] == "papilo.ch" || $_SERVER['SERVER_NAME'] == "www.papilo.ch") // due to redirection, we don't seem to have those set for papilo.ch
+			// $loader->load(__DIR__.'/config/config_suisse.yml');
+		// else
+			$loader->load(__DIR__.'/config/config_'.$this->getEnvironment().'.yml');
     }
 }

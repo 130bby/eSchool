@@ -232,7 +232,8 @@ class ExerciceRepository extends EntityRepository
 					$i=0;
 					foreach ($enonce as $cle => $enonce_part)
 					{
-						if ($i % 2 == 1 && $enonce_part == $variable[0] && $variable[0] != "")
+						// if ($i % 2 == 1 && $enonce_part == $variable[0] && $variable[0] != "") // sometimes we have &agrave; and stuff that fucks it up
+						if ($enonce_part == $variable[0] && $variable[0] != "")
 						{
 							$exercices[$key]['texte'] = str_replace('&'.$variable[0].'&',$variable[1],$exercices[$key]['texte']);
 						}
