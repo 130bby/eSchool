@@ -10,7 +10,7 @@ parameters:
     mailer_host:       SSL0.OVH.NET
     mailer_port:       587
     mailer_user:       contact@papilo.fr
-    mailer_password:   contactpapilo
+    mailer_password:   C4nY0uH4ckTh1s
     locale:            fr
     secret:            6bf38d82b8fca3c2b361d5f064a7bc9155fdd37f
     debug_toolbar:          true

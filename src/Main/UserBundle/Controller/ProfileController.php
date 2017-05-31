@@ -47,9 +47,10 @@ class ProfileController extends Controller
 		{
 			$classes[] = $em->getRepository('MainClasseBundle:Classe')->find($classe_user->getClasse());
 		}
+		$classe_ownership = $em->getRepository('MainClasseBundle:Classe')->findBy(array('owner'=> $user));
 
         return $this->render('MainUserBundle:Profile:show.html.twig', array(
-            'user' => $user,'themes' => $themes,'last_badge' => $last_badge,'last_epreuves' => $last_epreuves,'classes' => $classes
+            'user' => $user,'themes' => $themes,'last_badge' => $last_badge,'last_epreuves' => $last_epreuves,'classes' => $classes,'classe_ownership' => $classe_ownership
         ));
     }
 

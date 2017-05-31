@@ -1158,3 +1158,11 @@ border:none;
 .code_classe[placeholder]{
 color:#5b74a9; !important;
 }
+
+.first_classe_new a{
+color:#fff;
+background-color:#5c74a6;
+display:inline-block;
+border-radius: 20px;
+padding:2px;
+}

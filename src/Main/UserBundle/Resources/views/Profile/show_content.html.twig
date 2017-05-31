@@ -1,6 +1,6 @@
 {% trans_default_domain 'FOSUserBundle' %}
 <div class="container-profile">
-	<h2 style="text-align:left;color:#f39f03;margin-bottom:20px;"> TON PROFIL </h2>
+	<h2 style="text-align:left;color:#f39f03;margin-bottom:20px;">{% if is_granted('ROLE_ELEVE') %} TON PROFIL {% elseif is_granted('ROLE_PROF') %} SOMMAIRE {% endif %}</h2>
 
 	{% set flashMsgs = app.session.flashBag.all %}
 	{% if  flashMsgs %}
@@ -23,6 +23,7 @@
 	{% endif %}	
 	
 	<!--<div class="col-xs-12 fos_user_user_show blocCentre div_profile">-->
+	{% if is_granted('ROLE_ELEVE') %}
 	<div class="col-xs-12 col-sm-7 fos_user_user_show div_profile">
 		<div class="profile-picture">
 		<img src="/img/profile.png" />
@@ -31,15 +32,59 @@
 			<p style="color:#ffffff;font-size:30px;margin:0px;">{{ user.username }}</p>
 			<p style="color:#202121;margin-bottom:20px;">{{ user.firstName }} {{ user.lastName }}</p>
 			<p><i>{{ 'profile.show.email'|trans }}:</i> {{ user.email }}</p>
-			{% if is_granted('ROLE_ELEVE') %}
 			<p><i>{{ 'Classe'|trans }}:</i> {{ user.classe }}ème</p>
-			{% endif %}
 			<p><i>{{ 'Date de naissance'|trans }}:</i> {{ user.birthday|date("d/m/Y") }}</p>
 			<p><i>{{ 'Pays'|trans }}:</i> {{ user.country }}</p>
 			<a href="{{ path('main_user_profil_edit')}}" ><button type="button" class="btn btn-modify-profile"> Modifier ton profil</button></a>
 		</div>
 	</div>
-	{% if is_granted('ROLE_PROF') %}
+	{% endif %}
+	{% if is_granted('ROLE_PROF') and classe_ownership is empty %}
+	<div class="col-xs-12">
+		<p style="float:left;"><img src="/img/pyramide_incline.png" /></p>
+		<p style="color:#f39f03;font-size:30px;font-weight:bold">"Bienvenue {{ user.username }} !"</p>
+		<p class="first_classe_new" style="color:#5c74a6;font-size:25px;margin:0px;font-weight:bold">Nous sommes très content de vous compter parmi nous !<br />Commencez par <a href="{{ path('classe_new')}}">Créer votre première classe</a></p>
+	</div>
+	<div style="border-bottom: 1px solid #5c74a6;width:50%;margin:auto;">&nbsp;</div>
+	<div class="col-xs-12" style="margin-top:50px;">
+			<p style="color:#5c74a6;font-size:25px;margin:0px;font-weight:bold;margin-bottom:20px;">En tant qu'éminent professeur de Papilo, vous pouvez aussi:<br /></p>
+			<div class="col-xs-6 col-md-3" style="text-align:center;">
+				<img style="display:block;margin-left:auto;margin-right:auto;" src="/img/first_prof1.png" /><br />
+				<div class="separateur-home">&nbsp;</div>
+				<span>Suivre les compétences acquises par vos élèves</span>
+			</div>
+			<div class="col-xs-6 col-md-3" style="text-align:center;">
+				<img style="display:block;margin-left:auto;margin-right:auto;" src="/img/first_prof2.png" /><br />
+				<div class="separateur-home">&nbsp;</div>
+				<span>Voir les examens maison par savoir</span>
+			</div>
+			<div class="col-xs-6 col-md-3" style="text-align:center;">
+				<img style="display:block;margin-left:auto;margin-right:auto;" src="/img/first_prof3.png" /><br />
+				<div class="separateur-home">&nbsp;</div>
+				<span>Ouvrir le calendrier de progression</span>
+			</div>
+			<div class="col-xs-6 col-md-3" style="text-align:center;">
+				<img style="display:block;margin-left:auto;margin-right:auto;" src="/img/first_prof4.png" /><br />
+				<div class="separateur-home">&nbsp;</div>
+				<span>Voir les statistiques de vos élèves</span>
+			</div>
+			
+	</div>
+	
+	{% elseif is_granted('ROLE_PROF') %}
+	<div class="col-xs-12 col-sm-7 fos_user_user_show div_profile">
+		<div class="profile-picture">
+		<img src="/img/profile.png" />
+		</div>
+		<div class="profile-description">
+			<p style="color:#ffffff;font-size:30px;margin:0px;">{{ user.username }}</p>
+			<p style="color:#202121;margin-bottom:20px;">{{ user.firstName }} {{ user.lastName }}</p>
+			<p><i>{{ 'profile.show.email'|trans }}:</i> {{ user.email }}</p>
+			<p><i>{{ 'Pays'|trans }}:</i> {{ user.country }}</p>
+			<a href="{{ path('main_user_profil_edit')}}" ><button type="button" class="btn btn-modify-profile"> Modifier votre profil</button></a>
+		</div>
+	</div>
+	
 	<div class="col-sm-4 col-xs-12 col-sm-offset-1 profile-themes-main">
 		<a class="profile-themes" href="{{ path('classe')}}">Gérer les classes</a><br />
 		<a class="profile-themes" href="{{ path('classe_new')}}">Créer une classe</a><br />
