@@ -22,7 +22,7 @@ class CalendrierType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-		$builder->add('elements', 'collection', array('type' => new CalendrierElementType($this->classe,$this->sc),'allow_add' => true,'allow_delete' => true,'by_reference' => false));
+		$builder->add('elements', 'collection', array('label' => " ",'type' => new CalendrierElementType($this->classe,$this->sc),'allow_add' => true,'allow_delete' => true,'by_reference' => false));
     }
     
 

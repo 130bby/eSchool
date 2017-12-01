@@ -90,11 +90,12 @@ class Classe
 	 * @ORM\JoinColumn(name="theme_id", referencedColumnName="id", onDelete="CASCADE")
 	*/
 	protected $theme;
-
-	/**
-	 * @ORM\OneToMany(targetEntity="Main\ClasseBundle\Entity\Calendrier", mappedBy="classe")
-	*/
-	protected $calendrier;
+	
+    /**
+     * @ORM\OneToMany(targetEntity="Main\ClasseBundle\Entity\Calendrier", mappedBy="classe")
+    */
+    protected $calendrier;
+	
 	
     public function __construct()
     {

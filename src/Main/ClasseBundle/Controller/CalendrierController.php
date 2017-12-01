@@ -72,7 +72,7 @@ class CalendrierController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Créer'));
+        $form->add('submit', 'submit', array('label' => 'Créer le calendrier','attr' => array('class' => 'submit_classe', 'style' => 'margin-bottom:40px;margin-left:12px;width:35%')));
 
         return $form;
     }
@@ -86,11 +86,16 @@ class CalendrierController extends Controller
      */
     public function newAction($classe_id)
     {
+		if (!$this->isGranted('ROLE_PROF'))
+			return $this->redirectToRoute('main_home_homepage');
 		$form   = $this->createCreateForm($classe_id);
+		$em = $this->getDoctrine()->getManager();
+		$classe = $em->getRepository('MainClasseBundle:Classe')->find($classe_id);
 
         return array(
             'form'   => $form->createView(),
             'classe_id'   => $classe_id,
+            'classe_name'   => $classe->getName(),
         );
     }
 	
@@ -113,19 +118,42 @@ class CalendrierController extends Controller
 			
         $deleteForm = $this->createDeleteForm($classe_id);
 		$i = 0;
+		$user = $this->container->get('security.context')->getToken()->getUser();
 		foreach ($entity->getCalendrier() as $cal_element)
 		{
-			$gantt_values[$i]['from'] = "/Date(".$cal_element->getStart()->getTimestamp()."000)/";
-			$gantt_values[$i]['to'] = "/Date(".$cal_element->getEnd()->getTimestamp()."000)/";
-			$gantt_values[$i]['desc'] = $cal_element->getSavoir()->getName();
-			$gantt_values[$i]['label'] = $cal_element->getSavoir()->getName();
-			$gantt_data[$i]["values"][0] = $gantt_values[$i];
+			$scores = array();
+			$savoirs_passed = $em->getRepository('MainUserBundle:SavoirUser')->findby(array("user" => $user,"savoir" => $cal_element->getSavoir()));
+			foreach ($savoirs_passed as $savoir_passed)
+				$scores[] = $savoir_passed->getScore();
+			if (!empty($scores) && max($scores) > 80)			
+				$passed[$i] = 1;
+			else
+				$passed[$i] = 0;
+			$calendar_elements[$i]['id'] = $cal_element->getSavoir()->getId();
+			$calendar_elements[$i]['title'] = $cal_element->getSavoir()->getName();
+			$calendar_elements[$i]['start'] = $cal_element->getStart()->format('Y-m-d');
+			$calendar_elements[$i]['end'] = $cal_element->getEnd()->format('Y-m-d');
+			if (!empty($scores))
+				$calendar_elements[$i]['strength'] = round(max($scores)/20);
+			else
+				$calendar_elements[$i]['strength'] = 0;
+			if ($passed[$i] == 1)
+				$calendar_elements[$i]['backgroundColor'] = '#5cb85c';
+			elseif (!empty($scores) && max($scores) > 60)			
+				$calendar_elements[$i]['backgroundColor'] = '#fdd835';
+			elseif ((empty($scores) || max($scores) < 60) && ($cal_element->getEnd() < new \DateTime("now")))			
+				$calendar_elements[$i]['backgroundColor'] = '#d9534f';
+			elseif($cal_element->getStart() > new \DateTime("now"))
+				$calendar_elements[$i]['backgroundColor'] = '#9e9e9e';
+			else
+				$calendar_elements[$i]['backgroundColor'] = '#f39f03';
 			$i++;
 		}
 
         return array(
             'entity'      => $entity,
-            'gantt_data'=> json_encode($gantt_data),
+            'passed'=> $passed,
+            'calendar_elements'=> $calendar_elements,
             'delete_form' => $deleteForm->createView(),
         );
     }	
@@ -140,7 +168,9 @@ class CalendrierController extends Controller
     public function editAction($classe_id)
     {
         $em = $this->getDoctrine()->getManager();
-
+		if (!$this->isGranted('ROLE_PROF'))
+			return $this->redirectToRoute('main_home_homepage');
+		
         $entity = $em->getRepository('MainClasseBundle:Classe')->find($classe_id);
 
         if (!$entity) {
@@ -172,7 +202,7 @@ class CalendrierController extends Controller
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+        $form->add('submit', 'submit', array('label' => 'Mettre à jour','attr' => array('class' => 'submit_classe', 'style' => 'margin-top:40px;margin-left:12px;width:35%')));
 
         return $form;
     }
@@ -239,7 +269,7 @@ class CalendrierController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('calendrier_delete', array('classe_id' => $classe_id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
+            ->add('submit', 'submit', array('label' => 'Supprimer le calendrier','attr' => array('class' => 'submit_classe', 'style' => 'margin-left:12px;width:35%;background-color:#B22222;')))
             ->getForm()
         ;
     }	

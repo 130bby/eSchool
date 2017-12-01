@@ -30,8 +30,8 @@ class CalendrierElementType extends AbstractType
 										  ->where('c.theme = ?1')
 						->setParameter(1, $this->classe->getTheme());}
 			))
-            ->add('start')
-            ->add('end')
+            ->add('start',null,array('label' => "Début"))
+            ->add('end',null,array('label' => "Fin"))
         ;
     }
     

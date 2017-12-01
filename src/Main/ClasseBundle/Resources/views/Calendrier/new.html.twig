@@ -2,12 +2,10 @@
 
 {% block body -%}
 {{ form_start(form) }}
-    <h3>Calendrier</h3>
+    <h3>Calendrier de la classe {{classe_name}}</h3>
     <ul class="calendrier" data-prototype="{{ form_widget(form.elements.vars.prototype)|e('html_attr') }}">
         {% for ce in form.elements %}
-            <li>{{ form_row(ce.savoir) }}</li>
-            <li>{{ form_row(ce.start) }}</li>
-            <li>{{ form_row(ce.end) }}</li>
+            <li>{{ form_row(ce.savoir) }} {{ form_row(ce.start) }} {{ form_row(ce.end) }}</li>
         {% endfor %}
     </ul>
 	<input type="hidden" name="classe" value="{{classe_id}}">
@@ -20,7 +18,7 @@
 		var $collectionHolder;
 
 		// setup an "add a tag" link
-		var $addTagLink = $('<a href="#" class="add_tag_link">Ajouter un élément</a>');
+		var $addTagLink = $('<a href="#" class="add_tag_link submit_classe btn" style="width:25%">Ajouter un élément</a>');
 		var $newLinkLi = $('<li></li>').append($addTagLink);
 
 		jQuery(document).ready(function() {
@@ -71,7 +69,7 @@
 		}	
 
 		function addTagFormDeleteLink($tagFormLi) {
-			var $removeFormA = $('<a href="#">Supprimer cet élément</a>');
+			var $removeFormA = $('<a href="#" class="submit_del_classe btn" style="width:25%" >Supprimer cet élément</a><br /><br />');
 			$tagFormLi.append($removeFormA);
 
 			$removeFormA.on('click', function(e) {

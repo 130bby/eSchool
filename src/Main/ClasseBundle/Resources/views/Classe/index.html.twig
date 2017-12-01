@@ -39,13 +39,17 @@
 							<td>{% if entity.theme is not null %}{{ entity.theme.name }}{% endif %}</td>
 							<td>
 								<a href="{{ path('classe_show', { 'id': entity.id }) }}"><img src="/img/fleche_verte.png" title="Voir"/></a>
-								<a href="{{ path('classe_edit', { 'id': entity.id }) }}"><img src="/img/crayon_modifier.png" title="Modifier" /></a>
+								{% if is_granted('ROLE_PROF') %}
+									<a href="{{ path('classe_edit', { 'id': entity.id }) }}"><img src="/img/crayon_modifier.png" title="Modifier" /></a>
+								{% endif %}
 							</td>
 						</tr>
 					{% endfor %}
 					</tbody>
 				</table>
+				{% if is_granted('ROLE_PROF') %}
 				<a href="{{ path('classe_new') }}" style="font-weight:bold;color:#5c74a6;padding-bottom:20px;" >> Créer une nouvelle Classe</a>
+				{% endif %}
 			</div>
 		</div>
 	</div>

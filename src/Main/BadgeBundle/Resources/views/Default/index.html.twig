@@ -15,15 +15,23 @@
 						{% endfor %}
 						{% if badges.5.niveau < 5 %}
 							{% for i in range(badges.5.niveau+1,5) %}
-							<span class="badge5-0"></span>
+							{% if i == 2 %}
+								<span title="Réussir 10 épreuves" class="badge5-0"></span>
+							{% elseif i == 3 %}
+								<span title="Réussir 20 épreuves" class="badge5-0"></span>
+							{% elseif i == 4 %}
+								<span title="Réussir 50 épreuves" class="badge5-0"></span>
+							{% elseif i == 5 %}
+								<span title="Réussir 100 épreuves" class="badge5-0"></span>
+							{% endif %}
 							{% endfor %}
 						{% endif %}
 					{% else %}
-						<span class="badge5-0"></span>
-						<span class="badge5-0"></span>
-						<span class="badge5-0"></span>
-						<span class="badge5-0"></span>
-						<span class="badge5-0"></span>
+						<span title="Réussir 5 épreuves" class="badge5-0"></span>
+						<span title="Réussir 10 épreuves" class="badge5-0"></span>
+						<span title="Réussir 20 épreuves" class="badge5-0"></span>
+						<span title="Réussir 50 épreuves" class="badge5-0"></span>
+						<span title="Réussir 100 épreuves" class="badge5-0"></span>
 					{% endif %}
 					</div>
 
@@ -32,7 +40,7 @@
 					{% if badges.3 is defined %}
 						<span class="badge3-1"></span>
 					{% else %}
-						<span class="badge3-0"></span>
+						<span title="Réussir une épreuve pour la première fois" class="badge3-0"></span>
 					{% endif %}
 					</div>
 					
@@ -41,7 +49,7 @@
 					{% if badges.7 is defined %}
 						<span class="badge7-1"></span>
 					{% else %}
-						<span class="badge7-0"></span>
+						<span title="Echouer à une épreuve, puis la réussir" class="badge7-0"></span>
 					{% endif %}
 					</div>
 					
@@ -53,16 +61,36 @@
 						{% endfor %}
 						{% if badges.6.niveau < 6 %}
 							{% for i in range(badges.6.niveau+1,6) %}
-							<span class="badge6-0"></span>
+							{% if i == 2 %}
+								<span title="Maîtriser 5 thèmes" class="badge6-0"></span>
+							{% elseif i == 3 %}
+							<!--
+								<span title="Maîtriser 10 thèmes" class="badge6-0"></span>
+							-->
+							{% elseif i == 4 %}
+							<!--
+								<span title="Maîtriser 15 thèmes" class="badge6-0"></span>
+							-->
+							{% elseif i == 5 %}
+							<!--
+								<span title="Maîtriser 20 thèmes" class="badge6-0"></span>
+							-->
+							{% elseif i == 6 %}
+							<!--
+								<span title="Maîtriser 25 thèmes" class="badge6-0"></span>
+							-->
+							{% endif %}
 							{% endfor %}
 						{% endif %}
 					{% else %}
-						<span class="badge6-0"></span>
-						<span class="badge6-0"></span>
-						<span class="badge6-0"></span>
-						<span class="badge6-0"></span>
-						<span class="badge6-0"></span>
-						<span class="badge6-0"></span>
+						<span title="Maîtriser 3 thèmes" class="badge6-0"></span>
+						<span title="Maîtriser 5 thèmes" class="badge6-0"></span>
+						<!--
+						<span title="Maîtriser 10 thèmes" class="badge6-0"></span>
+						<span title="Maîtriser 15 thèmes" class="badge6-0"></span>
+						<span title="Maîtriser 20 thèmes" class="badge6-0"></span>
+						<span title="Maîtriser 25 thèmes" class="badge6-0"></span>
+						-->
 					{% endif %}
 					</div>
 					
@@ -71,7 +99,7 @@
 					{% if badges.4 is defined %}
 						<span class="badge4-1"></span>
 					{% else %}
-						<span class="badge4-0"></span>
+						<span title="Réussir une épreuve avec le score minimum" class="badge4-0"></span>
 					{% endif %}
 					</div>
 
@@ -80,7 +108,7 @@
 					{% if badges.2 is defined %}
 						<span class="badge2-1"></span>
 					{% else %}
-						<span class="badge2-0"></span>
+						<span title="Réussir une épreuve sans faire de faute" class="badge2-0"></span>
 					{% endif %}
 					</div>	
 
@@ -90,7 +118,7 @@
 						<span class="badge1-1"></span>
 						<p class="badge-section-title">Thèmes maîtrisés :{% for theme in badges.1.themes %}<br />- {{theme}}{% endfor %}</p>
 					{% else %}
-						<span class="badge1-0"></span>
+						<span title="Réussir tous les savoirs d'un thème" class="badge1-0"></span>
 					{% endif %}
 					</div>	
 

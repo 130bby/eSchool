@@ -2,8 +2,10 @@
 
 {% block body -%}
 
-Filtres :
+
 <form id="improve_filter" action="{{ path('main_savoir_improve') }}" method="post">
+	<br/>
+	<span style="color:#f39f03;">Filtres :</span>
 	<select id="theme_filter" name="theme_filter">
 		{% for matiere in app.session.get('matieres')%}
 			{% for theme in matiere.themes %}
@@ -11,9 +13,10 @@ Filtres :
 			{% endfor %}
 		{% endfor %}
 	</select>
-	<input type="checkbox" id="perfectionnement" name="perfectionnement" value="perfectionnement" {% if app.request.get('perfectionnement') == "perfectionnement"%}checked{%endif%}/><label for="perfectionnement">Perfectionnement</label>
-	<input type="checkbox" id="a_decouvrir" name="a_decouvrir" value="a_decouvrir" {% if app.request.get('a_decouvrir') == "a_decouvrir"%}checked{%endif%}/><label for="a_decouvrir">A Découvrir</label>
-	<input type="submit" value="Filtrer" />
+	<label for="perfectionnement"><input type="checkbox" id="perfectionnement" name="perfectionnement" value="perfectionnement" {% if app.request.get('perfectionnement') == "perfectionnement"%}checked{%endif%}/>Perfectionnement</label>
+	<label for="a_decouvrir"><input type="checkbox" id="a_decouvrir" name="a_decouvrir" value="a_decouvrir" {% if app.request.get('a_decouvrir') == "a_decouvrir"%}checked{%endif%}/>A Découvrir</label>
+	<input type="submit" class="add_tag_link submit_classe btn" style="min-width:100px;width:100px" value="Filtrer" />
+	<a href="{{ path('main_savoir_improve')}}" class="add_tag_link submit_classe btn" style="background-color:#f39f03;min-width:130px;width:130px">Réinitialiser</a>
 </form>
 
 <ul class="list-style" style="text-align:center;list-style: none;background-color: #fffaf2;">

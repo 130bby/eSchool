@@ -411,6 +411,7 @@ margin-bottom:20px;
 .icone_menu_eleve{
 display:inline;
 left: 4px;
+margin-left:-10px;
 }
 
 #menu_user_eleve li{
@@ -805,4 +806,46 @@ margin-right:0px;
 .fb-login-button img{
 width:100px;
 }
+}
+
+.tab-custom:hover,
+.tab-custom.active,
+.tab-custom.active:hover {
+  color:#f39f03;
+}
+
+/* Full calendar css override */
+.fc-event{
+    cursor: pointer;
+}
+
+.fc-content{
+    text-align: center;
+}
+
+.fc td, .fc th{
+border:2px solid #fff;
+padding:5px;
+}
+
+.fc-day-number{
+color:#fff;
+}
+
+.fc-day-header{
+background-color:#5c74a6;
+color:#ffffff;
+text-align:center;
+}
+.fc-unthemed td.fc-today{
+background-color: #7290b8;
+}
+
+.fc-day{
+background-color: #7290b8;
+color:#ffffff;
+border-left:2px solid #fff;
+padding:5px;
+text-align:center;
+	
 }

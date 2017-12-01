@@ -22,7 +22,7 @@ class Calendrier
     private $id;
 
 	/**
-	 * @ORM\ManyToOne(targetEntity="Main\ClasseBundle\Entity\Classe")
+	 * @ORM\ManyToOne(targetEntity="Main\ClasseBundle\Entity\Classe",inversedBy="calendrier")
 	 * @ORM\JoinColumn(name="classe_id", referencedColumnName="id", onDelete="CASCADE")
 	*/
 	protected $classe;

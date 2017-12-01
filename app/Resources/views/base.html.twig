@@ -138,50 +138,55 @@
 									<a href="#" data-toggle="dropdown" class="menu-user"><img src="/img/picto_menu.png" />  {{app.user.username}} &#8595;</a>
 										<ul id="menu_user_eleve" class="dropdown-menu">
 										<li>
-											<span class="glyphicon glyphicon-info-sign icone_menu_eleve"></span><a href="{{ path('main_user_profil')}}" style="display:inline" class="icone_menu_eleve">Mon profil</a>
+											<span class="glyphicon glyphicon-user icone_menu_eleve" style="color:#5b74a9"></span><a href="{{ path('main_user_profil')}}" style="display:inline" class="icone_menu_eleve">Mon profil</a>
 										</li>
 										<li>
-											<span class="glyphicon glyphicon-info-sign icone_menu_eleve"></span><a href="{{ path('suivi_examen')}}" style="display:inline" class="icone_menu_eleve">Suivi</a>
+											<span class="glyphicon glyphicon-book icone_menu_eleve" style="color:#5b74a9"></span><a href="{{ path('classe')}}" style="display:inline" class="icone_menu_eleve">Mes classes</a>
 										</li>
 										<li>
-											<span class="glyphicon glyphicon-info-sign icone_menu_eleve"></span><a href="{{ path('main_blog_homepage')}}" style="display:inline" class="icone_menu_eleve">Quêtes de PAPILO</a>
+											<span class="glyphicon glyphicon-gift icone_menu_eleve" style="color:#5b74a9"></span><a href="{{ path('main_blog_homepage')}}" style="display:inline" class="icone_menu_eleve">Quêtes de PAPILO</a>
 										</li>
 										<li>
-											<span class="glyphicon glyphicon-signal icone_menu_eleve"></span><a href="{{ path('main_savoir_improve')}}" style="display:inline" class="icone_menu_eleve">Savoirs à améliorer</a>
+											<span class="glyphicon glyphicon-signal icone_menu_eleve" style="color:#5b74a9"></span><a href="{{ path('main_savoir_improve')}}" style="display:inline" class="icone_menu_eleve">Savoirs à améliorer</a>
 										</li>
 										<li>
-											<span class="glyphicon glyphicon-plus-sign icone_menu_eleve"></span><a href="{{ path('main_user_add_theme')}}" style="display:inline" class="icone_menu_eleve">Gérer mes thèmes</a>
+											<span class="glyphicon glyphicon-plus-sign icone_menu_eleve" style="color:#5b74a9"></span><a href="{{ path('main_user_add_theme')}}" style="display:inline" class="icone_menu_eleve">Gérer mes thèmes</a>
 										</li>
 										<li>
-											<span class="glyphicon glyphicon-stats icone_menu_eleve"></span><a href="{{ path('main_user_my_history')}}" style="display:inline" class="icone_menu_eleve">Mon historique</a>
+											<span class="glyphicon glyphicon-tasks icone_menu_eleve" style="color:#5b74a9"></span><a href="{{ path('main_user_my_history')}}" style="display:inline" class="icone_menu_eleve">Mon historique</a>
 										</li>
 										<li>
-											<span class="glyphicon glyphicon-stats icone_menu_eleve"></span><a href="{{ path('main_user_my_stats')}}" style="display:inline" class="icone_menu_eleve">Mes statistiques</a>
+											<span class="glyphicon glyphicon-stats icone_menu_eleve" style="color:#5b74a9"></span><a href="{{ path('main_user_my_stats')}}" style="display:inline" class="icone_menu_eleve">Mes statistiques</a>
 										</li>
 										<li>
-											<span class="glyphicon glyphicon-star-empty icone_menu_eleve"></span><a href="{{ path('main_badge_homepage')}}" style="display:inline" class="icone_menu_eleve">Mes badges</a>
+											<span class="glyphicon glyphicon-star-empty icone_menu_eleve" style="color:#5b74a9"></span><a href="{{ path('main_badge_homepage')}}" style="display:inline" class="icone_menu_eleve">Mes badges</a>
 										</li>
 										<li>
-											 <span class="glyphicon glyphicon-off icone_menu_eleve"></span><a href="{{ path('fos_user_security_logout')}}" style="display:inline" class="icone_menu_eleve" >Déconnexion</a>
+											 <span class="glyphicon glyphicon-off icone_menu_eleve" style="color:#5b74a9"></span><a href="{{ path('fos_user_security_logout')}}" style="display:inline" class="icone_menu_eleve" >Déconnexion</a>
 										</li>
 									</ul>
 								</li>
 								
 							{% elseif is_granted('ROLE_PROF') %}
 								<li>
-									<a href="#" data-toggle="dropdown" class="glyphicon glyphicon-user "></a>
+									<a href="#" data-toggle="dropdown" class="menu-user"><img src="/img/teacher.png" />  {{app.user.username}} &#8595;</a>
 									<ul id="menu_user_prof" class="dropdown-menu">
-										<li {% if app.request.get('_route') == 'exercice_my_list' %} class="active"{% endif %}>
-											<span class="glyphicon glyphicon-tasks icone_menu_eleve"></span><a href="{{ path('exercice_my_list')}}" style="display:inline">Mes exercices</a>
+									<!--
+										<li>
+											<span class="glyphicon glyphicon-tasks icone_menu_eleve" style="color:#5b74a9"></span><a href="{{ path('exercice_my_list')}}" style="display:inline" class="icone_menu_eleve">Mes exercices</a>
+										</li>
+									-->
+										<li>
+											<span class="glyphicon glyphicon-user icone_menu_eleve" style="color:#5b74a9"></span><a href="{{ path('main_user_profil')}}" style="display:inline" class="icone_menu_eleve">Mon profil</a>
 										</li>
 										<li>
-											<span class="glyphicon glyphicon-stats icone_menu_eleve"></span><a href="{{ path('main_user_my_stats_prof')}}" style="display:inline" class="icone_menu_eleve">Statistiques</a>
-										</li>
-										<li {% if app.request.get('_route') == 'main_user_profil' %} class="active"{% endif %}>
-											<span class="glyphicon glyphicon-info-sign icone_menu_eleve"></span><a href="{{ path('main_user_profil')}}" style="display:inline">Mon profil</a>
+											<span class="glyphicon glyphicon-stats icone_menu_eleve" style="color:#5b74a9"></span><a href="{{ path('main_user_my_stats_prof')}}" style="display:inline" class="icone_menu_eleve">Statistiques</a>
 										</li>
 										<li>
-											<span class="glyphicon glyphicon-off icone_menu_eleve"></span><a href="{{ path('fos_user_security_logout')}}" style="display:inline" class="icone_menu_eleve" >Déconnexion</a>
+											<span class="glyphicon glyphicon-book icone_menu_eleve" style="color:#5b74a9"></span><a href="{{ path('classe')}}" style="display:inline" class="icone_menu_eleve">Mes classes</a>
+										</li>
+										<li>
+											<span class="glyphicon glyphicon-off icone_menu_eleve" style="color:#5b74a9"></span><a href="{{ path('fos_user_security_logout')}}" style="display:inline" class="icone_menu_eleve" >Déconnexion</a>
 										</li>
 									</ul>
 								</li>
@@ -236,8 +241,8 @@
 							<h3>Inscription</h3>
 						</div>
 						<div class="modal-body modal-signup-body">
-							<a href="{{ path('main_student_register')}}">classique ( email )</a>
-							<a style="background-color:transparent;margin-top:10px;margin-bottom:12px;" href="#" onclick="fb_login();"><img style="width:150px;" src="/img/facebook-register-button.png" /></a>
+							<a style="background-color:transparent;margin-bottom:12px;" href="#" onclick="fb_login();"><img style="width:150px;" src="/img/facebook-register-button.png" /></a>
+							<a href="{{ path('main_student_register')}}">je suis un élève</a><br/>
 							<a class="bg-orange" href="{{ path('main_prof_register')}}">Je suis un professeur</a>
 						</div>
 					</div>

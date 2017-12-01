@@ -32,17 +32,35 @@ class ClasseController extends Controller
 		$user = $this->container->get('security.context')->getToken()->getUser();
 
         // $entities = $em->getRepository('MainClasseBundle:Classe')->findAll();
-        $entities = $em->getRepository('MainClasseBundle:Classe')->findBy(array('owner' => $user->getId()));
-		$nb_eleves = array();
-		foreach ($entities as $entity)
+		if ($this->isGranted('ROLE_PROF'))
 		{
-			$nb_eleves[] = count($eleves = $em->getRepository('MainUserBundle:ClasseUser')->findBy(array('classe' => $entity->getId())));
-		}
+			$entities = $em->getRepository('MainClasseBundle:Classe')->findBy(array('owner' => $user->getId()));
+			$nb_eleves = array();
+			foreach ($entities as $entity)
+			{
+				$nb_eleves[] = count($eleves = $em->getRepository('MainUserBundle:ClasseUser')->findBy(array('classe' => $entity->getId())));
+			}
 
-        return array(
-            'entities' => $entities,
-            'nb_eleves' => $nb_eleves,
-        );
+			return array(
+				'entities' => $entities,
+				'nb_eleves' => $nb_eleves,
+			);
+		}
+		elseif ($this->isGranted('ROLE_ELEVE'))
+		{
+			$entities = $em->getRepository('MainUserBundle:ClasseUser')->findBy(array('user' => $user->getId()));
+			$nb_eleves = array();
+			foreach ($entities as $entity)
+			{
+				$classes[] = $entity->getClasse();
+				$nb_eleves[] = count($eleves = $em->getRepository('MainUserBundle:ClasseUser')->findBy(array('classe' => $entity->getClasse())));
+			}
+			return array(
+				'entities' => $classes,
+				'nb_eleves' => $nb_eleves,
+			);
+		}
+		
     }
 	
     /**
@@ -118,7 +136,8 @@ class ClasseController extends Controller
     public function createAction(Request $request)
     {
 		$user= $this->get('security.context')->getToken()->getUser();
-		$this->denyAccessUnlessGranted('ROLE_PROF', $user, 'Attention à Seth, il va encore se mettre en colère !');
+		if (!$this->isGranted('ROLE_PROF'))
+			return $this->redirectToRoute('main_home_homepage');
         $entity = new Classe();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
@@ -166,6 +185,8 @@ class ClasseController extends Controller
      */
     public function newAction()
     {
+		if (!$this->isGranted('ROLE_PROF'))
+			return $this->redirectToRoute('main_home_homepage');
         $entity = new Classe();
         $form   = $this->createCreateForm($entity);
 

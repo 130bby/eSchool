@@ -1,55 +1,104 @@
 {% extends '::base.html.twig' %}
 {% block stylesheets %}
 	{{ parent() }}
-	<link rel="stylesheet" href="/css/style.css">
+	<link href='/css/fullcalendar.min.css' rel='stylesheet' />
+	<link href='/css/fullcalendar.print.min.css' rel='stylesheet' media='print' />
 {% endblock %}
 
 {% block body -%}
-    <h1>Calendrier</h1>
-	<table class="table">
-		<tr><th>Savoir</th><th>Début</th><th>Fin</th></tr>
-		{% for cal_elem in entity.calendrier%}
-			<tr><td>{{cal_elem.savoir.name}}</td><td>{{cal_elem.start|date('d-m-Y')}}</td><td>{{cal_elem.end|date('d-m-Y')}}</td>
-			</tr>
-		{% endfor %}
-	</table>
-
-	{% if is_granted('ROLE_PROF') %}
-    <ul class="record_actions">
-		<li>
-			<a href="{{ path('classe') }}">
-				Retour à la liste des classes
-			</a>
-		</li>
-		<li>
-			<a href="{{ path('calendrier_edit', { 'classe_id': entity.id }) }}">
-				Editer
-			</a>
-		</li>
-		<li>{{ form(delete_form) }}</li>
+    <h1 style="text-align:left;color:#f39f03;margin-bottom:20px;font-weight:bold;">CALENDRIER</h1>
+	<ul class="nav nav-tabs" role="tablist" style="text-align:center;">
+		<li role="presentation" class="active tab-custom" style="display:inline-block;float:none;"><a class="tab-custom" id="tab1" href="#calendrier" aria-controls="calendrier" role="tab" data-toggle="tab">Calendrier</a></li>
+		<li role="presentation" class="tab-custom" style="display:inline-block;float:none;"><a class="tab-custom" id="tab2" href="#liste" aria-controls="liste" role="tab" data-toggle="tab">Liste</a></li>
 	</ul>
-	{% endif %}
-	<div class="selector" style="text-align:center;"></div>
+	
+	<div class="tab-content">
+		<div role="tabpanel" class="tab-pane active" id="calendrier">
+			<div id='calendar' style="max-width: 900px;margin: 0 auto;margin-bottom:50px;"></div>
+		</div>
+		
+		{% for cal_elem in entity.calendrier%}
+		<div id="modal_savoir_arbre_{{cal_elem.savoir.id}}" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-sm modal-arbre-savoir">
+				<div class="modal-content modal-arbre-savoir-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h6>{{cal_elem.savoir.theme.name}} > {{cal_elem.savoir.name}}</h6>
+					</div>
+					<div class="modal-body">
+					<h3 style="text-align:center;">{{cal_elem.savoir.name|upper}}</h3>
+					{% if cal_elem.savoir.path is not null%}
+						<img class="center-block" src="/uploads/savoir/{{cal_elem.savoir.id}}.{{cal_elem.savoir.path}}" />
+					{% else %}
+						<img class="center-block" src="/img/icones/sphynx.png" />
+					{% endif %}
+					<p style="color:#add292;text-align:center;">Niveau : {%if calendar_elements[loop.index0]['strength'] is defined %}{{calendar_elements[loop.index0]['strength']}}{%else%}0{%endif%}</p><br />
+					<p style="text-align:center;">Aller à :</p><br />
+					<a href="{{ path('main_cours_show', { 'savoir_id': cal_elem.savoir.id }) }}" class="btn-epreuve">Cours</a><br/><br/>
+					<a href="{{ path('main_epreuve_pass_student', { 'savoir_id': cal_elem.savoir.id }) }}" class="btn-epreuve">Epreuve</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		{% endfor %}
+		
+		<div role="tabpanel" class="tab-pane" id="liste">
+			<table class="records_list table_index_classe2 table" style="max-width: 900px;margin: 0 auto;">
+				<tr><th>Savoir</th><th>Début</th><th>Fin</th>{% if is_granted('ROLE_ELEVE') %}<th>Actions</th>{% endif %}</tr>
+				{% for cal_elem in entity.calendrier%}
+					<tr {% if is_granted('ROLE_ELEVE') and passed[loop.index0] == 1 %}class="success"
+					{% elseif is_granted('ROLE_ELEVE') and cal_elem.start|date('Y-m-d') > "now"|date('Y-m-d') %}class="active"
+					{% elseif is_granted('ROLE_ELEVE') and cal_elem.end|date('Y-m-d') < "now"|date('Y-m-d') %}class="danger"{% endif %}>
+					<td>{{cal_elem.savoir.name}}</td><td>{{cal_elem.start|date('d-m-Y')}}</td><td>{{cal_elem.end|date('d-m-Y')}}</td>
+					{% if is_granted('ROLE_ELEVE') %}
+						<td><a href="{{ path('main_cours_show', { 'savoir_id': cal_elem.savoir.id }) }}" class="btn-epreuve" style="margin-left:0;">Cours</a>
+						<a href="{{ path('main_epreuve_pass_student', { 'savoir_id': cal_elem.savoir.id }) }}" class="btn-epreuve" style="margin-left:0;">Epreuve</a></td>
+					{% endif %}
+					</tr>
+				{% endfor %}
+			</table>
+
+			{% if is_granted('ROLE_PROF') %}
+					<a href="{{ path('calendrier_edit', { 'classe_id': entity.id }) }}"  style="color:#000;border-right:1px solid #000;margin:20px;display:inline-block;padding-right:30px;"><img src="/img/crayon_modifier.png">&nbsp;Editer le calendrier</a>
+					<a href="{{ path('classe') }}" style="color:#000;margin:auto;"><img src="/img/retour.png">&nbsp;Retour à la liste des classes</a>
+					{{ form(delete_form) }}
+			{% endif %}
+		</div>
+	</div>
+	
+<div class="footer-mer-1"></div>
+	
 	
 {% endblock %}
 
 {% block javascripts -%}
-	{{ parent() }}	
-	<script type="text/javascript" src="/js/jquery.fn.gantt.min.js"></script>
-	<script type="text/javascript">	
-		var gantt_data = {{gantt_data|raw}};
-		console.log(gantt_data);
-		$(".selector").gantt({
-			source: gantt_data,
-			scale: "days",
-			minScale: "days",
-			maxScale: "months",
-			onItemClick: function(data) {
-				alert("Item clicked - show some details");
+	{{ parent() }}
+	<script src='/js/moment.min.js'></script>
+	<script src='/js/fullcalendar.min.js'></script>
+	<script src='/js/locale-all.js'></script>
+<script>
+	$(document).ready(function() {
+		
+		$('#calendar').fullCalendar({
+			locale: 'fr',
+			header: {
+				left: 'prev,next today',
+				center: 'title',
 			},
-			onRender: function() {
-				console.log("chart rendered");
-			}
+			defaultDate: '2017-11-12',
+			navLinks: false, // can click day/week names to navigate views
+			editable: false,
+			eventLimit: true, // allow "more" link when too many events
+			events: {{calendar_elements|json_encode()|raw}},
+			eventClick: function(calEvent) {
+				$("#modal_savoir_arbre_"+calEvent.id).modal({
+					show: true
+				});
+			}						
 		});
-	</script>
+		
+	});
+</script>	
+	
+	
 {% endblock %}

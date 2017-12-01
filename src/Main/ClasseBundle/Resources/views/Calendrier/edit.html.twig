@@ -2,20 +2,18 @@
 
 {% block body -%}
 {{ form_start(edit_form) }}
-    <h3>Calendrier</h3>
+    <h3>Calendrier de la classe {{entity.name}}</h3>
     <ul class="calendrier" data-prototype="{{ form_widget(edit_form.elements.vars.prototype)|e('html_attr') }}">
         {% for ce in edit_form.elements %}
-            <li>{{ form_row(ce.savoir) }} - {{ form_row(ce.start) }} - {{ form_row(ce.end) }}</li>
+            <li>{{ form_row(ce.savoir) }} {{ form_row(ce.start) }} {{ form_row(ce.end) }}</li>
         {% endfor %}
     </ul>
 	<input type="hidden" name="classe" value="{{classe_id}}">
 {{ form_end(edit_form) }}
 
 {% if is_granted('ROLE_PROF') %}
-<ul class="record_actions">
-	<li>{{ form(delete_form) }}</li>
-	<li><a href="{{ path('classe_show', { 'id': classe_id })}}">Retour à la classe</a></li>
-</ul>
+{{ form(delete_form) }}
+<a href="{{ path('calendrier_show', { 'classe_id': entity.id }) }}" style="color:#000;margin-bottom:50px;margin-left:12px;display:inline-block;"><img src="/img/retour.png">&nbsp;Retour</a>
 {% endif %}	
 
 {% endblock %}
@@ -26,7 +24,7 @@
 		var $collectionHolder;
 
 		// setup an "add a tag" link
-		var $addTagLink = $('<a href="#" class="add_tag_link">Ajouter un élément</a>');
+		var $addTagLink = $('<a href="#" class="add_tag_link submit_classe btn" style="width:25%">Ajouter un élément</a>');
 		var $newLinkLi = $('<li></li>').append($addTagLink);
 
 		jQuery(document).ready(function() {
@@ -77,7 +75,7 @@
 		}	
 
 		function addTagFormDeleteLink($tagFormLi) {
-			var $removeFormA = $('<a href="#">Supprimer cet élément</a>');
+			var $removeFormA = $('<a href="#" class="submit_del_classe btn" style="width:25%" >Supprimer cet élément</a><br /><br />');
 			$tagFormLi.append($removeFormA);
 
 			$removeFormA.on('click', function(e) {
