@@ -29,7 +29,7 @@ class RegistrationFormType extends AbstractType
             ->add('first_name', null, array('label' => 'Prénom :' , 'attr' => array('placeholder' => 'Prénom :')))
             ->add('last_name', null, array('label' => 'Nom :' , 'attr' => array('placeholder' => 'Nom :')))
 			
-            ->add('birthday', 'birthday', array('label' => 'Date de naissance :' , 'years' => array('2000','2001','2002','2003','2004','2005'), 'attr' => array('placeholder' => 'Date de naissance')))
+            ->add('birthday', 'birthday', array('label' => 'Date de naissance :' , 'years' => range(1970,2015), 'attr' => array('placeholder' => 'Date de naissance')))
             ->add('country', 'country', array('label' => 'Pays :' , 'preferred_choices' => array('FR'), 'attr' => array('placeholder' => 'Pays')))
 			;
 		//	var_dump($options);

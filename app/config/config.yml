@@ -138,6 +138,8 @@ hwi_oauth:
             type:                facebook
             client_id:           524784864352284
             client_secret:       263584f84c45bc5bd80fa07936c2e29c
+            scope: "email,public_profile,user_birthday"
+            infos_url: "https://graph.facebook.com/me?fields=id,name,email,first_name,last_name,birthday"
             options:
                 display: popup #dialog is optimized for popup window
     fosub:
